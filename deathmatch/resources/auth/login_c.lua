@@ -30,7 +30,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 			end)
 			loginWindow:getBrowser():loadURL("http://mta/local/login.html")
 		end)
-	end, 2000, 1)
+	end, 5000, 1)
 end)
 
 addEvent("onLoginResult", true)

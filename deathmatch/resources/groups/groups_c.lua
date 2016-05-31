@@ -17,7 +17,7 @@ addEventHandler("onClientResourceStart", root, function()
 		end)
 		addEvent("toggleDuty", true)
 		addEventHandler("toggleDuty", groupsWindow:getBrowser(), function()
-			-- kod na duty
+			triggerServerEvent("toggleDuty", localPlayer, openedGroup)
 		end)
 		addEventHandler("onClientBrowserDocumentReady", groupsWindow:getBrowser(), function(url)
 			local charGroups = localPlayer:getData("charGroups")
