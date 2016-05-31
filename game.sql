@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `rp_buildings` (
   `exitZ` float NOT NULL,
   `ownerType` int(11) NOT NULL,
   `owner` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE IF NOT EXISTS `rp_characters` (
 `UID` int(9) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `rp_characters` (
   `skin` int(3) NOT NULL,
   `money` int(9) NOT NULL DEFAULT '1000',
   `health` int(3) NOT NULL DEFAULT '100'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE IF NOT EXISTS `rp_groups` (
 `UID` int(11) NOT NULL,
@@ -38,13 +38,13 @@ CREATE TABLE IF NOT EXISTS `rp_groups` (
   `leader` int(11) NOT NULL,
   `type` int(11) NOT NULL,
   `specialPermissions` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE IF NOT EXISTS `rp_groups_members` (
 `UID` int(11) NOT NULL,
   `charUID` int(11) NOT NULL,
   `groupUID` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE IF NOT EXISTS `rp_items` (
 `UID` int(9) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `rp_items` (
   `posX` float DEFAULT NULL,
   `posY` float DEFAULT NULL,
   `posZ` float DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE IF NOT EXISTS `rp_objects` (
 `UID` int(11) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `rp_objects` (
   `rotZ` float NOT NULL,
   `ownerType` int(11) NOT NULL,
   `owner` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE IF NOT EXISTS `rp_vehicles` (
 `UID` int(9) NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `rp_vehicles` (
   `parkRX` int(7) NOT NULL DEFAULT '0',
   `parkRY` int(7) NOT NULL DEFAULT '0',
   `parkRZ` int(7) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+);
 
 
 ALTER TABLE `rp_buildings`
