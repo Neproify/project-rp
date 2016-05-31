@@ -12,3 +12,9 @@ end)
 addEventHandler("onPlayerJoin", root, function()
 	source.nametagShowing = false
 end)
+
+addEventHandler("onPlayerQuit", root, function()
+	 local charInfo = source:getData("charInfo")
+	 if not charInfo then return end -- nie zalogowany, nic nie robimy :)
+	 exports.db:query("UPDATE `rp_characters` SET `money`=?, `health`=? WHERE `UID`=?", source.money, source.health, charInfo["UID"])
+end)
