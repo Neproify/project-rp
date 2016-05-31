@@ -10,4 +10,8 @@
 	<script src="char_c.lua" type="client" cache="false" />
 	<file src="login.html" />
 	<file src="charInfo.html" />
+	
+	<aclrequest>
+		<right name="function.kickPlayer" access="true" />
+	</aclrequest>
 </meta>

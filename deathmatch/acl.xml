@@ -4,18 +4,18 @@
         <object name="user.*"></object>
         <object name="resource.*"></object>
     </group>
-    <group name="Support">
-        <acl name="Support"></acl>
-    </group>
+    <group name="Support"></group>
     <group name="Admin">
-        <acl name="Support"></acl>
-        <acl name="Admin"></acl>
         <object name="user.Neproify"></object>
     </group>
     <group name="Console">
         <acl name="Console"></acl>
         <object name="user.Console"></object>
         <object name="user.Neproify"></object>
+    </group>
+    <group name="autoGroup_auth">
+        <acl name="autoACL_auth"></acl>
+        <object name="resource.auth"></object>
     </group>
     <acl name="Default">
         <right name="general.ModifyOtherObjects" access="false"></right>
@@ -170,5 +170,8 @@
         <right name="function.setServerConfigSetting" access="true"></right>
         <right name="function.updateResourceACLRequest" access="true"></right>
         <right name="command.aclrequest" access="true"></right>
+    </acl>
+    <acl name="autoACL_auth">
+        <right name="function.kickPlayer" access="true" who="Console" pending="false" date="2016-05-31 21:38:45"></right>
     </acl>
 </acl>

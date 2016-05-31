@@ -9,8 +9,11 @@ addEventHandler("onPlayerChat", root, function(msg, msgType)
 		local pos = source.position
 		local chatSphere = ColShape.Sphere(pos, 15)
 		local nearbyPlayers = chatSphere:getElementsWithin("player")
-		msg = string.gsub(msg, "<", "#C2A2DA*")
-		msg = string.gsub(msg, ">", "*#FFFFFF")
+		--msg = string.gsub(msg, "<", "#C2A2DA*")
+		--msg = string.gsub(msg, ">", "*#FFFFFF")
+		for text in string.gmatch(msg, "%b<>") do
+			msg = string.gsub(msg, text, "#C2A2DA*".. string.gsub(string.gsub(text, ">", ""), "<", "") .. "*#FFFFFF")
+		end
 		local name = exports.playerUtils:formatName(source.name)
 		for i,v in ipairs(nearbyPlayers) do
 			v:outputChat("#FFFFFF"..name.." mówi: "..msg, 0, 0, 0, true)
