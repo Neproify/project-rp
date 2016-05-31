@@ -11,3 +11,4 @@ deathmatch/registry.db
 deathmatch/server-id.keys
 deathmatch/settings.xml
 deathmatch/vehiclecolors.conf
+deathmatch/resources/db/config.lua
