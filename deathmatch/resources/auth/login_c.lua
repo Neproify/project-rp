@@ -11,23 +11,26 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 		triggerEvent("onLoginResult", localPlayer, {success = true})
 		return
 	end
-
-	loginWindow = GuiBrowser(screenWidth / 2 - 150, screenHeight / 2 - 150, 300, 300, true, true, false)
-	addEventHandler("onClientBrowserCreated", loginWindow, function()
-		addEventHandler("onClientBrowserDocumentReady", root, function(url)
-			if url ~= "http://mta/local/login.html" then return end
-			Camera.fade(true)
-			Camera.setMatrix(1489.8495, -1690.1045, 14.5469, 1484.8495, -1694.1045, 14.5469)
-			showChat(false)
-			showCursor(true)
-			guiSetInputEnabled(true)
-			addEvent("onLoginForm", true)
-			addEventHandler("onLoginForm", loginWindow:getBrowser(), function(login, password)
-				triggerServerEvent("onLoginRequest", root, login, password)
+	
+	-- Timer, bugował się input, tymczasowe?
+	Timer(function()
+		loginWindow = GuiBrowser(screenWidth / 2 - 150, screenHeight / 2 - 150, 300, 300, true, true, false)
+		addEventHandler("onClientBrowserCreated", loginWindow, function()
+			addEventHandler("onClientBrowserDocumentReady", root, function(url)
+				if url ~= "http://mta/local/login.html" then return end
+				Camera.fade(true)
+				Camera.setMatrix(1489.8495, -1690.1045, 14.5469, 1484.8495, -1694.1045, 14.5469)
+				showChat(false)
+				showCursor(true)
+				guiSetInputEnabled(true)
+				addEvent("onLoginForm", true)
+				addEventHandler("onLoginForm", loginWindow:getBrowser(), function(login, password)
+					triggerServerEvent("onLoginRequest", root, login, password)
+				end)
 			end)
+			loginWindow:getBrowser():loadURL("http://mta/local/login.html")
 		end)
-		loginWindow:getBrowser():loadURL("http://mta/local/login.html")
-	end)
+	end, 2000, 1)
 end)
 
 addEvent("onLoginResult", true)
