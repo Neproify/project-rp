@@ -1,0 +1,13 @@
+﻿deathmatch/backups
+deathmatch/databases
+deathmatch/logs
+deathmatch/resource-cache
+deathmatch/editor.conf
+deathmatch/editor_acl.xml
+deathmatch/banlist.xml
+deathmatch/internal.db
+deathmatch/local.conf
+deathmatch/registry.db
+deathmatch/server-id.keys
+deathmatch/settings.xml
+deathmatch/vehiclecolors.conf

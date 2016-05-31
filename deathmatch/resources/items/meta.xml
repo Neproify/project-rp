@@ -1,0 +1,14 @@
+<meta>
+	<include resource="html" />
+	
+	<oop>true</oop>
+	<script src="items_s.lua" type="server" />
+	<script src="groundItems_s.lua" type="server" />
+	<script src="playerItems_s.lua" type="server" />
+	<script src="playerItems_c.lua" type="client" cache="false" />
+	<script src="weapons_s.lua" type="server" />
+	<script src="weapons_c.lua" type="client" cache="false" />
+	<script src="carKeys_s.lua" type="server" />
+	<file src="playerItems.html" />
+	<file src="playerItems.js" />
+</meta>

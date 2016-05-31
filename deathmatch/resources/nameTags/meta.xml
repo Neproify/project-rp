@@ -1,0 +1,5 @@
+<meta>
+	<oop>true</oop>
+	<script src="nametags_c.lua" type="client" cache="false" />
+	<file src="myriadproregular.ttf" />
+</meta>

@@ -1,0 +1,8 @@
+<meta>
+	<include resource="html" />
+
+	<oop>true</oop>
+	<script src="buildings_s.lua" type="server" />
+	<script src="buildings_c.lua" type="client" cache="false" />
+	<file src="buildingInfo.html" />
+</meta>

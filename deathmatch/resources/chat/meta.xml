@@ -1,0 +1,7 @@
+<meta>
+	<oop>true</oop>
+	<script src="chat_s.lua" type="server" />
+	<script src="chat_c.lua" type="client" cache="false" />
+	<export function="clearChat" type="server" />
+	<export function="clearChat" type="client" cache="false" />
+</meta>

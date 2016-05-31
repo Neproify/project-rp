@@ -1,0 +1,16 @@
+<meta>
+	<oop>true</oop>
+	<script src="spawn_s.lua" type="server" />
+	<script src="id_s.lua" type="server" />
+	<script src="id_c.lua" type="client" cache="false" />
+	<script src="names_s.lua" type="server" />
+	<script src="names_c.lua" type="client" cache="false" />
+
+	<export function="getByID" type="server" />
+	<export function="getByName" type="server" />
+	<export function="getByID" type="client" cache="false" />
+	<export function="getByName" type="client" cache="false" />
+
+	<export function="formatName" type="server" />
+	<export function="formatName" type="client" cache="false" />
+</meta>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8" />
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap-theme.css">
+	<script src="http://mta/html/js/jquery.min.js"></script>
+	<script src="http://mta/html/js/bootstrap.min.js"></script>
+
+	<script>
+		function previousCharacter()
+		{
+			mta.triggerEvent("previousCharacter");
+		}
+		function selectCharacter()
+		{
+			mta.triggerEvent("selectCharacter");
+		}
+		function nextCharacter()
+		{
+			mta.triggerEvent("nextCharacter");
+		}
+	</script>
+</head>
+<body style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF;">
+	<div class="container">
+		<legend id="charName" style="color: #FFFFFF;"></legend>
+		<label id="charMoney">Stan konta: <b style="color: green;"></b></label><br />
+		<label id="charHealth">Zdrowie: <b style="color: red;"></b></label>
+		<div class="navbar-fixed-bottom">
+			<div class="container">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default" onclick="previousCharacter();">Poprzednia</button>
+					<button type="button" class="btn btn-default" onclick="selectCharacter();">Wybierz</button>
+					<button type="button" class="btn btn-default" onclick="nextCharacter();">Następna</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

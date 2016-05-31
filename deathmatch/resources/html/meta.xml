@@ -1,0 +1,12 @@
+<meta>
+	<download_priority_group>50</download_priority_group>
+
+	<script src="debug_c.lua" type="client" />
+
+	<file src="css/bootstrap.min.css" />
+	<file src="css/bootstrap-theme.css" />
+	<file src="css/animate.css" />
+	<file src="js/bootstrap.min.js" />
+	<file src="js/jquery.min.js" />
+	<file src="js/bootstrap-notify.min.js" />
+</meta>

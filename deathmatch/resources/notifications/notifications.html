@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8" />
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap-theme.css">
+	<link rel="stylesheet" href="http://mta/html/css/animate.css">
+	<script src="http://mta/html/js/jquery.min.js"></script>
+	<script src="http://mta/html/js/bootstrap.min.js"></script>
+	<script src="http://mta/html/js/bootstrap-notify.min.js"></script>
+	<script>
+		function addNotification(msg, type, delay)
+		{
+			$.notify({
+				message: msg
+			}, {
+				type: type,
+				allow_dismiss: false,
+				newest_on_top: true,
+				delay: delay,
+				timer: 1000,
+				spacing: 0,
+				animate: {
+					enter: 'animated fadeInDown',
+					exit: 'animated fadeOutUp'
+				}
+			});
+		}
+	</script>
+</head>
+<body style="background-color: rgba(0, 0, 0, 0.0); color: #FFFFFF;">
+</body>
+</html>

@@ -1,0 +1,13 @@
+<meta>
+	<download_priority_group>20</download_priority_group>
+
+	<include resource="html" />
+
+	<oop>true</oop>
+	<script src="login_s.lua" type="server" />
+	<script src="login_c.lua" type="client" cache="false" />
+	<script src="char_s.lua" type="server" />
+	<script src="char_c.lua" type="client" cache="false" />
+	<file src="login.html" />
+	<file src="charInfo.html" />
+</meta>

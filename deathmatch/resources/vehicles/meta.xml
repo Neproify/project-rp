@@ -1,0 +1,17 @@
+<meta>
+	<include resource="html" />
+	
+	<oop>true</oop>
+	<script src="vehicles_s.lua" type="server" />
+	<script src="vehicleControl_c.lua" type="client" cache="false" />
+	<script src="vehicleDamage_c.lua" type="client" cache="false" />
+	<script src="vehiclesList_c.lua" type="client" cache="false" />
+	<script src="vehiclesList_s.lua" type="server" />
+	<script src="fuel_c.lua" type="client" cache="false" />
+	<script src="mileage_c.lua" type="client" cache="false" />
+	<file src="playerVehicles.html" />
+	<file src="playerVehicles.js" />
+	<file src="img/licznik.png" />
+	<file src="img/needle.png" />
+	<export function="getVehicleByUID" type="server" />
+</meta>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8" />
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap-theme.css">
+	<script src="http://mta/html/js/jquery.min.js"></script>
+	<script src="http://mta/html/js/bootstrap.min.js"></script>
+
+	<script>
+		function sendLogin()
+		{
+			var login = $("#logininput").val();
+			var password = $("#passwordinput").val();
+			mta.triggerEvent("onLoginForm", login, password);
+		}
+	</script>
+</head>
+<body style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF;">
+	<div class="container">
+		<form class="form-horizontal">
+			<fieldset>
+
+				<!-- Form Name -->
+				<legend style="color: #FFFFFF;">Zaloguj się</legend>
+
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="logininput">Login</label>  
+					<div class="col-md-4">
+						<input id="logininput" name="logininput" type="text" placeholder="" class="form-control input-md" required="">
+
+					</div>
+				</div>
+
+				<!-- Password input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="passwordinput">Hasło</label>
+					<div class="col-md-4">
+						<input id="passwordinput" name="passwordinput" type="password" placeholder="" class="form-control input-md" required="">
+
+					</div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="loginbutton"></label>
+					<div class="col-md-4 text-center">
+						<button id="loginbutton" name="loginbutton" class="btn btn-default" onclick="sendLogin(); return false">Zaloguj się!</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+
+	</div>
+</body>
+</html>

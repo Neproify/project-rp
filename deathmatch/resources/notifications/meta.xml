@@ -1,0 +1,10 @@
+<meta>
+	<include resource="html" />
+
+	<oop>true</oop>
+	<script src="notifications_c.lua" type="client" cache="false" />
+	<script src="notifications_s.lua" type="server" />
+	<file src="notifications.html" />
+	<export function="add" type="server" />
+	<export function="add" type="client" cache="false" />
+</meta>

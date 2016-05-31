@@ -1,0 +1,16 @@
+<meta>
+	<include resource="html" />
+
+	<oop>true</oop>
+	<script src="groups_s.lua" type="server" />
+	<script src="groups_c.lua" type="client" cache="false" />
+
+	<file src="playerGroups.html" />
+	<file src="playerGroups.js" />
+	<file src="group.html" />
+	<file src="group.js" />
+	<file src="groupMembers.html" />
+	<file src="groupMembers.js" />
+	<file src="groupVehicles.html" />
+	<file src="groupVehicles.js" />
+</meta>
