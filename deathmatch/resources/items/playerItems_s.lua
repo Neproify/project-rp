@@ -71,6 +71,14 @@ function canUseItem(player, UID)
 	return true
 end
 
+function isOwnerOfItem(player, UID)
+	return canUseItem(player, UID)
+end
+
+function givePlayerItemForPlayer(from, to, UID)
+	setItemOwner(UID, to:getData("charInfo")["UID"])
+end
+
 addCommandHandler("flip", function(plr)
 	plr.vehicle.rotation = Vector3(0, 0, 0)
 end)

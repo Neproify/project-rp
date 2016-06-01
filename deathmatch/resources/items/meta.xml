@@ -11,4 +11,7 @@
 	<script src="carKeys_s.lua" type="server" />
 	<file src="playerItems.html" />
 	<file src="playerItems.js" />
+	
+	<export function="isOwnerOfItem" type="server" />
+	<export function="givePlayerItemForPlayer" type="server" />
 </meta>

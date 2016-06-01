@@ -1,0 +1,7 @@
+addEvent("onOffer", true)
+addEventHandler("onOffer", root, function()
+    local offerInfo = localPlayer:getData("offerInfo")
+    outputChatBox("Otrzymaleś ofertę od: " .. exports.playerUtils:formatName(offerInfo.from.name))
+    outputChatBox("Typ: ".. offerInfo.type .. ", przedmiot: ".. offerInfo.itemUID ..", koszt: $".. offerInfo.price)
+    outputChatBox("Wpisz /o akceptuj lub /o anuluj")
+end)
