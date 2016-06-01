@@ -1,6 +1,7 @@
 local db = exports.db
 
-addEventHandler("usePlayerItem", root, function(UID)
+addEventHandler("usePlayerItem", root, function(UID, player)
+	if not client then client = player end
 	local charInfo = client:getData("charInfo")
 	if not charInfo then
 		return

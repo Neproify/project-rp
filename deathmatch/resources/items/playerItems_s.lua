@@ -76,6 +76,9 @@ function isOwnerOfItem(player, UID)
 end
 
 function givePlayerItemForPlayer(from, to, UID)
+	if isItemUsed(UID) then
+		triggerEvent("usePlayerItem", root, UID, from)
+	end
 	setItemOwner(UID, to:getData("charInfo")["UID"])
 end
 
