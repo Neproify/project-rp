@@ -1,7 +1,7 @@
 local dbHandle
 
 addEventHandler("onResourceStart", resourceRoot, function()
-	dbHandle = Connection("mysql", "dbname="..dbName..";host="..dbAddress, dbUser, dbPassword, "share=1")
+	dbHandle = Connection("mysql", "dbname="..dbName..";host="..dbAddress..";charset=utf8;", dbUser, dbPassword, "share=1")
 	if dbHandle then
 	else
 		outputDebugLog("[DB] Error with database.")

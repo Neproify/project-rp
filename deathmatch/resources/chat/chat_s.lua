@@ -5,6 +5,7 @@ addEventHandler("onPlayerChat", root, function(msg, msgType)
 	if not charInfo then
 		return
 	end
+	msg = string.gsub(msg, "#%x%x%x%x%x%x", "")
 	if msgType == 0 then -- normalny chat
 		local pos = source.position
 		local chatSphere = ColShape.Sphere(pos, 15)
