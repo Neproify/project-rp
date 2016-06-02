@@ -22,6 +22,10 @@ addCommandHandler("fuel", function(plr, cmd, UID, fuel)
 	veh:setData("vehInfo", vehInfo)
 end)
 
+addCommandHandler("flip", function(plr)
+	plr.vehicle.rotation = Vector3(0, 0, 0)
+end)
+
 addCommandHandler("handling", function(plr, cmd, name, value)
 	plr.vehicle:setHandling(name, value)
 end)

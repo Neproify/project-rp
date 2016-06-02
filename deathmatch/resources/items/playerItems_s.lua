@@ -81,7 +81,3 @@ function givePlayerItemForPlayer(from, to, UID)
 	end
 	setItemOwner(UID, to:getData("charInfo")["UID"])
 end
-
-addCommandHandler("flip", function(plr)
-	plr.vehicle.rotation = Vector3(0, 0, 0)
-end)
