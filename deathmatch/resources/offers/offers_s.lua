@@ -1,9 +1,12 @@
 --[[
 	Typy ofert:
 	1 - przedmiot
+	2 - naprawa
+	3 - lakierowanie
+	4 - leczenie
 --]]
 
-addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4)
+addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 	if arg1 == "akceptuj" then
 		local offerInfo = player:getData("offerInfo")
 		if not offerInfo then return end
@@ -18,6 +21,34 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4)
 			offerInfo.from.money = offerInfo.from.money + offerInfo.price
 			offerInfo.to.money = offerInfo.to.money - offerInfo.price
 			exports.items:givePlayerItemForPlayer(offerInfo.from, offerInfo.to, offerInfo.itemUID)
+		elseif offerInfo.type == 2 then
+			if offerInfo.to.money < offerInfo.price then
+				return
+			end
+			
+			if not offerInfo.to.vehicle then
+				return
+			end
+			
+			offerInfo.to.vehicle:fix()
+			
+			offerInfo.from.money = offerInfo.from.money + offerInfo.price
+			offerInfo.to.money = offerInfo.to.money - offerInfo.price
+		elseif offerInfo.type == 3 then
+			if offerInfo.to.money < offerInfo.price then
+				return
+			end
+			
+			if not offerInfo.to.vehicle then
+				return
+			end
+			
+			offerInfo.to.vehicle:setColor(offerInfo.red, offerInfo.green, offerInfo.blue)
+			
+			offerInfo.from.money = offerInfo.from.money + offerInfo.price
+			offerInfo.to.money = offerInfo.to.money - offerInfo.price
+		elseif offerInfo.type == 4 then
+			offerInfo.to.health = 100
 		end
 		return
 	end
@@ -29,7 +60,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4)
 		 return
 	end
 	if not arg1 and not arg2 then
-		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot]", "info", 5000)
+		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot, naprawa, lakierowanie, leczenie]", "info", 5000)
     	return
 	end
 	local charInfo = player:getData("charInfo")
@@ -60,23 +91,46 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4)
 			return
 		end
 		
-		offerInfo.from = player
-		offerInfo.to = secondPlayer
 		offerInfo.type = 1
 		offerInfo.itemUID = tonumber(arg3)
 		offerInfo.price = tonumber(arg4)
-		
-		if offerInfo.price < 0 then
+	elseif arg2 == "naprawa" then
+		if not arg3 then
+			exports.notifications:add(player, "Użyj: /o(feruj) ".. arg1 .." naprawa [cena]")
 			return
 		end
+		
+		offerInfo.type = 2
+		offerInfo.price = tonumber(arg3)
+	elseif arg2 == "lakierowanie" then
+		 if not arg3 and not arg4 and not arg5 and not arg6 then
+		 	exports.notifications:add(player, "Użyj: /o(feruj) ".. arg1 .." lakierowanie [cena] [czerwony] [zielony] [niebieski]")
+		 	return
+		end
+		
+		offerInfo.type = 3
+		offerInfo.price = tonumber(arg3)
+		offerInfo.red = tonumber(arg4)
+		offerInfo.green = tonumber(arg5)
+		offerInfo.blue = tonumber(arg6)
+	elseif arg2 == "leczenie" then
+		offerInfo.type = 4
+		offerInfo.price = 0
 	end
 	
 	if not offerInfo then return end
 	
+	if offerInfo.price < 0 then
+		return
+	end
+	
+	offerInfo.from = player
+	offerInfo.to = secondPlayer
+	
 	player:setData("offerInfo", offerInfo)
 	secondPlayer:setData("offerInfo", offerInfo)
 		
-	exports.notifications:add(player, "Wysłałeś ofertę(cena: $".. tonumber(arg4) .. ") do ".. exports.playerUtils:formatName(secondPlayer.name), "info", 5000)
+	exports.notifications:add(player, "Wysłałeś ofertę(cena: $".. offerInfo.price .. ") do ".. exports.playerUtils:formatName(secondPlayer.name), "info", 5000)
 	
 	triggerClientEvent(secondPlayer, "onOffer", root)
 end)
