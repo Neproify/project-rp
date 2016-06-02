@@ -27,6 +27,28 @@ function loadPlayerGroups(player)
 	triggerClientEvent(player, "onPlayerGroupsLoaded", root)
 end
 
+function getGroupType(UID)
+	local groupInfo = db:fetch("SELECT * FROM `rp_groups` WHERE `UID`=?", UID)
+	groupInfo = groupInfo[1]
+	return groupInfo["type"]
+end
+
+function isOnDutyOfType(player, type)
+	if not player or not type then
+	 	return false
+	end
+	local group = player:getData("groupDuty")
+	if not group then
+		return false
+	end
+	
+	if getGroupType(group) == type then
+		return true
+	end
+	
+	return false
+end
+
 addEvent("loadPlayerGroups", true)
 addEventHandler("loadPlayerGroups", root, function()
 	loadPlayerGroups(client)

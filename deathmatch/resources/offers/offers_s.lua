@@ -100,6 +100,11 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			return
 		end
 		
+		if not exports.groups:isOnDutyOfType(player, 3) then
+			exports.notifications:add(player, "Nie pracujesz w warsztacie!", "danger", 3000)
+			return
+		end
+		
 		offerInfo.type = 2
 		offerInfo.price = tonumber(arg3)
 	elseif arg2 == "lakierowanie" then
@@ -108,12 +113,21 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 		 	return
 		end
 		
+		if not exports.groups:isOnDutyOfType(player, 5) then
+			exports.notifications:add(player, "Nie pracujesz w warsztacie!", "danger", 3000)
+			return
+		end
+		
 		offerInfo.type = 3
 		offerInfo.price = tonumber(arg3)
 		offerInfo.red = tonumber(arg4)
 		offerInfo.green = tonumber(arg5)
 		offerInfo.blue = tonumber(arg6)
 	elseif arg2 == "leczenie" then
+		if not exports.groups:isOnDutyOfType(player, 5) then
+			exports.notifications:add(player, "Nie pracujesz w szpitalu!", "danger", 3000)
+			return
+		end
 		offerInfo.type = 4
 		offerInfo.price = 0
 	end

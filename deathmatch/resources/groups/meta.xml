@@ -13,4 +13,6 @@
 	<file src="groupMembers.js" />
 	<file src="groupVehicles.html" />
 	<file src="groupVehicles.js" />
+	
+	<export function="isOnDutyOfType" type="server" />
 </meta>
