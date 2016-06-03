@@ -3,11 +3,16 @@ local screenWidth, screenHeight = guiGetScreenSize()
 local showItems = false
 local lastItemUse = 0
 
+local isGUIReady = false
+
 addEventHandler("onClientResourceStart", root, function()
 	itemsWindow = GuiBrowser(screenWidth - 300, screenHeight / 2 - 100, 300, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", itemsWindow, function()
 		itemsWindow:getBrowser():loadURL("http://mta/local/playerItems.html")
 		guiSetVisible(itemsWindow, showItems)
+		addEventHandler("onClientBrowserDocumentReady", itemsWindow:getBrowser(), function(url)
+			isGUIReady = true
+		end)
 		addEvent('usePlayerItem', true)
 		addEventHandler('usePlayerItem', itemsWindow:getBrowser(), function(UID)
 			if lastItemUse + 50 > getTickCount() then
@@ -26,11 +31,10 @@ addEventHandler("onClientResourceStart", root, function()
 end)
 
 function show()
-	showItems = true
-	triggerServerEvent("loadPlayerItems", localPlayer)
-	guiSetVisible(itemsWindow, true)
-	showCursor(true, false)
-	toggleControl("fire", false)
+	if isGUIReady == true then
+		showItems = true
+		triggerServerEvent("loadPlayerItems", localPlayer)
+	end
 end
 
 function hide()
@@ -62,5 +66,8 @@ addEvent("onPlayerItemsLoaded", true)
 addEventHandler("onPlayerItemsLoaded", root, function()
 	if showItems == true then
 		updateItems()
+		guiSetVisible(itemsWindow, true)
+		showCursor(true, false)
+		toggleControl("fire", false)
 	end
 end)

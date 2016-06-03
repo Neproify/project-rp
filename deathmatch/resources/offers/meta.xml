@@ -1,5 +1,5 @@
 <meta>
     <oop>true</oop>
     <script src="offers_s.lua" type="server" />
-    <script src="offers_c.lua" type="client" />
+    <script src="offers_c.lua" type="client" cache="false" />
 </meta>
