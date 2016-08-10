@@ -6,6 +6,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 		return
 	end
 	setPlayerHudComponentVisible("all", false)
+	
 
 	if not localPlayer:getData("charInfo") and localPlayer:getData("globalInfo") then
 		triggerEvent("onLoginResult", localPlayer, {success = true})
@@ -14,7 +15,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 	
 	-- Timer, bugował się input, tymczasowe?
 	Timer(function()
-		loginWindow = GuiBrowser(screenWidth / 2 - 150, screenHeight / 2 - 150, 300, 300, true, true, false)
+		loginWindow = GuiBrowser(screenWidth / 2 - 150, screenHeight / 2 - 100, 300, 200, true, true, false)
 		addEventHandler("onClientBrowserCreated", loginWindow, function()
 			addEventHandler("onClientBrowserDocumentReady", root, function(url)
 				if url ~= "http://mta/local/login.html" then return end

@@ -1,56 +1,72 @@
 local screenWidth, screenHeight = guiGetScreenSize()
 
-function showInteractionCircle()
-	dxDrawCircle(screenWidth / 2, screenHeight / 2 - 150, 6, 1.5, 0.2, 0, 360, tocolor(180, 0, 0))
+local selectedElement = nil
+local interactionActive = false
+local interactionWindow = nil
+
+addEventHandler("onClientResourceStart", root, function()
+	interactionWindow = GuiBrowser(0, 0, screenWidth, screenHeight, true, true, false)
+	addEventHandler("onClientBrowserCreated", interactionWindow, function()
+		interactionWindow:getBrowser():loadURL("http://mta/local/interaction.html")
+		guiSetVisible(interactionWindow, interactionActive)
+		bindKeysForPointer()
+	end)
+end)
+
+function drawPointer()
+	dxDrawCircle(screenWidth / 2, screenHeight / 2, 1, 3, 1, 0, 360, tocolor(255, 0, 0))
 end
 
-function showInteraction()
-	addEventHandler("onClientRender", root, showInteractionCircle)
+function interactionShowPointer()
+	selectedElement = nil
+	addEventHandler("onClientRender", root, drawPointer)
 end
 
-function endInteraction()
-	removeEventHandler("onClientRender", root, showInteractionCircle)
-	x, y, z = getCameraMatrix()
-	x2, y2, z2 = getWorldFromScreenPosition(screenWidth / 2, screenHeight / 2 - 150, 10)
-	hit, hitX, hitY, hitZ, hitElement, normalX, normalY, normalZ, material, lighting, piece = processLineOfSight(x, y, z, x2, y2, z2 - 1.5, true, true, true, true, true, true, false, true, localPlayer, false, true)
+function interactionGetElement()
+	removeEventHandler("onClientRender", root, drawPointer)
+	getNearbyElementForInteraction()
+	if not selectedElement then
+		return
+	end
+	interactionActive = true
+	guiSetVisible(interactionWindow, interactionActive)
+	bindKeysForMenu()
+end
+
+function cancelInteraction()
+	interactionActive = false
+	guiSetVisible(interactionWindow, interactionActive)
+	bindKeysForPointer()
+end
+
+function bindKeysForPointer()
+	unbindKey("mouse2", "down", cancelInteraction)
+
+	bindKey("1", "down", interactionShowPointer)
+	bindKey("1", "up", interactionGetElement)
+end
+
+function bindKeysForMenu()
+	unbindKey("1", "down", interactionShowPointer)
+	unbindKey("1", "up", interactionGetElement)
+	
+	bindKey("mouse2", "down", cancelInteraction)
+end
+
+function getNearbyElementForInteraction()
+	local px, py, pz = getCameraMatrix()
+	local tx, ty, tz = getWorldFromScreenPosition(screenWidth / 2, screenHeight / 2, 10)
+	hit, x, y, z, elementHit = processLineOfSight(px, py, pz, tx, ty, tz, true, true, true, true, true, false, false, false, localPlayer)
 	if hit then
-		if hitElement then
-			if hitElement.type == "vehicle" then
-				if piece == 2 then -- bagażnik
-					if hitElement:getDoorOpenRatio(1) > 0 then
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(1, 0, 1000)
-						end
-					else
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(1, 1, 1000)
-						end
-					end
-				elseif piece == 3 then -- maska
-					if hitElement:getDoorOpenRatio(0) > 0 then
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(0, 0, 1000)
-						end
-					else
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(0, 1, 1000)
-						end
-					end
-				end
-			elseif hitElement.type == "object" then
-				if hitElement:getData("itemInfo") then -- przedmiot
-					local itemInfo = hitElement:getData("itemInfo")
-					triggerServerEvent("pickItemByPlayer", localPlayer, itemInfo.UID)
-				end
-			end
+		if elementHit then
+			selectedElement = elementHit
+		else
+			return false
 		end
+	else
+		return false
 	end
 end
-
-bindKey("z", "down", showInteraction)
-bindKey("z", "up", endInteraction)
-
---funkcja do rysowania "kółek"
 
 function dxDrawCircle( posX, posY, radius, width, angleAmount, startAngle, stopAngle, color, postGUI )
 	if ( type( posX ) ~= "number" ) or ( type( posY ) ~= "number" ) then

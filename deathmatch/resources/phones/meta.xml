@@ -1,0 +1,7 @@
+<meta>
+    <oop>true</oop>
+
+    <script src="phone_c.lua" type="client" cache="false" />
+    
+    <file src="phone.html" />
+</meta>

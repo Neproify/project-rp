@@ -9,4 +9,13 @@
 	<file src="js/bootstrap.min.js" />
 	<file src="js/jquery.min.js" />
 	<file src="js/bootstrap-notify.min.js" />
+
+	<!-- FONT AWESOME -->
+	<file src="font-awesome/css/font-awesome.min.css" />
+	<file src="font-awesome/fonts/FontAwesome.otf" />
+	<file src="font-awesome/fonts/fontawesome-webfont.eot" />
+	<file src="font-awesome/fonts/fontawesome-webfont.svg" />
+	<file src="font-awesome/fonts/fontawesome-webfont.ttf" />
+	<file src="font-awesome/fonts/fontawesome-webfont.woff" />
+	<file src="font-awesome/fonts/fontawesome-webfont.woff2" />
 </meta>

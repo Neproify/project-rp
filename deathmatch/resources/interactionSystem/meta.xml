@@ -1,5 +1,11 @@
 <meta>
-	<oop>true</oop>
-	<script src="interaction_s.lua" type="server" />
-	<script src="interaction_c.lua" type="client" cache="false" />
+    <oop>true</oop>
+    <script src="interaction_c.lua" type="client" cache="false" />
+    
+    <file src="interaction.html" />
+    
+    <file src="js/jquery.honeycombs.js" />
+    <file src="css/honeycombs.css" />
+    <file src="fonts/icomoon.woff" />
+    <file src="fonts/icomoon.ttf" />
 </meta>

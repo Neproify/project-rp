@@ -4,6 +4,7 @@
 	<meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8" />
 	<link rel="stylesheet" href="http://mta/html/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://mta/html/css/bootstrap-theme.css">
+	<link rel="stylesheet" href="http://mta/html/font-awesome/css/font-awesome.min.css">
 	<script src="http://mta/html/js/jquery.min.js"></script>
 	<script src="http://mta/html/js/bootstrap.min.js"></script>
 
@@ -23,23 +24,15 @@
 
 				<!-- Form Name -->
 				<legend style="color: #FFFFFF;">Zaloguj się</legend>
-
-				<!-- Text input-->
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="logininput">Login</label>  
-					<div class="col-md-4">
-						<input id="logininput" name="logininput" type="text" placeholder="" class="form-control input-md" required="">
-
-					</div>
+				
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+					<input id="logininput" name="logininput" type="text" placeholder="Login" class="form-control input-md" required="">
 				</div>
-
-				<!-- Password input-->
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="passwordinput">Hasło</label>
-					<div class="col-md-4">
-						<input id="passwordinput" name="passwordinput" type="password" placeholder="" class="form-control input-md" required="">
-
-					</div>
+				
+				<div class="input-group">
+  					<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+  					<input id="passwordinput" name="passwordinput" type="password" placeholder="Hasło" class="form-control input-md" required="">
 				</div>
 
 				<!-- Button -->

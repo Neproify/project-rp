@@ -59,7 +59,7 @@ function updateCharInfo()
 	local characters = localPlayer:getData("characters")
 	loginPed:setModel(characters[selectedChar]["skin"])
 	charInfoWindow:getBrowser():executeJavascript("$('#charName').html('"..exports.playerUtils:formatName(characters[selectedChar]["name"]).."');")
-	charInfoWindow:getBrowser():executeJavascript("$('#charMoney b').html('$"..characters[selectedChar]["money"].."');")
+	charInfoWindow:getBrowser():executeJavascript("$('#charMoney b').html('"..characters[selectedChar]["money"].."');")
 	charInfoWindow:getBrowser():executeJavascript("$('#charHealth b').html('"..characters[selectedChar]["health"].."');")
 end
 
