@@ -1,6 +1,4 @@
 <meta>
-	<download_priority_group>20</download_priority_group>
-
 	<include resource="html" />
 
 	<oop>true</oop>
