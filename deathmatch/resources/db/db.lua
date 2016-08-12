@@ -19,6 +19,12 @@ function fetch(...)
 	return result, num_affected_rows, last_insert_id
 end
 
+function fetchOne(...)
+	local qh = dbHandle:query(...)
+	local result, num_affected_rows, last_insert_id = qh:poll(-1)
+	return result[1], num_affected_rows, last_insert_id
+end
+
 function getPrefix(type)
 	if type == "game" then
 		return dbGamePrefix

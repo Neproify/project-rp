@@ -16,8 +16,7 @@ addEventHandler("onLoginRequest", root, function(login, password)
 		return
 	end
 	
-	local globalInfoTemp = db:fetch("SELECT * FROM `forum_users` WHERE `username`=? LIMIT 1;", login)
-	globalInfoTemp = globalInfoTemp[1]
+	local globalInfoTemp = db:fetchOne("SELECT * FROM `ipb_core_members` WHERE `name`=? LIMIT 1;", login)
 	
 	if not globalInfoTemp then
 		result.success = false
@@ -26,7 +25,7 @@ addEventHandler("onLoginRequest", root, function(login, password)
 		return
 	end
 	
-	if not bcrypt_verify(password, globalInfoTemp["password"]) then
+	if not bcrypt_verify(password, globalInfoTemp["members_pass_hash"]) then
 		result.success = false
 		result.message = "Podałeś nieprawidłowy login i/lub hasło."
 		triggerClientEvent(client, "onLoginResult", root, result)
@@ -34,8 +33,8 @@ addEventHandler("onLoginRequest", root, function(login, password)
 	end
 
 	local globalInfo = {}
-	globalInfo["UID"] = globalInfoTemp["id"]
-	globalInfo["name"] = globalInfoTemp["username"]
+	globalInfo["UID"] = globalInfoTemp["member_id"]
+	globalInfo["name"] = globalInfoTemp["name"]
 	globalInfo["score"] = globalInfoTemp["score"]
 	globalInfo["admin"] = globalInfoTemp["admin"]
 	globalInfo["permissions"] = globalInfoTemp["permissions"]
