@@ -3,5 +3,8 @@
 ## Auth
 - Sprawdzić czy da się logować w kilka osób na jedno konto!
 
-# HTML
-- Wywalić większość zasobów, CEF w MTA ssie
+## Groups
+- Dodać zabezpieczenia przy zaczynaniu duty
+
+## NameTags
+- Usunąć wyświetlanie swojego nicku

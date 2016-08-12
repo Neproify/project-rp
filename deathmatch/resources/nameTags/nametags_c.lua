@@ -3,7 +3,7 @@ local font = dxCreateFont("myriadproregular.ttf", 12, false, "cleartype")
 addEventHandler("onClientRender", root, function()
 	local players = Element.getAllByType("player")
 	for i, v in ipairs(players) do
-		if i:getData("charInfo") and localPlayer.dimension == v.dimension then
+		if v:getData("charInfo") and localPlayer.dimension == v.dimension then
 			local dist = getDistanceBetweenPoints3D(localPlayer.position, v.position)
 			if dist < 15 then
 				if isLineOfSightClear(localPlayer.position, v.position, true, false, false, true, false, false, false) then

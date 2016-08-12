@@ -12,6 +12,10 @@
 
 local db = exports.db
 
+addEventHandler("onCharacterSelected", root, function(player)
+	loadPlayerGroups(player)
+end)
+
 function loadPlayerGroups(player)
 	local charInfo = player:getData("charInfo")
 	local charGroups = {}
@@ -22,6 +26,9 @@ function loadPlayerGroups(player)
 		info.groupInfo = groupInfo[1]
 		info.memberInfo = v
 		table.insert(charGroups, info)
+	end
+	if #charGroups < 1 then
+		charGroups = nil
 	end
 	player:setData("charGroups", charGroups)
 	triggerClientEvent(player, "onPlayerGroupsLoaded", root)

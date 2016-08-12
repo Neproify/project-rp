@@ -45,15 +45,22 @@ end)
 
 addEvent("usePlayerItem", true)
 
-function loadPlayerItems(player) -- reload?
+function loadPlayerItems(player) -- NOTE: Używać po zmianie zawartości ekwipunku gracza
 	local charInfo = player:getData("charInfo")
 	if not charInfo then
 		return
 	end
 	local items = db:fetch("SELECT * FROM `rp_items` WHERE `ownerType`=1 AND `owner`=?", charInfo["UID"])
+	if #items < 1 then
+		items = nil
+	end
 	player:setData("charItems", items)
 	triggerClientEvent(player, "onPlayerItemsLoaded", root)
 end
+
+addEventHandler("OnCharacterSelected", root, function(player)
+	loadPlayerItems(player)
+end)
 
 function canUseItem(player, UID)
 	if not player or not UID then

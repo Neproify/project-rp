@@ -7,6 +7,7 @@ addEventHandler("onClientResourceStart", root, function()
 	vehiclesWindow = GuiBrowser(screenWidth / 2 - 250, screenHeight / 2 - 150, 500, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", vehiclesWindow, function()
 		vehiclesWindow:getBrowser():loadURL("http://mta/local/playerVehicles.html")
+		triggerServerEvent("loadPlayerVehicles", localPlayer)
 		guiSetVisible(vehiclesWindow, showVehicles)
 	end)
 	addEvent("spawnPlayerVehicle", true)
@@ -22,16 +23,20 @@ addEventHandler("onClientResourceStart", root, function()
 end)
 
 function show()
-	triggerServerEvent("loadPlayerVehicles", localPlayer)
+	if not localPlayer:getData("charVehicles") then
+		exports.notifications:add("Nie posiadasz żadnych pojazdów!", "danger", 5000)
+		return
+	end
 	showVehicles = true
-	guiSetVisible(vehiclesWindow, true)
+	vehiclesWindow:setVisible(true)
 	showCursor(true, false)
 	toggleControl("fire", false)
+	updateVehicles()
 end
 
 function hide()
 	showVehicles = false
-	guiSetVisible(vehiclesWindow, false)
+	vehiclesWindow:setVisible(false)
 	showCursor(false)
 	toggleControl("fire", true)
 end
@@ -53,9 +58,9 @@ addEventHandler("onPlayerVehiclesLoaded", root, function()
 end)
 
 addCommandHandler("v", function()
-	if showVehicles then
-		hide()
-	else
+	if showVehicles == false then
 		show()
+	else
+		hide()
 	end
 end)

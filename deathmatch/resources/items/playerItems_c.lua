@@ -8,6 +8,7 @@ local isGUIReady = false
 addEventHandler("onClientResourceStart", root, function()
 	itemsWindow = GuiBrowser(screenWidth - 300, screenHeight / 2 - 100, 300, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", itemsWindow, function()
+		triggerServerEvent("loadPlayerItems", localPlayer)
 		itemsWindow:getBrowser():loadURL("http://mta/local/playerItems.html")
 		guiSetVisible(itemsWindow, showItems)
 		addEventHandler("onClientBrowserDocumentReady", itemsWindow:getBrowser(), function(url)
@@ -32,14 +33,21 @@ end)
 
 function show()
 	if isGUIReady == true then
+		if not localPlayer:getData("charItems") then
+			exports.notifications:add("Nie posiadasz żadnych przedmiotów!", "danger", 5000)
+			return
+		end
 		showItems = true
-		triggerServerEvent("loadPlayerItems", localPlayer)
+		updateItems()
+		itemsWindow:setVisible(true)
+		showCursor(true, false)
+		toggleControl("fire", false)
 	end
 end
 
 function hide()
 	showItems = false
-	guiSetVisible(itemsWindow, false)
+	itemsWindow:setVisible(false)
 	showCursor(false)
 	toggleControl("fire", true)
 end
@@ -66,7 +74,7 @@ addEvent("onPlayerItemsLoaded", true)
 addEventHandler("onPlayerItemsLoaded", root, function()
 	if showItems == true then
 		updateItems()
-		guiSetVisible(itemsWindow, true)
+		itemsWindow:setVisible(true)
 		showCursor(true, false)
 		toggleControl("fire", false)
 	end

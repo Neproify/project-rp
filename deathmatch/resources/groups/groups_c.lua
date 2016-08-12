@@ -9,6 +9,7 @@ addEventHandler("onClientResourceStart", root, function()
 	groupsWindow = GuiBrowser(screenWidth / 2 - 250, screenHeight / 2 - 150, 500, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", groupsWindow, function()
 		groupsWindow:getBrowser():loadURL("http://mta/local/playerGroups.html")
+		triggerServerEvent("loadPlayerGroups", localPlayer)
 		guiSetVisible(groupsWindow, groupsShow)
 		addEvent("openGroupPanel", true)
 		addEventHandler("openGroupPanel", groupsWindow:getBrowser(), function(UID)
@@ -41,27 +42,42 @@ addEventHandler("onClientResourceStart", root, function()
 				if not localPlayer:getData("charInfo") then
 					return
 				end
-				triggerServerEvent("loadPlayerGroups", localPlayer)
+				updateGroups()
 			end
 		end)
 	end)
 end)
 
 function show()
-	groupsShow = true
 	if not localPlayer:getData("charGroups") then
 		groupsWindow:getBrowser():loadURL("http://mta/local/playerGroups.html")
+		exports.notifications:add("Nie jesteś członkiem żadnej grupy!", "danger", 5000)
+		hide()
+		return
 	end
-	guiSetVisible(groupsWindow, true)
+	groupsShow = true
+	groupsWindow:setVisible(true)
 	showCursor(true, false)
 	toggleControl("fire", false)
+	if groupsWindow:getBrowser().url == "http://mta/local/playerGroups.html" then
+		updateGroups()
+	end
 end
 
 function hide()
 	groupsShow = false
-	guiSetVisible(groupsWindow, false)
+	groupsWindow:setVisible(false)
 	showCursor(false)
 	toggleControl("fire", true)
+end
+
+function updateGroups()
+	local charGroups = localPlayer:getData("charGroups") or {}
+	groupsWindow:getBrowser():executeJavascript("clearGroups();")
+	for i,v in ipairs(charGroups) do
+		groupsWindow:getBrowser():executeJavascript("addGroup("..v.groupInfo.UID..",'"..v.groupInfo.name.."');")
+	end
+	groupsWindow:getBrowser():executeJavascript("updateGroups();")
 end
 
 addCommandHandler("g", function()
@@ -75,11 +91,6 @@ end)
 addEvent("onPlayerGroupsLoaded", true)
 addEventHandler("onPlayerGroupsLoaded", root, function()
 	if groupsWindow:getBrowser():getURL() == "http://mta/local/playerGroups.html" then
-		local charGroups = localPlayer:getData("charGroups")
-		groupsWindow:getBrowser():executeJavascript("clearGroups();")
-		for i,v in ipairs(charGroups) do
-			groupsWindow:getBrowser():executeJavascript("addGroup("..v.groupInfo.UID..",'"..v.groupInfo.name.."');")
-		end
-		groupsWindow:getBrowser():executeJavascript("updateGroups();")
+		updateGroups()
 	end
 end)

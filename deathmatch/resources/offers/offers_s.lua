@@ -59,7 +59,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 		 offerInfo.to:setData("offerInfo", nil)
 		 return
 	end
-	if not arg1 and not arg2 then
+	if not arg1 or not arg2 then
 		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot, naprawa, lakierowanie, leczenie]", "info", 5000)
     	return
 	end

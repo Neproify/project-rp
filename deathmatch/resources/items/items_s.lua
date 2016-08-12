@@ -19,6 +19,12 @@ end
 
 function createItem(name, ownerType, owner, type, properties)
     local result, affected, UID = db:fetch("INSERT INTO `rp_items` SET `name`=?, `ownerType`=?, `owner`=?, `type`=?, `properties`=?", name, ownerType, owner, type, properties)
+    if ownerType == 1 then
+        local player = exports.playerUtils:getByCharUID(owner)
+        if player then
+            loadPlayerItems(player)
+        end
+    end
     return UID
 end
 
