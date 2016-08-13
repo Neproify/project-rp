@@ -10,8 +10,6 @@ addEventHandler("onPlayerChat", root, function(msg, msgType)
 		local pos = source.position
 		local chatSphere = ColShape.Sphere(pos, 15)
 		local nearbyPlayers = chatSphere:getElementsWithin("player")
-		--msg = string.gsub(msg, "<", "#C2A2DA*")
-		--msg = string.gsub(msg, ">", "*#FFFFFF")
 		for text in string.gmatch(msg, "%b<>") do
 			msg = string.gsub(msg, text, "#C2A2DA*".. string.gsub(string.gsub(text, ">", ""), "<", "") .. "*#FFFFFF")
 		end

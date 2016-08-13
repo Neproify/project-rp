@@ -1,5 +1,5 @@
 function getByID(ID)
-	local players = Element:getAllByType("player")
+	local players = Element.getAllByType("player")
 	for i,v in ipairs(players) do
 		if v:getData("ID") == ID then return v end
 	end

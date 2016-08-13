@@ -1,15 +1,3 @@
---[[
-	Typy grup:
-	1 - Rząd
-	2 - PD
-	3 - MC
-	4 - Radio(?)
-	5 - Warsztat
-	6 - Restauracja
-	7 - sklep 24/7
-	8 - grupa przestępcza
-]]--
-
 local db = exports.db
 
 addEventHandler("onCharacterSelected", root, function(player)
@@ -35,9 +23,26 @@ function loadPlayerGroups(player)
 end
 
 function getGroupType(UID)
-	local groupInfo = db:fetch("SELECT * FROM `rp_groups` WHERE `UID`=?", UID)
-	groupInfo = groupInfo[1]
+	local groupInfo = db:fetchOne("SELECT * FROM `rp_groups` WHERE `UID`=?", UID)
 	return groupInfo["type"]
+end
+
+function getGroupInfo(UID)
+	local groupInfo = db:fetchOne("SELECT * FROM `rp_groups` WHERE `UID`=?", UID)
+	return groupInfo
+end
+
+function getPlayerRankInGroup(player, gID)
+	local charInfo = player:getData("charInfo")
+	if not charInfo then
+		return false
+	end
+	local temp = db:fetchOne("SELECT * FROM `rp_groups_members` WHERE `charUID`=? AND `groupUID`=?", 
+		charInfo["UID"], gID)
+	if not temp then
+		return false end
+	local rank = db:fetchOne("SELECT * FROM `rp_groups_ranks` WHERE `UID`=?", temp["rank"])
+	return rank or false
 end
 
 function isOnDutyOfType(player, type)
@@ -53,6 +58,37 @@ function isOnDutyOfType(player, type)
 		return true
 	end
 	
+	return false
+end
+
+function haveGroupSpecialPermission(UID, permission)
+	local groupInfo = getGroupInfo(UID)
+	if bitTest(groupInfo["specialPermissions"], permission) then
+		return true
+	end
+	return false
+end
+
+function havePlayerGroupSpecialPermission(player, permission)
+	local group = player:getData("groupDuty")
+	if not group then
+		return false
+	end
+	return haveGroupSpecialPermission(group, permission)
+end
+
+function havePlayerPermissionInGroup(player, UID, permission)
+	local charInfo = player:getData("charInfo")
+	if not charInfo then
+		return false
+	end
+	local rank = getPlayerRankInGroup(player, UID)
+	if not rank then
+		return false
+	end
+	if bitTest(rank["permissions"], permission) then
+		return true
+	end
 	return false
 end
 

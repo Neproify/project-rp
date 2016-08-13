@@ -8,3 +8,9 @@
 
 ## NameTags
 - Usunąć wyświetlanie swojego nicku
+
+## Items
+- Usunąć komendy do debugu
+
+## Vehicles
+- Usunąć komendy do debugu

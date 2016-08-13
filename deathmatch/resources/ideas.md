@@ -28,6 +28,10 @@
 - Opony zwiększające przyczepność
 - Hamulce poprawiające siłę hamowania
 - Zawieszenie poprawiające sztywność nadwozia
+- Zawieszenie gwintowane, możliwość obniżania auta
+- Rodzaje paliwa(diesel, benzyna, lpg)
+- Wielkość felg
+- Air ride
 - Klatka bezpieczeństwa(zmniejszenie zniszczeń)
 - Rozpórka do silnika(zwiększenie sztywności nadwozia)
 - Turbiny(zwiększenie mocy, przyśpieszenia)
@@ -43,3 +47,6 @@
 
 ## Craftowanie przedmiotów
 - Tworzenie broni przez organizacje przestępcze
+
+## Obiekty do tworzenia interiorów
+- Głównie ściany, drzwi, podłogi
