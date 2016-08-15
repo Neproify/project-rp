@@ -49,18 +49,33 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			offerInfo.to.money = offerInfo.to.money - offerInfo.price
 		elseif offerInfo.type == 4 then
 			offerInfo.to.health = 100
+		elseif offerInfo.type == 5 then
+			if offerInfo.to.money < offerInfo.price then
+				return
+			end
+			local group = exports.groups:getPlayerGroup(offerInfo.from)
+			exports.groups:giveMoneyForGroup(group, offerInfo.price)
+			offerInfo.to.money = offerInfo.to.money - offerInfo.price
 		end
+		exports.notifications:add(offerInfo.from, string.format("%s zaakceptował ofertę.", 
+			exports.playerUtils:formatName(offerInfo.to.name)), "info", 3000)
+		exports.notifications:add(offerInfo.from, string.format("Zaakceptowałeś ofertę od %s.", 
+			exports.playerUtils:formatName(offerInfo.from.name)), "info", 3000)
 		return
 	end
 	if arg1 == "anuluj" then
 		 local offerInfo = player:getData("offerInfo")
 		 if not offerInfo then return end
+		 exports.notifications:add(offerInfo.from, string.format("%s anulował ofertę.", 
+			exports.playerUtils:formatName(player.name)), "info", 3000)
+		 exports.notifications:add(offerInfo.to, string.format("%s anulował ofertę.", 
+			exports.playerUtils:formatName(player.name)), "info", 3000)
 		 offerInfo.from:setData("offerInfo", nil)
 		 offerInfo.to:setData("offerInfo", nil)
 		 return
 	end
 	if not arg1 or not arg2 then
-		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot, naprawa, lakierowanie, leczenie]", "info", 5000)
+		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot, naprawa, lakierowanie, leczenie, mandat]", "info", 5000)
     	return
 	end
 	local charInfo = player:getData("charInfo")
@@ -100,7 +115,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			return
 		end
 		
-		if not exports.groups:isOnDutyOfType(player, 3) then
+		if not exports.groups:isOnDutyOfType(player, exports.groups:getGroupTypes().workshop) then
 			exports.notifications:add(player, "Nie pracujesz w warsztacie!", "danger", 3000)
 			return
 		end
@@ -124,12 +139,23 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 		offerInfo.green = tonumber(arg5)
 		offerInfo.blue = tonumber(arg6)
 	elseif arg2 == "leczenie" then
-		if not exports.groups:isOnDutyOfType(player, 5) then
+		if not exports.groups:isOnDutyOfType(player, exports.groups:getGroupTypes().emergency) then
 			exports.notifications:add(player, "Nie pracujesz w szpitalu!", "danger", 3000)
 			return
 		end
 		offerInfo.type = 4
 		offerInfo.price = 0
+	elseif arg2 == "mandat" then
+		if not exports.groups:isOnDutyOfType(player, exports.groups:getGroupTypes().police) then
+			exports.notifications:add(player, "Nie pracujesz w policji!", "danger", 3000)
+			return
+		end
+		if not arg3 then
+			exports.notifications:add(player, "Użyj: /o(feruj) ".. arg1 .." mandat [cena]")
+			return
+		end
+		offerInfo.type = 5
+		offerInfo.price = tonumber(arg3)
 	end
 	
 	if not offerInfo then return end

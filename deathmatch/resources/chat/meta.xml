@@ -4,4 +4,7 @@
 	<script src="chat_c.lua" type="client" cache="false" />
 	<export function="clearChat" type="server" />
 	<export function="clearChat" type="client" />
+	<export function="me" type="server" />
+	<export function="doFunction" type="server" />
+	<export function="ooc" type="server" />
 </meta>

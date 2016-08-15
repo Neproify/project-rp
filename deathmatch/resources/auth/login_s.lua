@@ -38,9 +38,25 @@ addEventHandler("onLoginRequest", root, function(login, password)
 	globalInfo["score"] = globalInfoTemp["score"]
 	globalInfo["admin"] = globalInfoTemp["admin"]
 	globalInfo["permissions"] = globalInfoTemp["permissions"]
+	if isPlayerAlreadyLogged(globalInfo["UID"]) then -- zabezpieczenie przed logowaniem na jedno konto przez kilka osób
+		client:kick("Próba logowania na jedno konto przez kilka osób.")
+		return
+	end
 	client:setData("globalInfo", globalInfo)
 	result.success = true
 	result.message = "Zalogowałeś się na swoje konto. Wybierz postać."
 	triggerClientEvent(client, "onLoginResult", root, result)
 	return
 end)
+
+function isPlayerAlreadyLogged(gID)
+	for i,v in ipairs(Element.getAllByType("player")) do
+		local globalInfo = v:getData("globalInfo")
+		if globalInfo then
+			if globalInfo["UID"] == gID then
+				return true
+			end
+		end
+	end
+	return false
+end

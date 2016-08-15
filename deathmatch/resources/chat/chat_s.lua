@@ -18,43 +18,47 @@ addEventHandler("onPlayerChat", root, function(msg, msgType)
 			v:outputChat("#FFFFFF"..name.." mówi: "..msg, 0, 0, 0, true)
 		end
 	elseif msgType == 1 then -- /me
-		local pos = source.position
-		local chatSphere = ColShape.Sphere(pos, 20)
-		local nearbyPlayers = chatSphere:getElementsWithin("player")
-		local name = exports.playerUtils:formatName(source.name)
-		for i,v in ipairs(nearbyPlayers) do
-			v:outputChat("#C2A2DA* "..name.." "..msg, 0, 0, 0, true)
-		end
+		me(source, msg)
 	end
 end)
 
-addCommandHandler("OOC", function(player, cmd, ...)
-	local charInfo = player:getData("charInfo")
-	local globalInfo = player:getData("globalInfo")
-	if not charInfo then
-		return
+function me(player, text)
+	local chatSphere = ColShape.Sphere(player.position, 20)
+	local nearbyPlayers = chatSphere:getElementsWithin("player")
+	local name = exports.playerUtils:formatName(player.name)
+	for i,v in ipairs(nearbyPlayers) do
+		v:outputChat("#C2A2DA* "..name.." "..text, 0, 0, 0, true)
 	end
+end
+
+function ooc(player, text)
+	local chatSphere = ColShape.Sphere(player.position, 15)
+	local nearbyPlayers = chatSphere:getElementsWithin("player")
+	local name = exports.playerUtils:formatName(player.name)
+	for i,v in ipairs(nearbyPlayers) do
+		v:outputChat("#FFFFFF(("..name.."("..player:getData("ID").."): "..text.."))", 0, 0, 0, true)
+	end
+end
+
+function doFunction(player, text)
+	local chatSphere = ColShape.Sphere(player.position, 20)
+	local nearbyPlayers = chatSphere:getElementsWithin("player")
+	local name = exports.playerUtils:formatName(player.name)
+	for i,v in ipairs(nearbyPlayers) do
+		v:outputChat("#9A9CCD* "..text.. " (("..name.."))", 0, 0, 0, true)
+	end
+end
+
+addCommandHandler("OOC", function(player, cmd, ...)
 	local msg = {...}
 	msg = table.concat(msg, " ")
-	local pos = player.position
-	local chatSphere = ColShape.Sphere(pos, 15)
-	local nearbyPlayers = chatSphere:getElementsWithin("player")
-	local name = exports.playerUtils:formatName(charInfo["name"])
-	for i,v in ipairs(nearbyPlayers) do
-		v:outputChat("#FFFFFF(("..name.."("..player:getData("ID").."): "..msg.."))", 0, 0, 0, true)
-	end
+	ooc(player, msg)
 end)
 
 addCommandHandler("do", function(player, cmd, ...)
 	local msg = {...}
 	msg = table.concat(msg, " ")
-	local pos = player.position
-	local chatSphere = ColShape.Sphere(pos, 20)
-	local nearbyPlayers = chatSphere:getElementsWithin("player")
-	local name = exports.playerUtils:formatName(player.name)
-	for i,v in ipairs(nearbyPlayers) do
-		v:outputChat("#9A9CCD* "..msg.. " (("..name.."))", 0, 0, 0, true)
-	end
+	doFunction(player, msg)
 end)
 
 addCommandHandler("sprobuj", function(player, cmd, ...)

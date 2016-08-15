@@ -1,10 +1,14 @@
 # Notatki dotyczące skryptów
 
-## Auth
-- Sprawdzić czy da się logować w kilka osób na jedno konto!
+## Chat
+- /krzycz
+- /szepcz
 
 ## Groups
 - Dodać zabezpieczenia przy zaczynaniu duty
+- Dokończyć /skuj
+- Przetrzymywanie w budynku
+- Chat grupowy
 
 ## NameTags
 - Usunąć wyświetlanie swojego nicku
@@ -14,3 +18,10 @@
 
 ## Vehicles
 - Usunąć komendy do debugu
+- Otwieranie szyb
+
+## Anims
+- DODAĆ ANIMACJE!
+
+## CEF
+- Dodać bringToFront(true) do każdego gui, focusuje i nie ma problemów

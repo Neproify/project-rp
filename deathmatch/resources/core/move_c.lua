@@ -14,22 +14,26 @@ local run = false
 local sprint = false
 
 function walking()
-	if getKeyState("w") then
+	local stopWalking = false
+	if isChatBoxInputActive() or isConsoleActive() or isMainMenuActive() then
+		stopWalking = true
+	end
+	if getKeyState("w") and not stopWalking then
 		setControlState("forwards", true)
 	else
 		setControlState("forwards", false)
 	end
-	if getKeyState("s") then
+	if getKeyState("s") and not stopWalking then
 		setControlState("backwards", true)
 	else
 		setControlState("backwards", false)
 	end
-	if getKeyState("a") then
+	if getKeyState("a") and not stopWalking then
 		setControlState("left", true)
 	else
 		setControlState("left", false)
 	end
-	if getKeyState("d") then
+	if getKeyState("d") and not stopWalking then
 		setControlState("right", true)
 	else
 		setControlState("right", false)

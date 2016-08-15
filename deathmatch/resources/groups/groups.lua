@@ -16,11 +16,19 @@ groupType.news = 4
 groupType.workshop = 5
 groupType.restaurant = 6
 
+function getGroupTypes()
+	return groupType
+end
+
 --[[
 	Uprawnienia pracowników:
 ]]--
 
 groupMemberPermission = {}
+
+function getGroupMemberPermissions()
+	return groupMemberPermission
+end
 
 --[[
 	Uprawnienia specjalne grup:
@@ -29,3 +37,7 @@ groupMemberPermission = {}
 
 groupSpecialPermission = {}
 groupSpecialPermission.megaphone = 1
+
+function getGroupSpecialPermissions()
+	return groupSpecialPermission
+end

@@ -1,5 +1,6 @@
 <meta>
 	<oop>true</oop>
 	<script src="core_s.lua" type="server" />
+	<script src="money_s.lua" type="server" />
 	<script src="move_c.lua" type="client" cache="false" />
 </meta>

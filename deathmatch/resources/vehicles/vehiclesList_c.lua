@@ -29,6 +29,7 @@ function show()
 	end
 	showVehicles = true
 	vehiclesWindow:setVisible(true)
+	vehiclesWindow:bringToFront(true)
 	showCursor(true, false)
 	toggleControl("fire", false)
 	updateVehicles()

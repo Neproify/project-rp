@@ -20,4 +20,9 @@
 	<file src="groupVehicles.js" />
 	
 	<export function="isOnDutyOfType" type="server" />
+	<export function="getPlayerGroup" type="server" />
+	<export function="giveMoneyForGroup" type="server" />
+	<export function="getGroupTypes" type="shared" />
+	<export function="getGroupMemberPermissions" type="shared" />
+	<export function="getGroupSpecialPermissions" type="shared" />
 </meta>
