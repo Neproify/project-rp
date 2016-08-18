@@ -1,4 +1,5 @@
 -- Chodzenie bez wciskania alta
+-- Podążanie za graczem który nas skuł
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	toggleControl("forwards", false)
@@ -7,15 +8,29 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 	toggleControl("right", false)
 	toggleControl("walk", false)
 	toggleControl("sprint", false)
-	addEventHandler("onClientRender", root, walking)
+	addEventHandler("onClientRender", root, onRender)
 end)
 
 local run = false
 local sprint = false
+local followingPlayer = nil
+local lastCheck = 0
+
+function onRender()
+	if getTickCount() - lastCheck > 1000 then
+		lastCheck = getTickCount()
+		followingPlayer = localPlayer:getData("cuffedBy")
+	end
+	if followingPlayer then
+		following()
+	else
+		walking()
+	end
+end
 
 function walking()
 	local stopWalking = false
-	if isChatBoxInputActive() or isConsoleActive() or isMainMenuActive() then
+	if isChatBoxInputActive() or isConsoleActive() or isMainMenuActive() or followingPlayer then
 		stopWalking = true
 	end
 	if getKeyState("w") and not stopWalking then
@@ -61,4 +76,38 @@ function walking()
 	if getKeyState("lalt") then
 		run = false
 	end
+end
+
+function following()
+	local distance = getDistanceBetweenPoints3D(localPlayer.position, followingPlayer.position)
+	if distance < 2 then
+		setControlState("forwards", false)
+	else
+		if not localPlayer.inVehicle then
+			setControlState("forwards", true)
+			if distance < 4 then
+				setControlState("walk", true)
+				setControlState("sprint", false)
+			elseif distance < 6 then
+				setControlState("walk", false)
+				setControlState("sprint", false)
+			else
+				setControlState("walk", false)
+				setControlState("sprint", true)
+			end
+
+			local pos1 = localPlayer.position
+			local pos2 = followingPlayer.position
+
+			local rotation = localPlayer.rotation
+			rotation.z = findRotation(pos1.x, pos1.y, pos2.x, pos2.y)
+
+			localPlayer.rotation = rotation
+		end
+	end
+end
+
+function findRotation( x1, y1, x2, y2 ) 
+    local t = -math.deg( math.atan2( x2 - x1, y2 - y1 ) )
+    return t < 0 and t + 360 or t
 end

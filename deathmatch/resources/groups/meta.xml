@@ -5,6 +5,7 @@
 	<script src="groups_s.lua" type="server" />
 	<script src="groups_c.lua" type="client" cache="false" />
 	<script src="groups.lua" type="shared" cache="false" />
+	<script src="radio_s.lua" type="server" />
 
 	<script src="group/lspd_s.lua" type="server" />
 

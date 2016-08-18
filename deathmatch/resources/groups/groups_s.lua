@@ -107,7 +107,38 @@ function havePlayerPermissionInGroup(player, UID, permission)
 	return false
 end
 
+function getGroupMoney(UID)
+	local groupInfo = getGroupInfo(UID)
+	if groupInfo then
+		return groupInfo["bank"]
+	end
+	return false
+end
+
 function giveMoneyForGroup(UID, money)
+	local groupMoney = getGroupMoney(UID)
+	if not groupMoney then
+		return false
+	end
+	db:query("UPDATE `rp_groups` SET `bank`=? WHERE `UID`=?", groupMoney + money, UID)
+	return true
+end
+
+function isPlayerInGroup(player, gID) -- hacky
+	if getPlayerRankInGroup(player, gID) ~= false then
+		return true
+	end
+	return false
+end
+
+function getAllPlayersOfGroupOnDuty(gID)
+	local players = {}
+	for i,v in ipairs(Element.getAllByType("player")) do
+		if v:getData("groupDuty") == gID then
+			table.insert(players, v)
+		end
+	end
+	return players
 end
 
 addEvent("loadPlayerGroups", true)
@@ -120,8 +151,11 @@ addEventHandler("toggleDuty", root, function(UID)
 	if not UID then return end
 	local currentDuty = client:getData("groupDuty")
 	if not currentDuty then
-		-- zaczynamy duty DO ZROBIENIA SPRAWDZANIE UPRAWNIEŃ, CZY JEST W GRUPIE, ITD!!!
+		if not isPlayerInGroup(client, UID) then
+			return
+		end
 		client:setData("groupDuty", UID)
+		client:setData("groupDutyInfo", getGroupInfo(UID))
 		local time = getRealTime()
 		client:setData("groupDutyStarted", time.timestamp)
 		exports.notifications:add(client, "Rozpocząłeś pracę.", "info", 3000)
@@ -131,6 +165,7 @@ addEventHandler("toggleDuty", root, function(UID)
 			local time = getRealTime()
 			local dutyTime = time.timestamp - client:getData("groupDutyStarted")
 			client:setData("groupDuty", nil)
+			client:setData("groupDutyInfo", nil)
 			exports.notifications:add(client, "Skończyłeś pracę. Przepracowałeś: ".. math.floor(dutyTime / 60) .. " min.", "info", 3000)
 			exports.db:query("UPDATE `rp_groups_members` SET `dutyTime` = `dutyTime` + ? WHERE `groupUID`=? AND `charUID`=? LIMIT 1;", dutyTime, UID, charInfo["UID"])
 		else

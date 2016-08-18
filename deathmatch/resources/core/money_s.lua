@@ -19,5 +19,5 @@ addCommandHandler("pay", function(player, cmd, arg1, arg2)
 	end
 	player.money = player.money - money
 	who.money = who.money + money
-	exports.chat:me(player, "przekazuje pieniądze ".. exports.playerUtils:formatName(who.name) ..".")
+	exports.chat:outputMe(player, "przekazuje pieniądze ".. exports.playerUtils:formatName(who.name) ..".")
 end)

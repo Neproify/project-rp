@@ -1,4 +1,7 @@
-local font = dxCreateFont("myriadproregular.ttf", 12, false, "cleartype")
+local font14 = dxCreateFont("myriadproregular.ttf", 14, false, "cleartype")
+local font12 = dxCreateFont("myriadproregular.ttf", 12, false, "cleartype")
+
+local showLocalPlayer = true
 
 addEventHandler("onClientRender", root, function()
 	local players = Element.getAllByType("player")
@@ -10,12 +13,20 @@ addEventHandler("onClientRender", root, function()
 					local bx, by, bz = v:getBonePosition(8)
 					local x, y = getScreenFromWorldPosition(bx, by, bz + 0.25)
 					if x and y then
-						--if localPlayer == v then
-						if false then
+						if localPlayer == v and not showLocalPlayer then
 						else
 							local text = exports.playerUtils:formatName(v.name) .. " (" .. v:getData("ID") .. ")\n"
-							--dxDrawText(text, x, y, x, y, tocolor(186, 117, 255), 0.85 + (15 - dist) * 0.08, font, "center", "center")
-							dxDrawText(text, x, y, x, y, tocolor(186, 117, 255), 1, font, "center", "center")
+							local offset = 0
+							dxDrawText(text, x, y, x, y, tocolor(186, 117, 255), 1, font14, "center", "center")
+							offset = offset + font14:getHeight(1) + 10
+							if v:getData("groupDuty") then
+								local groupDutyInfo = v:getData("groupDutyInfo")
+								if groupDutyInfo then
+									text = "[" .. groupDutyInfo["name"] .. "]\n"
+									dxDrawText(text, x, y + offset, x, y, tocolor(186, 117, 255), 1, font12, "center", "center")
+									offset = offset + font12:getHeight(1)
+								end
+							end
 						end
 					end
 				end

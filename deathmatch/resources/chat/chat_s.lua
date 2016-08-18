@@ -22,7 +22,7 @@ addEventHandler("onPlayerChat", root, function(msg, msgType)
 	end
 end)
 
-function me(player, text)
+function outputMe(player, text)
 	local chatSphere = ColShape.Sphere(player.position, 20)
 	local nearbyPlayers = chatSphere:getElementsWithin("player")
 	local name = exports.playerUtils:formatName(player.name)
@@ -31,7 +31,7 @@ function me(player, text)
 	end
 end
 
-function ooc(player, text)
+function outputOOC(player, text)
 	local chatSphere = ColShape.Sphere(player.position, 15)
 	local nearbyPlayers = chatSphere:getElementsWithin("player")
 	local name = exports.playerUtils:formatName(player.name)
@@ -40,7 +40,7 @@ function ooc(player, text)
 	end
 end
 
-function doFunction(player, text)
+function outputDo(player, text)
 	local chatSphere = ColShape.Sphere(player.position, 20)
 	local nearbyPlayers = chatSphere:getElementsWithin("player")
 	local name = exports.playerUtils:formatName(player.name)
@@ -52,13 +52,13 @@ end
 addCommandHandler("OOC", function(player, cmd, ...)
 	local msg = {...}
 	msg = table.concat(msg, " ")
-	ooc(player, msg)
+	outputOOC(player, msg)
 end)
 
 addCommandHandler("do", function(player, cmd, ...)
 	local msg = {...}
 	msg = table.concat(msg, " ")
-	doFunction(player, msg)
+	outputDo(player, msg)
 end)
 
 addCommandHandler("sprobuj", function(player, cmd, ...)
@@ -95,6 +95,28 @@ addCommandHandler("w", function(player, cmd, id, ...)
 	if not target then return end
 	player:outputChat("#99FFAA(( << ".. target.name .."(".. target:getData("ID") .."): ".. msg .. "))", 255, 0, 0, true)
 	target:outputChat("#78DEAA(( >> ".. player.name .."(".. player:getData("ID") .."): ".. msg .. "))", 255, 0, 0, true)
+end)
+
+addCommandHandler("k", function(player, cmd, ...)
+	local msg = {...}
+	msg = table.concat(msg, " ")
+	local chatSphere = ColShape.Sphere(player.position, 20)
+	local nearbyPlayers = chatSphere:getElementsWithin("player")
+	local name = exports.playerUtils:formatName(player.name)
+	for i,v in ipairs(nearbyPlayers) do
+		v:outputChat("#FFFFFF".. name .. " krzyczy: ".. msg, 0, 0, 0, true)
+	end
+end)
+
+addCommandHandler("s", function(player, cmd, ...)
+	local msg = {...}
+	msg = table.concat(msg, " ")
+	local chatSphere = ColShape.Sphere(player.position, 5)
+	local nearbyPlayers = chatSphere:getElementsWithin("player")
+	local name = exports.playerUtils:formatName(player.name)
+	for i,v in ipairs(nearbyPlayers) do
+		v:outputChat("#FFFFFF".. name .. " szepcze: ".. msg, 0, 0, 0, true)
+	end
 end)
 
 function Player:clearChat()

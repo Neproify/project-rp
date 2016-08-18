@@ -20,7 +20,7 @@ addEventHandler("usePlayerItem", root, function(UID, player)
 								properties[2] = tonumber(properties[2]) + tonumber(ammoClipProperties[2])
 								updateItemProperties(UID, packProperties(properties))
 								exports.notifications:add(client, "Uzupełniłeś magazynek w broni ".. itemInfo.name ..".", "info", 3000)
-								exports.chat:me(client, "uzupełnia magazynek w broni.")
+								exports.chat:outputMe(client, "uzupełnia magazynek w broni.")
 								client:setData("usingAmmoClip", 0)
 								deleteItem(ammoClipInfo.UID)
 							end
@@ -31,7 +31,7 @@ addEventHandler("usePlayerItem", root, function(UID, player)
 						return
 					end
 					client:giveWeapon(properties[1], properties[2], true)
-					exports.chat:me(client, "wyciąga ".. itemInfo.name .. ".")
+					exports.chat:outputMe(client, "wyciąga ".. itemInfo.name .. ".")
 					markItemAsUsed(UID, true)
 				else
 					exports.notifications:add(client, "Używasz już broni tego typu.", "danger", 3000)
@@ -41,7 +41,7 @@ addEventHandler("usePlayerItem", root, function(UID, player)
 				properties[2] = client:getTotalAmmo(getSlotFromWeapon(properties[1]))
 				updateItemProperties(UID, packProperties(properties))
 				client:takeWeapon(properties[1])
-				exports.chat:me(client, "chowa ".. itemInfo.name ..".")
+				exports.chat:outputMe(client, "chowa ".. itemInfo.name ..".")
 				markItemAsUsed(UID, false)
 			end
 		elseif itemInfo.type == 2 then

@@ -17,13 +17,13 @@ addCommandHandler("skuj", function(player, cmd, whoid)
 			who:setData("cuffedBy", player)
 			exports.notifications:add(player, string.format("Skułeś gracza %s(ID: %d)", 
 				exports.playerUtils:formatName(who.name), who:getData("ID")), "info", 3000)
-			exports.notifications:add(player, string.format("Zostałeś skuty przez gracza %s(ID: %d)", 
+			exports.notifications:add(who, string.format("Zostałeś skuty przez gracza %s(ID: %d)", 
 				exports.playerUtils:formatName(player.name), player:getData("ID")), "info", 3000)
 		else
 			who:setData("cuffedBy", nil)
 			exports.notifications:add(player, string.format("Rozkułeś gracza %s(ID: %d)", 
 				exports.playerUtils:formatName(who.name), who:getData("ID")), "info", 3000)
-			exports.notifications:add(player, string.format("Zostałeś rozkuty przez gracza %s(ID: %d)", 
+			exports.notifications:add(who, string.format("Zostałeś rozkuty przez gracza %s(ID: %d)", 
 				exports.playerUtils:formatName(player.name), player:getData("ID")), "info", 3000)
 		end
 	end
