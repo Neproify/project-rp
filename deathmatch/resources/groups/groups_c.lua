@@ -5,7 +5,7 @@ local openedGroup = nil
 
 local screenWidth, screenHeight = guiGetScreenSize()
 
-addEventHandler("onClientResourceStart", root, function()
+addEventHandler("onClientResourceStart", resourceRoot, function()
 	groupsWindow = GuiBrowser(screenWidth / 2 - 250, screenHeight / 2 - 150, 500, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", groupsWindow, function()
 		groupsWindow:getBrowser():loadURL("http://mta/local/playerGroups.html")

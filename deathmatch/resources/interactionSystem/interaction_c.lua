@@ -4,7 +4,7 @@ local selectedElement = nil
 local interactionActive = false
 local interactionWindow = nil
 
-addEventHandler("onClientResourceStart", root, function()
+addEventHandler("onClientResourceStart", resourceRoot, function()
 	interactionWindow = GuiBrowser(0, 0, screenWidth, screenHeight, true, true, false)
 	addEventHandler("onClientBrowserCreated", interactionWindow, function()
 		interactionWindow:getBrowser():loadURL("http://mta/local/interaction.html")
@@ -30,6 +30,7 @@ function interactionGetElement()
 	end
 	interactionActive = true
 	guiSetVisible(interactionWindow, interactionActive)
+	showCursor(true)
 	bindKeysForMenu()
 end
 
@@ -37,6 +38,7 @@ function cancelInteraction()
 	interactionActive = false
 	guiSetVisible(interactionWindow, interactionActive)
 	bindKeysForPointer()
+	showCursor(false)
 end
 
 function bindKeysForPointer()

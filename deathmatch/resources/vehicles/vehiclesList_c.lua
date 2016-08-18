@@ -3,7 +3,7 @@ local screenWidth, screenHeight = guiGetScreenSize()
 local vehiclesWindow = nil
 local showVehicles = false
 
-addEventHandler("onClientResourceStart", root, function()
+addEventHandler("onClientResourceStart", resourceRoot, function()
 	vehiclesWindow = GuiBrowser(screenWidth / 2 - 250, screenHeight / 2 - 150, 500, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", vehiclesWindow, function()
 		vehiclesWindow:getBrowser():loadURL("http://mta/local/playerVehicles.html")

@@ -3,9 +3,5 @@
     <script src="interaction_c.lua" type="client" cache="false" />
     
     <file src="interaction.html" />
-    
-    <file src="js/jquery.honeycombs.js" />
-    <file src="css/honeycombs.css" />
-    <file src="fonts/icomoon.woff" />
-    <file src="fonts/icomoon.ttf" />
+    <file src="interaction.css" />
 </meta>

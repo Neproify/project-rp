@@ -2,7 +2,7 @@ local phoneWindow = nil
 local screenWidth, screenHeight = guiGetScreenSize()
 local showPhone = false
 
-addEventHandler("onClientResourceStart", root, function()
+addEventHandler("onClientResourceStart", resourceRoot, function()
 	phoneWindow = GuiBrowser(screenWidth / 2 - 270 , 0, 540, 1100, true, true, false)
 	addEventHandler("onClientBrowserCreated", phoneWindow, function()
         phoneWindow:getBrowser():loadURL("http://mta/local/phone.html")
