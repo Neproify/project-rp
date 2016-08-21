@@ -1,7 +1,4 @@
 <meta>
     <oop>true</oop>
     <script src="interaction_c.lua" type="client" cache="false" />
-    
-    <file src="interaction.html" />
-    <file src="interaction.css" />
 </meta>
