@@ -3,15 +3,11 @@
 ## Groups
 - Przetrzymywanie w budynku
 
-## BW
-- Nieprzytomność gdy skończy się nam hp
-
 ## NameTags
 - Usunąć wyświetlanie swojego nicku
 
 ## Items
 - Usunąć komendy do debugu
-- Czasami przedmioty są niewczytane po logowaniu!
 
 ## Vehicles
 - Usunąć komendy do debugu
@@ -19,9 +15,6 @@
 
 ## Anims
 - DODAĆ ANIMACJE!
-
-## Scoreboard
-- Nazwa gracza, ID, Ping
 
 ## Help
 - Pomoc dla graczy

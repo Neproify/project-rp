@@ -30,7 +30,7 @@ end
 
 function walking()
 	local stopWalking = false
-	if isChatBoxInputActive() or isConsoleActive() or isMainMenuActive() or followingPlayer then
+	if isChatBoxInputActive() or isConsoleActive() or isMainMenuActive() or exports.bw:isPlayerBrutallyWounded(localPlayer) or followingPlayer then
 		stopWalking = true
 	end
 	if getKeyState("w") and not stopWalking then

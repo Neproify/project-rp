@@ -5,7 +5,7 @@ local lastItemUse = 0
 
 local isGUIReady = false
 
-addEventHandler("onClientResourceStart", root, function()
+addEventHandler("onClientResourceStart", resourceRoot, function()
 	itemsWindow = GuiBrowser(screenWidth - 300, screenHeight / 2 - 100, 300, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", itemsWindow, function()
 		triggerServerEvent("loadPlayerItems", localPlayer)

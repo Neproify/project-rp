@@ -1,0 +1,9 @@
+<meta>
+	<oop>true</oop>
+	<script src="bw_s.lua" type="server" />
+	<script src="bw_c.lua" type="client" cache="false" />
+	<script src="bw.lua" type="shared" cache="false" />
+
+	<export function="isPlayerBrutallyWounded" type="shared" />
+	<export function="unBWPlayer" type="server" />
+</meta>

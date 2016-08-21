@@ -2,15 +2,6 @@ var items = [];
 
 function updateItems()
 {
-	/*$('#items').html('');
-	for (var i = 0; i < items.length; i++)
-	{
-		$('<a id="'+items[i]['UID']+'" href="#" style="color: white; text-decoration: none;" onclick="useItem('+items[i]['UID']+'); return false;">'+items[i]['name']+'</a><br />').appendTo('#items');
-		if(items[i]['used'] == true)
-		{
-			$('#'+items[i]['UID']).css('font-weight', '900');
-		}
-	};*/
 	$('#items tbody').html('');
 	for(var i = 0; i < items.length; i++)
 	{

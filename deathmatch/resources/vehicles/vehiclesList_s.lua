@@ -5,7 +5,7 @@ addEventHandler("loadPlayerVehicles", root, function()
 	loadPlayerVehicles(client)
 end)
 
-addEventHandler("OnCharacterSelected", root, function(player)
+addEventHandler("onCharacterSelected", root, function(player)
 	loadPlayerVehicles(player)
 end)
 

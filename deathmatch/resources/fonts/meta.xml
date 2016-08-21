@@ -1,0 +1,7 @@
+<meta>
+	<oop>true</oop>
+	<script src="fonts_c.lua" type="client" cache="false" />
+	<file src="Lato-Hairline.ttf" />
+	<file src="Lato-Regular.ttf" />
+	<export function="getFont" type="client" />
+</meta>

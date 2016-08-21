@@ -8,6 +8,8 @@
 	<script src="radio_s.lua" type="server" />
 
 	<script src="group/lspd_s.lua" type="server" />
+	<script src="group/news_s.lua" type="server" />
+	<script src="group/news_c.lua" type="client" />
 
 	<script src="item/megaphone_s.lua" type="server" />
 

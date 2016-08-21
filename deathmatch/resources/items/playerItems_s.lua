@@ -58,7 +58,7 @@ function loadPlayerItems(player) -- NOTE: Używać po zmianie zawartości ekwipu
 	triggerClientEvent(player, "onPlayerItemsLoaded", root)
 end
 
-addEventHandler("OnCharacterSelected", root, function(player)
+addEventHandler("onCharacterSelected", root, function(player)
 	loadPlayerItems(player)
 end)
 

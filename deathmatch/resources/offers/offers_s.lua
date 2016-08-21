@@ -56,6 +56,8 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			local group = exports.groups:getPlayerGroup(offerInfo.from)
 			exports.groups:giveMoneyForGroup(group, offerInfo.price)
 			offerInfo.to.money = offerInfo.to.money - offerInfo.price
+		elseif offerInfo.type == 6 then
+			exports.bw:unBWPlayer(offerInfo.to)
 		end
 		exports.notifications:add(offerInfo.from, string.format("%s zaakceptował ofertę.", 
 			exports.playerUtils:formatName(offerInfo.to.name)), "info", 3000)
@@ -75,7 +77,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 		 return
 	end
 	if not arg1 or not arg2 then
-		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot, naprawa, lakierowanie, leczenie, mandat]", "info", 5000)
+		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot, naprawa, lakierowanie, leczenie, mandat, unbw]", "info", 5000)
     	return
 	end
 	local charInfo = player:getData("charInfo")
@@ -156,6 +158,13 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 		end
 		offerInfo.type = 5
 		offerInfo.price = tonumber(arg3)
+	elseif arg2 == "unbw" then
+		if not exports.groups:isOnDutyOfType(player, exports.groups:getGroupTypes().emergency) then
+			exports.notifications:add(player, "Nie pracujesz w szpitalu!", "danger", 3000)
+			return
+		end
+		offerInfo.type = 6
+		offerInfo.price = 0
 	end
 	
 	if not offerInfo then return end

@@ -1,0 +1,6 @@
+<meta>
+	<oop>true</oop>
+	<script src="scoreboard_c.lua" type="client" cache="false" />
+	<file src="scoreboard.html" />
+	<file src="scoreboard.js" />
+</meta>

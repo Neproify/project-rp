@@ -1,5 +1,6 @@
-local font14 = dxCreateFont("myriadproregular.ttf", 14, false, "cleartype")
-local font12 = dxCreateFont("myriadproregular.ttf", 12, false, "cleartype")
+local font14 = exports.fonts:getFont("Lato-Regular.ttf", 14, false, "antialiased")
+local font12 = exports.fonts:getFont("Lato-Regular.ttf", 12, false, "antialiased")
+local font10 = exports.fonts:getFont("Lato-Regular.ttf", 10, false, "antialiased")
 
 local showLocalPlayer = true
 
@@ -17,15 +18,27 @@ addEventHandler("onClientRender", root, function()
 						else
 							local text = exports.playerUtils:formatName(v.name) .. " (" .. v:getData("ID") .. ")\n"
 							local offset = 0
-							dxDrawText(text, x, y, x, y, tocolor(186, 117, 255), 1, font14, "center", "center")
+							dxDrawText(text, x, y, x, y, tocolor(255, 255, 255), 1, font14, "center", "center")
 							offset = offset + font14:getHeight(1) + 10
 							if v:getData("groupDuty") then
 								local groupDutyInfo = v:getData("groupDutyInfo")
 								if groupDutyInfo then
 									text = "[" .. groupDutyInfo["name"] .. "]\n"
-									dxDrawText(text, x, y + offset, x, y, tocolor(186, 117, 255), 1, font12, "center", "center")
-									offset = offset + font12:getHeight(1)
+									dxDrawText(text, x, y + offset, x, y, tocolor(255, 255, 255), 1, font12, "center", "center")
+									offset = offset + font12:getHeight(1) + 10
 								end
+							end
+							local state = "("
+							local anyStateToShow = false
+							if exports.bw:isPlayerBrutallyWounded(v) then
+								anyStateToShow = true
+								state = state .. "nieprzytomny, "
+							end
+							if anyStateToShow then
+								state = state:sub(1, -3)
+								state = state .. ")"
+								dxDrawText(state, x, y + offset, x, y, tocolor(255, 255, 255), 1, font10, "center", "center")
+								offset = offset + font10:getHeight(1) + 10
 							end
 						end
 					end
