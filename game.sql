@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 31 Maj 2016, 18:17
--- Wersja serwera: 10.1.9-MariaDB
--- Wersja PHP: 7.0.0
+-- Czas generowania: 21 Sie 2016, 15:46
+-- Wersja serwera: 10.1.13-MariaDB
+-- Wersja PHP: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `rp_buildings` (
   `UID` int(9) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `description` varchar(128) NOT NULL,
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `enterX` float NOT NULL,
   `enterY` float NOT NULL,
   `enterZ` float NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `rp_buildings` (
   `exitZ` float NOT NULL,
   `ownerType` int(11) NOT NULL,
   `owner` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -50,11 +50,11 @@ CREATE TABLE `rp_buildings` (
 CREATE TABLE `rp_characters` (
   `UID` int(9) NOT NULL,
   `global` int(9) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `skin` int(3) NOT NULL,
   `money` int(9) NOT NULL DEFAULT '1000',
   `health` int(3) NOT NULL DEFAULT '100'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -64,12 +64,13 @@ CREATE TABLE `rp_characters` (
 
 CREATE TABLE `rp_groups` (
   `UID` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `bank` int(11) NOT NULL,
+  `leaderRank` int(11) NOT NULL,
   `leader` int(11) NOT NULL,
   `type` int(11) NOT NULL,
   `specialPermissions` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -80,8 +81,25 @@ CREATE TABLE `rp_groups` (
 CREATE TABLE `rp_groups_members` (
   `UID` int(11) NOT NULL,
   `charUID` int(11) NOT NULL,
-  `groupUID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `groupUID` int(11) NOT NULL,
+  `rank` int(11) NOT NULL,
+  `dutyTime` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `rp_groups_ranks`
+--
+
+CREATE TABLE `rp_groups_ranks` (
+  `UID` int(11) NOT NULL,
+  `groupID` int(11) NOT NULL,
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `salary` int(11) NOT NULL DEFAULT '0',
+  `skin` int(11) DEFAULT NULL,
+  `permissions` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -91,16 +109,32 @@ CREATE TABLE `rp_groups_members` (
 
 CREATE TABLE `rp_items` (
   `UID` int(9) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `used` int(1) NOT NULL DEFAULT '0',
   `ownerType` int(9) NOT NULL,
   `owner` int(9) NOT NULL,
   `type` int(9) NOT NULL,
-  `properties` varchar(64) NOT NULL,
+  `properties` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `posX` float DEFAULT NULL,
   `posY` float DEFAULT NULL,
   `posZ` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `rp_logs`
+--
+
+CREATE TABLE `rp_logs` (
+  `UID` int(9) NOT NULL,
+  `type` int(11) NOT NULL,
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ipAddress` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `globalID` int(9) NOT NULL,
+  `charID` int(9) NOT NULL,
+  `details` varchar(512) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -119,7 +153,7 @@ CREATE TABLE `rp_objects` (
   `rotZ` float NOT NULL,
   `ownerType` int(11) NOT NULL,
   `owner` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -131,10 +165,10 @@ CREATE TABLE `rp_vehicles` (
   `UID` int(9) NOT NULL,
   `model` int(3) NOT NULL,
   `health` int(4) NOT NULL DEFAULT '1000',
-  `panelStates` varchar(32) NOT NULL DEFAULT '0,0,0,0,0,0,0',
-  `doorStates` varchar(32) NOT NULL DEFAULT '0,0,0,0,0,0',
-  `wheelStates` varchar(15) NOT NULL DEFAULT '0,0,0,0',
-  `color` varchar(64) NOT NULL DEFAULT '0,0,0,0,0,0,0,0,0,0,0,0',
+  `panelStates` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0,0,0,0,0,0,0',
+  `doorStates` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0,0,0,0,0,0',
+  `wheelStates` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0,0,0,0',
+  `color` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0,0,0,0,0,0,0,0,0,0,0,0',
   `fuel` float NOT NULL DEFAULT '10',
   `mileage` float NOT NULL DEFAULT '0',
   `ownerType` int(2) NOT NULL DEFAULT '0',
@@ -145,7 +179,7 @@ CREATE TABLE `rp_vehicles` (
   `parkRX` int(7) NOT NULL DEFAULT '0',
   `parkRY` int(7) NOT NULL DEFAULT '0',
   `parkRZ` int(7) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Indeksy dla zrzutów tabel
@@ -176,9 +210,21 @@ ALTER TABLE `rp_groups_members`
   ADD PRIMARY KEY (`UID`);
 
 --
+-- Indexes for table `rp_groups_ranks`
+--
+ALTER TABLE `rp_groups_ranks`
+  ADD PRIMARY KEY (`UID`);
+
+--
 -- Indexes for table `rp_items`
 --
 ALTER TABLE `rp_items`
+  ADD PRIMARY KEY (`UID`);
+
+--
+-- Indexes for table `rp_logs`
+--
+ALTER TABLE `rp_logs`
   ADD PRIMARY KEY (`UID`);
 
 --
@@ -192,46 +238,3 @@ ALTER TABLE `rp_objects`
 --
 ALTER TABLE `rp_vehicles`
   ADD PRIMARY KEY (`UID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT dla tabeli `rp_buildings`
---
-ALTER TABLE `rp_buildings`
-  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_characters`
---
-ALTER TABLE `rp_characters`
-  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_groups`
---
-ALTER TABLE `rp_groups`
-  MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_groups_members`
---
-ALTER TABLE `rp_groups_members`
-  MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_items`
---
-ALTER TABLE `rp_items`
-  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_objects`
---
-ALTER TABLE `rp_objects`
-  MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_vehicles`
---
-ALTER TABLE `rp_vehicles`
-  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

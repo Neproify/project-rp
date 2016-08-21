@@ -1,0 +1,6 @@
+<meta>
+	<oop>true</oop>
+	<script src="logs_s.lua" type="server" />
+	<export function="addLog" type="server" />
+	<export function="getLogTypes" type="server" />
+</meta>

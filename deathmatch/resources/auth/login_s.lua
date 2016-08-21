@@ -29,6 +29,7 @@ addEventHandler("onLoginRequest", root, function(login, password)
 		result.success = false
 		result.message = "Podałeś nieprawidłowy login i/lub hasło."
 		triggerClientEvent(client, "onLoginResult", root, result)
+		exports.logs:addLog(exports.logs:getLogTypes().auth, client.ip, globalInfoTemp["member_id"], -1, "0")
 		return
 	end
 
@@ -40,12 +41,14 @@ addEventHandler("onLoginRequest", root, function(login, password)
 	globalInfo["permissions"] = globalInfoTemp["permissions"]
 	if isPlayerAlreadyLogged(globalInfo["UID"]) then -- zabezpieczenie przed logowaniem na jedno konto przez kilka osób
 		client:kick("Próba logowania na jedno konto przez kilka osób.")
+		exports.logs:addLog(exports.logs:getLogTypes().auth, client.ip, globalInfoTemp["member_id"], -1, "2")
 		return
 	end
 	client:setData("globalInfo", globalInfo)
 	result.success = true
 	result.message = "Zalogowałeś się na swoje konto. Wybierz postać."
 	triggerClientEvent(client, "onLoginResult", root, result)
+	exports.logs:addLog(exports.logs:getLogTypes().auth, client.ip, globalInfoTemp["member_id"], -1, "1")
 	return
 end)
 

@@ -17,6 +17,12 @@ addEventHandler("dropPlayerItem", root, function(UID)
 		setItemPosition(UID, pos.x, pos.y, pos.z - 0.9)
 		loadPlayerItems(client)
 		loadGroundItem(UID)
+		local details = {}
+		details[1] = UID
+		details[2] = pos.x
+		details[3] = pos.y
+		details[4] = pos.z
+		exports.logs:addLog(exports.logs:getLogTypes().itemDrop, client.ip, client:getData("globalInfo")["UID"], client:getData("charInfo")["UID"], details)
 	end
 end)
 
@@ -39,11 +45,27 @@ addEventHandler("pickItemByPlayer", root, function(UID)
 			setItemOwnerType(UID, 1)
 			setItemOwner(UID, charInfo.UID)
 			loadPlayerItems(client)
+			local details = {}
+			details[1] = UID
+			exports.logs:addLog(exports.logs:getLogTypes().itemPick, client.ip, client:getData("globalInfo")["UID"], client:getData("charInfo")["UID"], details)
 		end
 	end
 end)
 
 addEvent("usePlayerItem", true)
+addEventHandler("usePlayerItem", root, function(UID, player)
+	if not client then client = player end
+	local charInfo = client:getData("charInfo")
+	if not charInfo then
+		return
+	end
+	if canUseItem(client, UID) then
+		local details = {}
+		local itemInfo = getItemInfo(UID)
+		details[1] = UID
+		exports.logs:addLog(exports.logs:getLogTypes().itemUse, client.ip, client:getData("globalInfo")["UID"], charInfo["UID"], details)
+	end
+end)
 
 function loadPlayerItems(player) -- NOTE: Używać po zmianie zawartości ekwipunku gracza
 	local charInfo = player:getData("charInfo")

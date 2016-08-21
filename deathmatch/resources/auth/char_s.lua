@@ -31,6 +31,7 @@ addEventHandler("selectCharacter", root, function(UID)
 	client:setName(charInfo["name"])
 	triggerEvent("onCharacterSelected", root, client)
 	triggerClientEvent(client, "onCharacterSelected", root)
+	exports.logs:addLog(exports.logs:getLogTypes().authCharacter, client.ip, globalInfo["UID"], charInfo["UID"], "")
 end)
 
 addEvent("onCharacterSelected", true)

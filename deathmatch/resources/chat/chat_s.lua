@@ -17,8 +17,9 @@ addEventHandler("onPlayerChat", root, function(msg, msgType)
 		for i,v in ipairs(nearbyPlayers) do
 			v:outputChat("#FFFFFF"..name.." mówi: "..msg, 0, 0, 0, true)
 		end
+		exports.logs:addLog(exports.logs:getLogTypes().chatNormal, source.ip, globalInfo["UID"], charInfo["UID"], msg)
 	elseif msgType == 1 then -- /me
-		me(source, msg)
+		outputMe(source, msg)
 	end
 end)
 
@@ -29,6 +30,7 @@ function outputMe(player, text)
 	for i,v in ipairs(nearbyPlayers) do
 		v:outputChat("#C2A2DA* "..name.." "..text, 0, 0, 0, true)
 	end
+	exports.logs:addLog(exports.logs:getLogTypes().chatMe, player.ip, player:getData("globalInfo")["UID"], player:getData("charInfo")["UID"], text)
 end
 
 function outputOOC(player, text)
@@ -47,6 +49,7 @@ function outputDo(player, text)
 	for i,v in ipairs(nearbyPlayers) do
 		v:outputChat("#9A9CCD* "..text.. " (("..name.."))", 0, 0, 0, true)
 	end
+	exports.logs:addLog(exports.logs:getLogTypes().chatDo, player.ip, player:getData("globalInfo")["UID"], player:getData("charInfo")["UID"], text)
 end
 
 addCommandHandler("OOC", function(player, cmd, ...)
@@ -95,6 +98,10 @@ addCommandHandler("w", function(player, cmd, id, ...)
 	if not target then return end
 	player:outputChat("#99FFAA(( << ".. target.name .."(".. target:getData("ID") .."): ".. msg .. "))", 255, 0, 0, true)
 	target:outputChat("#78DEAA(( >> ".. player.name .."(".. player:getData("ID") .."): ".. msg .. "))", 255, 0, 0, true)
+	local details = {}
+	details[1] = msg
+	details[2] = target:getData("charInfo")["UID"]
+	exports.logs:addLog(exports.logs:getLogTypes().chatPrivate, player.ip, player:getData("globalInfo")["UID"], player:getData("charInfo")["UID"], details)
 end)
 
 addCommandHandler("k", function(player, cmd, ...)
@@ -106,6 +113,7 @@ addCommandHandler("k", function(player, cmd, ...)
 	for i,v in ipairs(nearbyPlayers) do
 		v:outputChat("#FFFFFF".. name .. " krzyczy: ".. msg, 0, 0, 0, true)
 	end
+	exports.logs:addLog(exports.logs:getLogTypes().chatShout, player.ip, player:getData("globalInfo")["UID"], player:getData("charInfo")["UID"], msg)
 end)
 
 addCommandHandler("s", function(player, cmd, ...)
@@ -117,6 +125,8 @@ addCommandHandler("s", function(player, cmd, ...)
 	for i,v in ipairs(nearbyPlayers) do
 		v:outputChat("#FFFFFF".. name .. " szepcze: ".. msg, 0, 0, 0, true)
 	end
+	local details = {}
+	exports.logs:addLog(exports.logs:getLogTypes().chatWhisper, player.ip, player:getData("globalInfo")["UID"], player:getData("charInfo")["UID"], msg)
 end)
 
 function Player:clearChat()
