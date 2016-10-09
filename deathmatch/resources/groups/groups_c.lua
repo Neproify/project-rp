@@ -7,25 +7,25 @@ local screenWidth, screenHeight = guiGetScreenSize()
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	groupsWindow = GuiBrowser(screenWidth / 2 - 250, screenHeight / 2 - 150, 500, 300, true, true, false)
-	addEventHandler("onClientBrowserCreated", groupsWindow, function()
-		groupsWindow:getBrowser():loadURL("http://mta/local/playerGroups.html")
+	addEventHandler("onClientBrowserCreated", groupsWindow.browser, function()
+		groupsWindow.browser:loadURL("http://mta/local/playerGroups.html")
 		triggerServerEvent("loadPlayerGroups", localPlayer)
 		guiSetVisible(groupsWindow, groupsShow)
 		addEvent("openGroupPanel", true)
-		addEventHandler("openGroupPanel", groupsWindow:getBrowser(), function(UID)
+		addEventHandler("openGroupPanel", groupsWindow.browser, function(UID)
 			openedGroup = tonumber(UID)
-			groupsWindow:getBrowser():loadURL("http://mta/local/group.html")
+			groupsWindow.browser:loadURL("http://mta/local/group.html")
 		end)
 		addEvent("toggleDuty", true)
-		addEventHandler("toggleDuty", groupsWindow:getBrowser(), function()
+		addEventHandler("toggleDuty", groupsWindow.browser, function()
 			triggerServerEvent("toggleDuty", localPlayer, openedGroup)
 		end)
-		addEventHandler("onClientBrowserDocumentReady", groupsWindow:getBrowser(), function(url)
+		addEventHandler("onClientBrowserDocumentReady", groupsWindow.browser, function(url)
 			local charGroups = localPlayer:getData("charGroups")
 			if url == "http://mta/local/group.html" then
 				for i,v in ipairs(charGroups) do
 					if v.groupInfo.UID == openedGroup then
-						groupsWindow:getBrowser():executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
+						groupsWindow.browser:executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
 						break
 					end
 				end
@@ -33,7 +33,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 			if url == "http://mta/local/groupMembers.html" then
 				for i,v in ipairs(charGroups) do
 					if v.groupInfo.UID == openedGroup then
-						groupsWindow:getBrowser():executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
+						groupsWindow.browser:executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
 						break
 					end
 				end
@@ -50,7 +50,7 @@ end)
 
 function show()
 	if not localPlayer:getData("charGroups") then
-		groupsWindow:getBrowser():loadURL("http://mta/local/playerGroups.html")
+		groupsWindow.browser:loadURL("http://mta/local/playerGroups.html")
 		exports.notifications:add("Nie jesteś członkiem żadnej grupy!", "danger", 5000)
 		hide()
 		return
@@ -59,7 +59,7 @@ function show()
 	groupsWindow:setVisible(true)
 	showCursor(true, false)
 	toggleControl("fire", false)
-	if groupsWindow:getBrowser().url == "http://mta/local/playerGroups.html" then
+	if groupsWindow.browser.url == "http://mta/local/playerGroups.html" then
 		updateGroups()
 	end
 end
@@ -73,11 +73,11 @@ end
 
 function updateGroups()
 	local charGroups = localPlayer:getData("charGroups") or {}
-	groupsWindow:getBrowser():executeJavascript("clearGroups();")
+	groupsWindow.browser:executeJavascript("clearGroups();")
 	for i,v in ipairs(charGroups) do
-		groupsWindow:getBrowser():executeJavascript("addGroup("..v.groupInfo.UID..",'"..v.groupInfo.name.."');")
+		groupsWindow.browser:executeJavascript("addGroup("..v.groupInfo.UID..",'"..v.groupInfo.name.."');")
 	end
-	groupsWindow:getBrowser():executeJavascript("updateGroups();")
+	groupsWindow.browser:executeJavascript("updateGroups();")
 end
 
 addCommandHandler("g", function()
@@ -90,7 +90,7 @@ end)
 
 addEvent("onPlayerGroupsLoaded", true)
 addEventHandler("onPlayerGroupsLoaded", root, function()
-	if groupsWindow:getBrowser():getURL() == "http://mta/local/playerGroups.html" then
+	if groupsWindow.browser:getURL() == "http://mta/local/playerGroups.html" then
 		updateGroups()
 	end
 end)

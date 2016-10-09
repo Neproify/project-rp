@@ -4,8 +4,8 @@ local showPhone = false
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	phoneWindow = GuiBrowser(screenWidth / 2 - 270 , 0, 540, 1100, true, true, false)
-	addEventHandler("onClientBrowserCreated", phoneWindow, function()
-        phoneWindow:getBrowser():loadURL("http://mta/local/phone.html")
+	addEventHandler("onClientBrowserCreated", phoneWindow.browser, function()
+        phoneWindow.browser:loadURL("http://mta/local/phone.html")
         guiSetVisible(phoneWindow, showPhone)
 	end)
 end)

@@ -6,8 +6,8 @@ local screenWidth, screenHeight = guiGetScreenSize()
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	buildingWindow = GuiBrowser(screenWidth / 2 - 300, screenHeight - 200, 600, 200, true, true, false)
-	addEventHandler("onClientBrowserCreated", buildingWindow, function()
-		buildingWindow:getBrowser():loadURL("http://mta/local/buildingInfo.html")
+	addEventHandler("onClientBrowserCreated", buildingWindow.browser, function()
+		buildingWindow.browser:loadURL("http://mta/local/buildingInfo.html")
 		guiSetVisible(buildingWindow, false)
 	end)
 end)
@@ -17,8 +17,8 @@ addEventHandler("onClientPickupHit", root, function(player, matchingDimension)
 		local buildingInfo = source:getData("buildingInfo")
 		if buildingInfo then
 			pickup = source
-			buildingWindow:getBrowser():executeJavascript("$('#name').html('"..buildingInfo.name.."');")
-			buildingWindow:getBrowser():executeJavascript("$('#description').html('"..buildingInfo.description.."');")
+			buildingWindow.browser:executeJavascript("$('#name').html('"..buildingInfo.name.."');")
+			buildingWindow.browser:executeJavascript("$('#description').html('"..buildingInfo.description.."');")
 			showingInfo = true
 			Timer(function()
 				if showingInfo == true then

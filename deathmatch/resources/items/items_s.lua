@@ -9,6 +9,11 @@
 	1 - broń, podtypy: id broni, ilość kul
 	2 - magazynek do broni, podtypy: id broni, ilość kul
     3 - kluczyk do auta, podtypy: id auta, typ(1 - zwykły kluczyk)
+    4 - dokument, podtypy: typ dokumentu, ważny do
+    [
+        1 - dowód osobisty
+        2 - prawo jazdy
+    ]
 --]]
 local db = exports.db
 
@@ -122,26 +127,3 @@ function Check(funcname, ...)
         end
     end
 end
-
--- kilka komend do testów.
-
-addCommandHandler("giveitem", function(plr, cmd, name, type, properties)
-    if not name or not type or not properties then
-        exports.notifications:add(plr, "Użyj: /giveitem nazwa typ właściwości.", "info", 5000)
-        return
-    end
-    local charInfo = plr:getData("charInfo")
-    local UID = createItem(name, 1, charInfo['UID'], type, properties)
-end)
-
-addCommandHandler("deleteitem", function(plr, cmd, UID)
-    if not UID then
-        exports.notifications:add(plr, "Użyj: /deleteitem UID", "info", 5000)
-        return
-    end
-    deleteItem(UID)
-end)
-
-addCommandHandler("deleteallitems", function()
-    db:query("DELETE FROM `rp_items`")
-end)

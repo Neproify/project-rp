@@ -7,15 +7,15 @@ local isGUIReady = false
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	itemsWindow = GuiBrowser(screenWidth - 300, screenHeight / 2 - 100, 300, 300, true, true, false)
-	addEventHandler("onClientBrowserCreated", itemsWindow, function()
+	addEventHandler("onClientBrowserCreated", itemsWindow.browser, function()
 		triggerServerEvent("loadPlayerItems", localPlayer)
-		itemsWindow:getBrowser():loadURL("http://mta/local/playerItems.html")
+		itemsWindow.browser:loadURL("http://mta/local/playerItems.html")
 		guiSetVisible(itemsWindow, showItems)
-		addEventHandler("onClientBrowserDocumentReady", itemsWindow:getBrowser(), function(url)
+		addEventHandler("onClientBrowserDocumentReady", itemsWindow.browser, function(url)
 			isGUIReady = true
 		end)
 		addEvent('usePlayerItem', true)
-		addEventHandler('usePlayerItem', itemsWindow:getBrowser(), function(UID)
+		addEventHandler('usePlayerItem', itemsWindow.browser, function(UID)
 			if lastItemUse + 50 > getTickCount() then
 				return
 			end
@@ -24,7 +24,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 			triggerServerEvent("usePlayerItem", localPlayer, UID)
 		end)
 		addEvent("dropPlayerItem", true)
-		addEventHandler("dropPlayerItem", itemsWindow:getBrowser(), function(UID)
+		addEventHandler("dropPlayerItem", itemsWindow.browser, function(UID)
 			hide()
 			triggerServerEvent("dropPlayerItem", localPlayer, UID)
 		end)
@@ -62,11 +62,11 @@ end
 
 function updateItems()
 	local charItems = localPlayer:getData("charItems")
-	itemsWindow:getBrowser():executeJavascript('clearItems();')
+	itemsWindow.browser:executeJavascript('clearItems();')
 	for i,v in ipairs(charItems) do
-		itemsWindow:getBrowser():executeJavascript('addItem('..v['UID']..',"'..v["name"]..'",'..v["used"]..');')
+		itemsWindow.browser:executeJavascript('addItem('..v['UID']..',"'..v["name"]..'",'..v["used"]..');')
 	end
-	itemsWindow:getBrowser():executeJavascript('updateItems();')
+	itemsWindow.browser:executeJavascript('updateItems();')
 end
 bindKey("p", "down", toggle)
 

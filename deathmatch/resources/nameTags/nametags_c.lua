@@ -2,7 +2,7 @@ local font14 = exports.fonts:getFont("Lato-Regular.ttf", 14, false, "antialiased
 local font12 = exports.fonts:getFont("Lato-Regular.ttf", 12, false, "antialiased")
 local font10 = exports.fonts:getFont("Lato-Regular.ttf", 10, false, "antialiased")
 
-local showLocalPlayer = true
+local showLocalPlayer = false
 
 addEventHandler("onClientRender", root, function()
 	local players = Element.getAllByType("player")

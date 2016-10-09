@@ -8,7 +8,6 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 		return
 	end
 	setPlayerHudComponentVisible("all", false)
-	
 
 	if not localPlayer:getData("charInfo") and localPlayer:getData("globalInfo") then
 		triggerEvent("onLoginResult", localPlayer, {success = true})
@@ -16,8 +15,8 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 	end
 	
 	loginWindow = GuiBrowser(screenWidth / 2 - 150, screenHeight / 2 - 100, 300, 200, true, true, false)
-	addEventHandler("onClientBrowserCreated", loginWindow, function()
-		addEventHandler("onClientBrowserDocumentReady", root, function(url)
+	addEventHandler("onClientBrowserCreated", loginWindow.browser, function()
+		addEventHandler("onClientBrowserDocumentReady", loginWindow.browser, function(url)
 			if url ~= "http://mta/local/login.html" then return end
 			Camera.fade(true)
 			Camera.setMatrix(1489.8495, -1690.1045, 14.5469, 1484.8495, -1694.1045, 14.5469)
@@ -26,7 +25,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 			guiSetInputEnabled(true)
 			loginWindow:bringToFront(true)
 			addEvent("onLoginForm", true)
-			addEventHandler("onLoginForm", loginWindow:getBrowser(), function(login, password)
+			addEventHandler("onLoginForm", loginWindow.browser, function(login, password)
 				if processingLogin == true then
 					return
 				end
@@ -34,7 +33,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 				triggerServerEvent("onLoginRequest", root, login, password)
 			end)
 		end)
-		loginWindow:getBrowser():loadURL("http://mta/local/login.html")
+		loginWindow.browser:loadURL("http://mta/local/login.html")
 	end)
 end)
 

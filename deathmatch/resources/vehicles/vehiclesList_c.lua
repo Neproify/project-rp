@@ -5,18 +5,18 @@ local showVehicles = false
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	vehiclesWindow = GuiBrowser(screenWidth / 2 - 250, screenHeight / 2 - 150, 500, 300, true, true, false)
-	addEventHandler("onClientBrowserCreated", vehiclesWindow, function()
-		vehiclesWindow:getBrowser():loadURL("http://mta/local/playerVehicles.html")
+	addEventHandler("onClientBrowserCreated", vehiclesWindow.browser, function()
+		vehiclesWindow.browser:loadURL("http://mta/local/playerVehicles.html")
 		triggerServerEvent("loadPlayerVehicles", localPlayer)
 		guiSetVisible(vehiclesWindow, showVehicles)
 	end)
 	addEvent("spawnPlayerVehicle", true)
-	addEventHandler("spawnPlayerVehicle", vehiclesWindow:getBrowser(), function(UID)
+	addEventHandler("spawnPlayerVehicle", vehiclesWindow.browser, function(UID)
 		hide()
 		triggerServerEvent("spawnVehicleByPlayer", localPlayer, UID)
 	end)
 	addEvent("findVehicle", true)
-	addEventHandler("findVehicle", vehiclesWindow:getBrowser(), function(UID)
+	addEventHandler("findVehicle", vehiclesWindow.browser, function(UID)
 		hide()
 		triggerServerEvent("findVehicleByPlayer", localPlayer, UID)
 	end)
@@ -44,11 +44,11 @@ end
 
 function updateVehicles()
 	local charVehicles = localPlayer:getData("charVehicles")
-	vehiclesWindow:getBrowser():executeJavascript('clearVehicles();')
+	vehiclesWindow.browser:executeJavascript('clearVehicles();')
 	for i,v in ipairs(charVehicles) do
-		vehiclesWindow:getBrowser():executeJavascript('addVehicle('..v['UID']..',"'..getVehicleNameFromModel(v['model'])..'");')
+		vehiclesWindow.browser:executeJavascript('addVehicle('..v['UID']..',"'..getVehicleNameFromModel(v['model'])..'");')
 	end
-	vehiclesWindow:getBrowser():executeJavascript('updateVehicles();')
+	vehiclesWindow.browser:executeJavascript('updateVehicles();')
 end
 
 addEvent("onPlayerVehiclesLoaded", true)

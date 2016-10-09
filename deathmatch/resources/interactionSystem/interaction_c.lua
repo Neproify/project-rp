@@ -16,26 +16,12 @@ function endInteraction()
 	if hit then
 		if hitElement then
 			if hitElement.type == "vehicle" then
-				if piece == 2 then -- bagażnik
-					if hitElement:getDoorOpenRatio(1) > 0 then
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(1, 0, 1000)
-						end
-					else
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(1, 1, 1000)
-						end
-					end
+				if piece == 0 then -- rama
+					triggerServerEvent("showVehicleInfo", localPlayer, hitElement)
+				elseif piece == 2 then -- bagażnik
+					triggerServerEvent("toggleVehicleTrunkByPlayer", localPlayer, hitElement)
 				elseif piece == 3 then -- maska
-					if hitElement:getDoorOpenRatio(0) > 0 then
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(0, 0, 1000)
-						end
-					else
-						if not hitElement.locked then
-							hitElement:setDoorOpenRatio(0, 1, 1000)
-						end
-					end
+					triggerServerEvent("toggleVehicleHoodByPlayer", localPlayer, hitElement)
 				end
 			elseif hitElement.type == "object" then
 				if hitElement:getData("itemInfo") then -- przedmiot

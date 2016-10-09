@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 21 Sie 2016, 15:46
+-- Czas generowania: 08 Paź 2016, 18:21
 -- Wersja serwera: 10.1.13-MariaDB
 -- Wersja PHP: 7.0.8
 
@@ -238,3 +238,56 @@ ALTER TABLE `rp_objects`
 --
 ALTER TABLE `rp_vehicles`
   ADD PRIMARY KEY (`UID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT dla tabeli `rp_buildings`
+--
+ALTER TABLE `rp_buildings`
+  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_characters`
+--
+ALTER TABLE `rp_characters`
+  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_groups`
+--
+ALTER TABLE `rp_groups`
+  MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_groups_members`
+--
+ALTER TABLE `rp_groups_members`
+  MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_groups_ranks`
+--
+ALTER TABLE `rp_groups_ranks`
+  MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_items`
+--
+ALTER TABLE `rp_items`
+  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_logs`
+--
+ALTER TABLE `rp_logs`
+  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_objects`
+--
+ALTER TABLE `rp_objects`
+  MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT dla tabeli `rp_vehicles`
+--
+ALTER TABLE `rp_vehicles`
+  MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

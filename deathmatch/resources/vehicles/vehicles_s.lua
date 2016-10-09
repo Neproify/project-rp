@@ -1,43 +1,5 @@
 local db = exports.db
 
-addCommandHandler("fixVeh", function(plr, cmd, UID)
-	if not UID then
-		if plr.vehicle then
-			plr.vehicle:fix()
-		end
-	else
-		veh = getVehicleByUID(tonumber(UID))
-		veh:fix()
-	end
-end)
-
-addCommandHandler("tpto", function(plr, cmd, UID)
-	plr.position = getVehicleByUID(tonumber(UID)).position
-end)
-
-addCommandHandler("fuel", function(plr, cmd, UID, fuel)
-	local veh = getVehicleByUID(tonumber(UID))
-	local vehInfo = veh:getData("vehInfo")
-	vehInfo.fuel = tonumber(fuel)
-	veh:setData("vehInfo", vehInfo)
-end)
-
-addCommandHandler("flip", function(plr)
-	plr.vehicle.rotation = Vector3(0, 0, 0)
-end)
-
-addCommandHandler("handling", function(plr, cmd, name, value)
-	plr.vehicle:setHandling(name, value)
-end)
-
-addCommandHandler("model", function(plr, cmd, model)
-	plr.vehicle.model = model
-end)
-
-addCommandHandler("flip", function(plr, cmd)
-	plr.vehicle.rotation = Vector3(0, 0, 0)
-end)
-
 function spawnVehicle(UID)
 	local vehInfo = db:fetch("SELECT * FROM `rp_vehicles` WHERE `UID`=?", UID)
 	if not vehInfo then
@@ -46,7 +8,7 @@ function spawnVehicle(UID)
 	vehInfo = vehInfo[1]
 	local veh = Vehicle(vehInfo.model, vehInfo.parkX, vehInfo.parkY, vehInfo.parkZ,
 		vehInfo.parkRX, vehInfo.parkRY, vehInfo.parkRZ,
-		"LS "..vehInfo.UID, false)
+		"LS-"..vehInfo.UID, false)
 	veh:setData("vehInfo", vehInfo)
 	veh.health = vehInfo.health
 	local vehColorsTemp = string.explode(vehInfo.color, ",")
@@ -128,13 +90,6 @@ function getVehicleByUID(UID)
 	return false
 end
 
---[[addEventHandler("onResourceStart", resourceRoot, function()
-	local vehicles = db:fetch("SELECT `UID` FROM `rp_vehicles`")
-	for i,v in ipairs(vehicles) do
-		spawnVehicle(v.UID)
-	end
-end)--]]
-
 addEventHandler("onResourceStop", resourceRoot, function()
 	for i,v in ipairs(Element.getAllByType("vehicle")) do
 		local vehInfo = v:getData("vehInfo")
@@ -193,6 +148,38 @@ addEventHandler("toggleVehicleHandbrakeByPlayer", root, function()
 	end
 end)
 
+addEvent("toggleVehicleTrunkByPlayer", true)
+addEventHandler("toggleVehicleTrunkByPlayer", root, function(vehicle)
+	if getDistanceBetweenPoints3D(client.position, vehicle.position) > 5 then
+		return
+	end
+	if vehicle:getDoorOpenRatio(1) > 0 then
+		if not vehicle.locked then
+			vehicle:setDoorOpenRatio(1, 0, 1000)
+		end
+	else
+		if not vehicle.locked then
+			vehicle:setDoorOpenRatio(1, 1, 1000)
+		end
+	end
+end)
+
+addEvent("toggleVehicleHoodByPlayer", true)
+addEventHandler("toggleVehicleHoodByPlayer", root, function(vehicle)
+	if getDistanceBetweenPoints3D(client.position, vehicle.position) > 5 then
+		return
+	end
+	if vehicle:getDoorOpenRatio(0) > 0 then
+		if not vehicle.locked then
+			vehicle:setDoorOpenRatio(0, 0, 1000)
+		end
+	else
+		if not vehicle.locked then
+			vehicle:setDoorOpenRatio(0, 1, 1000)
+		end
+	end
+end)
+
 addEvent("spawnVehicleByPlayer", true)
 addEventHandler("spawnVehicleByPlayer", root, function(UID)
 	if not getVehicleByUID(tonumber(UID)) then
@@ -222,6 +209,13 @@ addEventHandler("findVehicleByPlayer", root, function(UID)
 	local blip = Blip(veh.position, 0, 2, 255, 0, 0, 255, 0, 99999, client)
 	blip:setData("vehInfo", veh:getData("vehInfo"))
 	exports.notifications:add(client, "Twój pojazd został zaznaczony na mapie.", "info", 3000)
+end)
+
+addEvent("showVehicleInfo", true)
+addEventHandler("showVehicleInfo", root, function(vehicle)
+	local vehInfo = vehicle:getData("vehInfo")
+	local info = string.format("Pojazd: %s, UID: %d, Tablice: %s", vehicle.name, vehInfo["UID"], vehicle.plateText)
+	exports.notifications:add(client, info, "info", 10000)
 end)
 
 -- kilka funkcji
