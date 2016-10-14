@@ -20,6 +20,14 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 		addEventHandler("toggleDuty", groupsWindow.browser, function()
 			triggerServerEvent("toggleDuty", localPlayer, openedGroup)
 		end)
+		addEvent("saveGroupMember", true)
+		addEventHandler("saveGroupMember", groupsWindow.browser, function(UID, rankUID)
+			triggerServerEvent("saveGroupMember", localPlayer, openedGroup, UID, rankUID)
+		end)
+		addEvent("kickGroupMember", true)
+		addEventHandler("kickGroupMember", groupsWindow.browser, function(UID)
+			triggerServerEvent("kickGroupMember", localPlayer, openedGroup, UID)
+		end)
 		addEventHandler("onClientBrowserDocumentReady", groupsWindow.browser, function(url)
 			local charGroups = localPlayer:getData("charGroups")
 			if url == "http://mta/local/group.html" then
@@ -34,6 +42,7 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 				for i,v in ipairs(charGroups) do
 					if v.groupInfo.UID == openedGroup then
 						groupsWindow.browser:executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
+						triggerServerEvent("loadMembersOfGroup", localPlayer, openedGroup)
 						break
 					end
 				end
@@ -57,6 +66,7 @@ function show()
 	end
 	groupsShow = true
 	groupsWindow:setVisible(true)
+	groupsWindow:bringToFront(true)
 	showCursor(true, false)
 	toggleControl("fire", false)
 	if groupsWindow.browser.url == "http://mta/local/playerGroups.html" then
@@ -92,5 +102,20 @@ addEvent("onPlayerGroupsLoaded", true)
 addEventHandler("onPlayerGroupsLoaded", root, function()
 	if groupsWindow.browser:getURL() == "http://mta/local/playerGroups.html" then
 		updateGroups()
+	end
+end)
+
+addEvent("onMembersOfGroupLoaded", true)
+addEventHandler("onMembersOfGroupLoaded", root, function(members, ranks)
+	if groupsWindow.browser.url == "http://mta/local/groupMembers.html" then
+		groupsWindow.browser:executeJavascript("cleanMembers();")
+		for i,v in ipairs(members) do
+			groupsWindow.browser:executeJavascript("addMember(".. v.UID ..", '".. exports.playerUtils:formatName(v.name) .."', ".. v.rank ..");")
+		end
+		groupsWindow.browser:executeJavascript("cleanRanks()")
+		for i,v in ipairs(ranks) do
+			groupsWindow.browser:executeJavascript("addRank(".. v.UID ..", '".. v.name .."');")
+		end
+		groupsWindow.browser:executeJavascript("updateMembers();")
 	end
 end)

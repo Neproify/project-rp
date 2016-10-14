@@ -25,6 +25,10 @@ function fetchOne(...)
 	return result[1], num_affected_rows, last_insert_id
 end
 
+function prepareString(...)
+	return dbHandle:prepareString(...)
+end
+
 function getPrefix(type)
 	if type == "game" then
 		return dbGamePrefix

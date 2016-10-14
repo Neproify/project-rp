@@ -141,6 +141,16 @@ function getAllPlayersOfGroupOnDuty(gID)
 	return players
 end
 
+function getGroupMembers(gID)
+	local members = db:fetch("SELECT * FROM `rp_groups_members` WHERE `groupUID`=?", gID)
+	return members
+end
+
+function getGroupRanks(gID)
+	local ranks = db:fetch("SELECT * FROM `rp_groups_ranks` WHERE `groupID`=?", gID)
+	return ranks
+end
+
 addEvent("loadPlayerGroups", true)
 addEventHandler("loadPlayerGroups", root, function()
 	loadPlayerGroups(client)
@@ -169,7 +179,80 @@ addEventHandler("toggleDuty", root, function(UID)
 			exports.notifications:add(client, "Skończyłeś pracę. Przepracowałeś: ".. math.floor(dutyTime / 60) .. " min.", "info", 3000)
 			exports.db:query("UPDATE `rp_groups_members` SET `dutyTime` = `dutyTime` + ? WHERE `groupUID`=? AND `charUID`=? LIMIT 1;", dutyTime, UID, charInfo["UID"])
 		else
-			exports.notifications:add(client, "Pracujesz już w innej grupie!", "error", 3000)
+			exports.notifications:add(client, "Pracujesz już w innej grupie!", "danger", 3000)
 		end
+	end
+end)
+
+addEvent("loadMembersOfGroup", true)
+addEventHandler("loadMembersOfGroup", root, function(UID)
+	if not UID then return end
+	if not isPlayerInGroup(client, UID) then
+		return
+	end
+
+	local members = getGroupMembers(UID)
+	local ranks = getGroupRanks(UID)
+
+	local queryString = db:prepareString("SELECT * FROM `rp_characters` WHERE `UID`=0")
+	for i,v in ipairs(members) do
+		queryString = queryString .. db:prepareString(" OR `UID`=?", v.charUID)
+	end
+	local charInfos = db:fetch(queryString)
+	for i,v in ipairs(charInfos) do
+		for i2,v2 in ipairs(members) do
+			if v2.charUID == v.UID then
+				members[i2]['name'] = v.name
+				break
+			end
+		end
+	end
+	triggerClientEvent(client, "onMembersOfGroupLoaded", root, members, ranks)
+end)
+
+addEvent("saveGroupMember", true)
+addEventHandler("saveGroupMember", root, function(gID, charID, rankID)
+	if not havePlayerPermissionInGroup(client, gID, groupMemberPermission.membersManagment) then
+		exports.notifications:add(client, "Nie masz uprawnień do zarządzania pracownikami w grupie!", "danger", 3000)
+		return
+	end
+
+	local groupRanks = getGroupRanks(gID)
+	local isInGroup = false
+
+	for i,v in ipairs(groupRanks) do
+		if v.UID == tonumber(rankID) then
+			isInGroup = true
+			break
+		end
+	end
+
+	if not isInGroup then -- Grr, that hacker! :)
+		return
+	end
+
+	db:query("UPDATE `rp_groups_members` SET `rank` = ? WHERE `groupUID` = ? AND `charUID` = ?", rankID, gID, charID)
+	exports.notifications:add(client, "Pracownik został edytowany.", "info", 3000)
+
+	local editedPlayer = exports.playerUtils:getByCharUID(tonumber(charID))
+	if editedPlayer then
+		exports.notifications:add(editedPlayer, "Twoje uprawnienia w jednej z grup do której należysz zostały zmienione.", "info", 3000)
+	end
+end)
+
+addEvent("kickGroupMember", true)
+addEventHandler("kickGroupMember", root, function(gID, charID)
+	if not havePlayerPermissionInGroup(client, gID, groupMemberPermission.membersManagment) then
+		exports.notifications:add(client, "Nie masz uprawnień do zarządzania pracownikami w grupie!", "danger", 3000)
+		return
+	end
+
+	db:query("DELETE FROM `rp_groups_members` WHERE `groupUID` = ? AND `charUID` = ?", gID, charID)
+
+	exports.notifications:add(client, "Wyrzuciłeś pracownika z grupy.", "info", 3000)
+
+	local editedPlayer = exports.playerUtils:getByCharUID(tonumber(charID))
+	if editedPlayer then
+		exports.notifications:add(editedPlayer, "Zostałeś wyrzucony z jednej z grup.", "info", 3000)
 	end
 end)

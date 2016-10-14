@@ -25,6 +25,7 @@ end
 ]]--
 
 groupMemberPermission = {}
+groupMemberPermission.membersManagment = 1
 
 function getGroupMemberPermissions()
 	return groupMemberPermission
