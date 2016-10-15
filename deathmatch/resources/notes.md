@@ -1,2 +1,2 @@
 # Notatki dotyczące skryptów
-Tutaj lądują jakieś drobne notatki.
+Tutaj lądują jakieś drobne notatki. 
