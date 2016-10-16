@@ -256,3 +256,36 @@ addEventHandler("kickGroupMember", root, function(gID, charID)
 		exports.notifications:add(editedPlayer, "Zostałeś wyrzucony z jednej z grup.", "info", 3000)
 	end
 end)
+
+addEvent("addGroupMember", true)
+addEventHandler("addGroupMember", root, function(gID, name)
+	if not havePlayerPermissionInGroup(client, gID, groupMemberPermission.membersManagment) then
+		exports.notifications:add(client, "Nie masz uprawnień do zarządzania pracownikami w grupie!", "danger", 3000)
+		return
+	end
+
+	if not name then
+		return
+	end
+
+	local charInfo = db:fetchOne("SELECT * FROM `rp_characters` WHERE `name` = ?", name)
+	if not charInfo then
+		exports.notifications:add(client, "Nie znaleziono osoby o nazwie ".. name, "danger", 3000)
+		return
+	end
+
+	local inGroupInfo = db:fetchOne("SELECT * FROM `rp_groups_members` WHERE `groupUID` = ? AND `charUID` = ?", gID, charInfo.UID)
+	if inGroupInfo then
+		exports.notifications:add(client, "Podana osoba pracuje już w tej grupie!", "danger", 3000)
+		return
+	end
+
+	db:query("INSERT INTO `rp_groups_members` SET `charUID` = ?, `groupUID` = ?, `rank` = -1", charInfo.UID, gID)
+
+	exports.notifications:add(client, "Dodano ".. name .. " do grupy.")
+
+	local addedPlayer = exports.playerUtils:getByCharUID(charInfo["UID"])
+	if addedPlayer then
+		exports.notifications:add(addedPlayer, "Zostałeś dodany do nowej grupy.", "info", 3000)
+	end
+end)

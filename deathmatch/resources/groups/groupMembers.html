@@ -23,6 +23,11 @@
 		{
 			color: black;
 		}
+
+		input
+		{
+			color: black;
+		}
 	</style>
 </head>
 <body id="body" style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF;">
@@ -46,6 +51,8 @@
 				</tr>
 			</tbody>
 		</table>
+		<input type="text" id="memberToAddName" placeholder="John_Smith" />
+		<button onclick="mta.triggerEvent('addGroupMember', $('#memberToAddName').val());" class="btn btn-default">Dodaj pracownika</button>
 	</div>
 </body>
 </html>
