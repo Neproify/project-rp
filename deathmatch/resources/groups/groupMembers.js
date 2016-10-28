@@ -11,7 +11,12 @@ function updateMembers()
 		output += '<td><select id="ranks-'+members[i]['UID']+'">';
 		for(var i2 = 0; i2 < ranks.length; i2++)
 		{
-			output += '<option value="'+ranks[i2]['UID']+'">'+ranks[i2]['name']+'</option>';
+			output += '<option value="'+ranks[i2]['UID']+'"';
+			if(members[i]['currentRank'] == ranks[i2]['UID'])
+			{
+				output += 'selected';
+			}
+			output += '>'+ranks[i2]['name']+'</option>';
 		}
 		output += '</select></td>';
 		output += '<td><a href="#" onclick="event.preventDefault(); saveMember('+members[i]['UID']+')">Zapisz</a> <a href="#" onclick="event.preventDefault(); kickMember('+members[i]['UID']+')">Wyrzuć</a></td>';

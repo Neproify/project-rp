@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="http://mta/html/css/animate.css">
 	<script src="http://mta/html/js/jquery.min.js"></script>
 	<script src="http://mta/html/js/bootstrap.min.js"></script>
-	<script src="http://mta/local/group.js"></script>
+	<script src="http://mta/local/groupRanks.js"></script>
 	<style>
 		body
 		{
@@ -17,6 +17,11 @@
 		.table th, .table td
 		{ 
 			border-top: none !important;
+		}
+
+		input
+		{
+			color: black;
 		}
 	</style>
 </head>
@@ -28,6 +33,21 @@
 			<button onclick="location.href='http://mta/local/group.html';" class="btn btn-default">Informacje</button><button onclick="location.href='http://mta/local/groupMembers.html';" class="btn btn-default">Pracownicy</button><button onclick="location.href='http://mta/local/groupRanks.html';" class="btn btn-default">Rangi</button><button onclick="location.href='http://mta/local/groupVehicles.html';" class="btn btn-default">Pojazdy</button>
 			<button onclick="mta.triggerEvent('toggleDuty');" class="btn btn-default">Służba</button>
 		</div>
+		<table class="table table-condensed" id="ranks">
+			<thead>
+				<tr>
+					<th>Nazwa</th>
+					<th>Zarządzanie pracownikami</th>
+					<th>Opcje</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				</tr>
+			</tbody>
+		</table>
+		<input type="text" id="rankToAddName" placeholder="Pracownik" />
+		<button onclick="mta.triggerEvent('addGroupRank', $('#rankToAddName').val());" class="btn btn-default">Dodaj rangę</button>
 	</div>
 </body>
 </html>

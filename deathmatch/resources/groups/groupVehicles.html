@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8" />
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap-theme.css">
+	<link rel="stylesheet" href="http://mta/html/css/animate.css">
+	<script src="http://mta/html/js/jquery.min.js"></script>
+	<script src="http://mta/html/js/bootstrap.min.js"></script>
+	<script src="http://mta/local/groupVehicles.js"></script>
+	<style>
+		body
+		{
+			overflow: hidden;
+		}
+
+		.table th, .table td
+		{ 
+			border-top: none !important;
+		}
+	</style>
+</head>
+<body id="body" style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF;">
+	<div class="container">
+		<legend id="name" style="color: #FFFFFF;"></legend>
+		<div style="text-align: center;">
+			<button onclick="location.href='http://mta/local/playerGroups.html';" class="btn btn-default">Wstecz</button>
+			<button onclick="location.href='http://mta/local/group.html';" class="btn btn-default">Informacje</button><button onclick="location.href='http://mta/local/groupMembers.html';" class="btn btn-default">Pracownicy</button><button onclick="location.href='http://mta/local/groupRanks.html';" class="btn btn-default">Rangi</button><button onclick="location.href='http://mta/local/groupVehicles.html';" class="btn btn-default">Pojazdy</button><button onclick="mta.triggerEvent('toggleDuty');" class="btn btn-default">Służba</button>
+		</div>
+	</div>
+</body>
+</html>

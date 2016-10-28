@@ -212,6 +212,9 @@ end)
 
 addEvent("saveGroupMember", true)
 addEventHandler("saveGroupMember", root, function(gID, charID, rankID)
+	if not gID or not charID or not rankID then
+		return
+	end
 	if not havePlayerPermissionInGroup(client, gID, groupMemberPermission.membersManagment) then
 		exports.notifications:add(client, "Nie masz uprawnień do zarządzania pracownikami w grupie!", "danger", 3000)
 		return
@@ -231,7 +234,7 @@ addEventHandler("saveGroupMember", root, function(gID, charID, rankID)
 		return
 	end
 
-	db:query("UPDATE `rp_groups_members` SET `rank` = ? WHERE `groupUID` = ? AND `charUID` = ?", rankID, gID, charID)
+	db:query("UPDATE `rp_groups_members` SET `rank` = ? WHERE `groupUID` = ? AND `charUID` = ?", tonumber(rankID), tonumber(gID), tonumber(charID))
 	exports.notifications:add(client, "Pracownik został edytowany.", "info", 3000)
 
 	local editedPlayer = exports.playerUtils:getByCharUID(tonumber(charID))
@@ -288,4 +291,71 @@ addEventHandler("addGroupMember", root, function(gID, name)
 	if addedPlayer then
 		exports.notifications:add(addedPlayer, "Zostałeś dodany do nowej grupy.", "info", 3000)
 	end
+end)
+
+addEvent("loadRanksOfGroup", true)
+addEventHandler("loadRanksOfGroup", root, function(UID)
+	if not UID then return end
+	if not isPlayerInGroup(client, UID) then
+		return
+	end
+
+	local ranks = getGroupRanks(UID)
+
+	triggerClientEvent(client, "onRanksOfGroupLoaded", root, ranks)
+end)
+
+addEvent("saveGroupRank", true)
+addEventHandler("saveGroupRank", root, function(gID, rankID, rankName, rankPermissions)
+	if not gID or not rankID or not rankName or not rankPermissions then
+		return
+	end
+
+	if not havePlayerPermissionInGroup(client, gID, groupMemberPermission.membersManagment) then
+		exports.notifications:add(client, "Nie masz uprawnień do zarządzania pracownikami w grupie!", "danger", 3000)
+		return
+	end
+
+	db:query("UPDATE `rp_groups_ranks` SET `name`= ?, `permissions` = ? WHERE `UID` = ? AND `groupID` = ?",
+		rankName, tonumber(rankPermissions), tonumber(rankID), tonumber(gID))
+
+	exports.notifications:add(client, "Zmodyfikowałeś rangę.")
+end)
+
+addEvent("deleteGroupRank", true)
+addEventHandler("deleteGroupRank", root, function(gID, rankID)
+	if not gID or not rankID then
+		return
+	end
+
+	if not havePlayerPermissionInGroup(client, gID, groupMemberPermission.membersManagment) then
+		exports.notifications:add(client, "Nie masz uprawnień do zarządzania pracownikami w grupie!", "danger", 3000)
+		return
+	end
+
+	local _, count = db:fetch("SELECT * FROM `rp_groups_members` WHERE `rank` = ?", tonumber(rankID))
+	if count > 0 then
+		exports.notifications:add(client, "Nie możesz usunąć rangi przypisanej jakiemukolwiek pracownikowi!", "danger", 3000)
+		return
+	end
+
+	db:query("DELETE FROM `rp_groups_ranks` WHERE `UID` = ? AND `groupID` = ?", tonumber(rankID), tonumber(gID))
+
+	exports.notifications:add(client, "Usunąłeś rangę.")
+end)
+
+addEvent("addGroupRank", true)
+addEventHandler("addGroupRank", root, function(gID, rankName)
+	if not gID or not rankName then
+		return
+	end
+
+	if not havePlayerPermissionInGroup(client, gID, groupMemberPermission.membersManagment) then
+		exports.notifications:add(client, "Nie masz uprawnień do zarządzania pracownikami w grupie!", "danger", 3000)
+		return
+	end
+
+	db:query("INSERT INTO `rp_groups_ranks` SET `name` = ?, `groupID` = ?, `permissions` = 0", rankName, tonumber(gID))
+
+	exports.notifications:add(client, "Dodałeś nową rangę.")
 end)

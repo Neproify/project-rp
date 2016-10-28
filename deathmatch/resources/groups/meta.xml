@@ -9,7 +9,7 @@
 
 	<script src="group/lspd_s.lua" type="server" />
 	<script src="group/news_s.lua" type="server" />
-	<script src="group/news_c.lua" type="client" />
+	<script src="group/news_c.lua" type="client" cache="false" />
 
 	<script src="item/megaphone_s.lua" type="server" />
 
@@ -19,6 +19,8 @@
 	<file src="group.js" />
 	<file src="groupMembers.html" />
 	<file src="groupMembers.js" />
+	<file src="groupRanks.html" />
+	<file src="groupRanks.js" />
 	<file src="groupVehicles.html" />
 	<file src="groupVehicles.js" />
 	

@@ -6,7 +6,7 @@ local openedGroup = nil
 local screenWidth, screenHeight = guiGetScreenSize()
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
-	groupsWindow = GuiBrowser(screenWidth / 2 - 250, screenHeight / 2 - 150, 500, 300, true, true, false)
+	groupsWindow = GuiBrowser(screenWidth / 2 - 300, screenHeight / 2 - 150, 600, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", groupsWindow.browser, function()
 		groupsWindow.browser:loadURL("http://mta/local/playerGroups.html")
 		triggerServerEvent("loadPlayerGroups", localPlayer)
@@ -32,6 +32,18 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 		addEventHandler("addGroupMember", groupsWindow.browser, function(name)
 			triggerServerEvent("addGroupMember", localPlayer, openedGroup, name)
 		end)
+		addEvent("saveGroupRank", true)
+		addEventHandler("saveGroupRank", groupsWindow.browser, function(UID, rankName, permissions)
+			triggerServerEvent("saveGroupRank", localPlayer, openedGroup, UID, rankName, permissions)
+		end)
+		addEvent("deleteGroupRank", true)
+		addEventHandler("deleteGroupRank", groupsWindow.browser, function(UID)
+			triggerServerEvent("deleteGroupRank", localPlayer, openedGroup, UID)
+		end)
+		addEvent("addGroupRank", true)
+		addEventHandler("addGroupRank", groupsWindow.browser, function(name)
+			triggerServerEvent("addGroupRank", localPlayer, openedGroup, name)
+		end)
 		addEventHandler("onClientBrowserDocumentReady", groupsWindow.browser, function(url)
 			local charGroups = localPlayer:getData("charGroups")
 			if url == "http://mta/local/group.html" then
@@ -47,6 +59,23 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 					if v.groupInfo.UID == openedGroup then
 						groupsWindow.browser:executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
 						triggerServerEvent("loadMembersOfGroup", localPlayer, openedGroup)
+						break
+					end
+				end
+			end
+			if url == "http://mta/local/groupRanks.html" then
+				for i,v in ipairs(charGroups) do
+					if v.groupInfo.UID == openedGroup then
+						groupsWindow.browser:executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
+						triggerServerEvent("loadRanksOfGroup", localPlayer, openedGroup)
+						break
+					end
+				end
+			end
+			if url == "http://mta/local/groupVehicles.html" then
+				for i,v in ipairs(charGroups) do
+					if v.groupInfo.UID == openedGroup then
+						groupsWindow.browser:executeJavascript("$('#name').html('"..v.groupInfo.name.."');")
 						break
 					end
 				end
@@ -114,12 +143,24 @@ addEventHandler("onMembersOfGroupLoaded", root, function(members, ranks)
 	if groupsWindow.browser.url == "http://mta/local/groupMembers.html" then
 		groupsWindow.browser:executeJavascript("cleanMembers();")
 		for i,v in ipairs(members) do
-			groupsWindow.browser:executeJavascript("addMember(".. v.UID ..", '".. exports.playerUtils:formatName(v.name) .."', ".. v.rank ..");")
+			groupsWindow.browser:executeJavascript("addMember(".. v.charUID ..", '".. exports.playerUtils:formatName(v.name) .."', ".. v.rank ..");")
 		end
 		groupsWindow.browser:executeJavascript("cleanRanks()")
 		for i,v in ipairs(ranks) do
 			groupsWindow.browser:executeJavascript("addRank(".. v.UID ..", '".. v.name .."');")
 		end
+		groupsWindow.browser:executeJavascript("addRank(-1, 'Brak');")
 		groupsWindow.browser:executeJavascript("updateMembers();")
+	end
+end)
+
+addEvent("onRanksOfGroupLoaded", true)
+addEventHandler("onRanksOfGroupLoaded", root, function(ranks)
+	if groupsWindow.browser.url == "http://mta/local/groupRanks.html" then
+		groupsWindow.browser:executeJavascript("cleanRanks();")
+		for i,v in ipairs(ranks) do
+			groupsWindow.browser:executeJavascript("addRank(".. v.UID ..", '".. v.name .."', ".. v.permissions ..");")
+		end
+		groupsWindow.browser:executeJavascript("updateRanks();")
 	end
 end)
