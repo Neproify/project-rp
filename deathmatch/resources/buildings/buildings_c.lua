@@ -14,8 +14,9 @@ end)
 
 addEventHandler("onClientPickupHit", root, function(player, matchingDimension)
 	if player == localPlayer then
-		local buildingInfo = source:getData("buildingInfo")
-		if buildingInfo then
+		local building = source:getData("building")
+		if building then
+			local buildingInfo = building:getData("buildingInfo")
 			pickup = source
 			buildingWindow.browser:executeJavascript("$('#name').html('"..buildingInfo.name.."');")
 			buildingWindow.browser:executeJavascript("$('#description').html('"..buildingInfo.description.."');")
@@ -31,7 +32,7 @@ end)
 
 addEventHandler("onClientPickupLeave", root, function(player, matchingDimension)
 	if player == localPlayer then
-		if source:getData("buildingInfo") then
+		if source:getData("building") then
 			pickup = nil
 			guiSetVisible(buildingWindow, false)
 			showingInfo = false

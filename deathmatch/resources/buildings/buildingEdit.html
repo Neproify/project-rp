@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8" />
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://mta/html/css/bootstrap-theme.css">
+	<script src="http://mta/html/js/jquery.min.js"></script>
+	<script src="http://mta/html/js/bootstrap.min.js"></script>
+</head>
+<body id="body" style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF;">
+	<div class="container">
+		<legend style="color: #FFFFFF;">Edycja budynku</legend>
+		<div class="form-group">
+			<label>Nazwa:</label>
+    		<input id="name" class="form-control" value="" />
+		</div>
+		<div class="form-group">
+			<label>Opis:</label>
+    		<input id="description" class="form-control" value="" />
+		</div>
+		<button class="btn btn-default" onclick="save();">Zapisz</button><button class="btn btn-danger" onclick="cancel();">Anuluj</button>
+	</div>
+	<script>
+		function save()
+		{
+			var name = $('#name').val();
+			var description = $('#description').val();
+			mta.triggerEvent('saveEdit', name, description);
+		}
+
+		function cancel()
+		{
+			mta.triggerEvent('cancelEdit');
+		}
+	</script>
+</body>
+</html>

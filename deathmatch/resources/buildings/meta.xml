@@ -4,5 +4,9 @@
 	<oop>true</oop>
 	<script src="buildings_s.lua" type="server" />
 	<script src="buildings_c.lua" type="client" cache="false" />
+
+	<script src="buildingEdit_c.lua" type="client" cache="false" />
+
 	<file src="buildingInfo.html" />
+	<file src="buildingEdit.html" />
 </meta>
