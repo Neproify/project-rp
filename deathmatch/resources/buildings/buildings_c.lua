@@ -43,7 +43,6 @@ end)
 function useDoor()
 	if pickup then
 		triggerServerEvent("useDoor", localPlayer, pickup)
-		guiSetVisible(buildingWindow, false)
 	end
 end
 bindKey("e", "down", useDoor)
