@@ -13,6 +13,8 @@
 
 	<script src="item/megaphone_s.lua" type="server" />
 
+	<script src="jail_s.lua" type="server" /> <!-- przetrzymywanie -->
+
 	<file src="playerGroups.html" />
 	<file src="playerGroups.js" />
 	<file src="group.html" />

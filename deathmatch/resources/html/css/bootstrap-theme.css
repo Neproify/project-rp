@@ -7,3 +7,29 @@
 ::-webkit-scrollbar { 
     display: none; 
 }
+
+body {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FFFFFF;
+    overflow: hidden;
+}
+
+legend {
+    color: #FFFFFF;
+}
+
+.keyboard-tip {
+    font-size: 22px;
+}
+
+.table th, .table td { 
+	border-top: none !important;
+}
+
+select {
+    color: black;
+}
+
+input {
+    color: black;
+}
