@@ -9,8 +9,6 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 	addEventHandler("onClientBrowserCreated", buildingWindow.browser, function()
 		buildingWindow.browser:loadURL("http://mta/local/buildingInfo.html")
 		guiSetVisible(buildingWindow, false)
-		setDevelopmentMode(true, true)
-		buildingWindow.browser.devTools = true
 	end)
 end)
 
@@ -25,7 +23,7 @@ addEventHandler("onClientPickupHit", root, function(player, matchingDimension)
 			if building:getData("locked") then
 				buildingWindow.browser:executeJavascript("$('#locked').html('Zamknięte');")
 			else
-				buildingWindow.browser:executeJavascript("$('#locked').hmtl('');")
+				buildingWindow.browser:executeJavascript("$('#locked').html('');")
 			end
 			showingInfo = true
 			Timer(function()

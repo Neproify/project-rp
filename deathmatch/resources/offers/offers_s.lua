@@ -61,7 +61,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 		end
 		exports.notifications:add(offerInfo.from, string.format("%s zaakceptował ofertę.", 
 			exports.playerUtils:formatName(offerInfo.to.name)), "info", 3000)
-		exports.notifications:add(offerInfo.from, string.format("Zaakceptowałeś ofertę od %s.", 
+		exports.notifications:add(offerInfo.to, string.format("Zaakceptowałeś ofertę od %s.", 
 			exports.playerUtils:formatName(offerInfo.from.name)), "info", 3000)
 		return
 	end
