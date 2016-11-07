@@ -63,6 +63,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			exports.playerUtils:formatName(offerInfo.to.name)), "info", 3000)
 		exports.notifications:add(offerInfo.to, string.format("Zaakceptowałeś ofertę od %s.", 
 			exports.playerUtils:formatName(offerInfo.from.name)), "info", 3000)
+		triggerClientEvent(offerInfo.to, "onOfferHide", root)
 		return
 	end
 	if arg1 == "anuluj" then
@@ -70,11 +71,12 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 		 if not offerInfo then return end
 		 exports.notifications:add(offerInfo.from, string.format("%s anulował ofertę.", 
 			exports.playerUtils:formatName(player.name)), "info", 3000)
-		 exports.notifications:add(offerInfo.to, string.format("%s anulował ofertę.", 
+		 exports.notifications:add(offerInfo.to, string.format("Anulowałeś ofertę.", 
 			exports.playerUtils:formatName(player.name)), "info", 3000)
-		 offerInfo.from:setData("offerInfo", nil)
-		 offerInfo.to:setData("offerInfo", nil)
-		 return
+		triggerClientEvent(offerInfo.to, "onOfferHide", root)
+		offerInfo.from:setData("offerInfo", nil)
+		offerInfo.to:setData("offerInfo", nil)
+		return
 	end
 	if not arg1 or not arg2 then
 		exports.notifications:add(player, "Użyj: /o(feruj) [id] [przedmiot, naprawa, lakierowanie, leczenie, mandat, unbw]", "info", 5000)
