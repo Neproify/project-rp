@@ -7,7 +7,7 @@ addEventHandler("spawnPlayer", root, function()
 	client:spawn(1481.8495, -1687.1045, 14.0469, 178.7321, charInfo["skin"])
 	if charInfo.jailBuilding ~= nil then
 		local position = Vector3(charInfo.jailX, charInfo.jailY, charInfo.jailZ)
-		local building = Element.GetByID("building-".. charInfo.jailBuilding)
+		local building = Element.getByID("building-".. charInfo.jailBuilding)
 		if building then
 			client:setData("inBuilding", building)
 			client.dimension = building:getData("exitPickup").dimension

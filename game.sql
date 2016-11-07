@@ -1,30 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Czas generowania: 08 Paź 2016, 18:21
--- Wersja serwera: 10.1.13-MariaDB
--- Wersja PHP: 7.0.8
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Baza danych: `roleplay`
---
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_buildings`
---
 
 CREATE TABLE `rp_buildings` (
   `UID` int(9) NOT NULL,
@@ -41,26 +22,18 @@ CREATE TABLE `rp_buildings` (
   `owner` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_characters`
---
-
 CREATE TABLE `rp_characters` (
   `UID` int(9) NOT NULL,
   `global` int(9) NOT NULL,
   `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `skin` int(3) NOT NULL,
   `money` int(9) NOT NULL DEFAULT '1000',
-  `health` int(3) NOT NULL DEFAULT '100'
+  `health` int(3) NOT NULL DEFAULT '100',
+  `jailX` float DEFAULT NULL,
+  `jailY` float DEFAULT NULL,
+  `jailZ` float DEFAULT NULL,
+  `jailBuilding` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_groups`
---
 
 CREATE TABLE `rp_groups` (
   `UID` int(11) NOT NULL,
@@ -72,25 +45,13 @@ CREATE TABLE `rp_groups` (
   `specialPermissions` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_groups_members`
---
-
 CREATE TABLE `rp_groups_members` (
   `UID` int(11) NOT NULL,
   `charUID` int(11) NOT NULL,
   `groupUID` int(11) NOT NULL,
   `rank` int(11) NOT NULL,
   `dutyTime` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_groups_ranks`
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `rp_groups_ranks` (
   `UID` int(11) NOT NULL,
@@ -100,12 +61,6 @@ CREATE TABLE `rp_groups_ranks` (
   `skin` int(11) DEFAULT NULL,
   `permissions` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_items`
---
 
 CREATE TABLE `rp_items` (
   `UID` int(9) NOT NULL,
@@ -120,12 +75,6 @@ CREATE TABLE `rp_items` (
   `posZ` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_logs`
---
-
 CREATE TABLE `rp_logs` (
   `UID` int(9) NOT NULL,
   `type` int(11) NOT NULL,
@@ -135,12 +84,6 @@ CREATE TABLE `rp_logs` (
   `charID` int(9) NOT NULL,
   `details` varchar(512) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_objects`
---
 
 CREATE TABLE `rp_objects` (
   `UID` int(11) NOT NULL,
@@ -153,13 +96,7 @@ CREATE TABLE `rp_objects` (
   `rotZ` float NOT NULL,
   `ownerType` int(11) NOT NULL,
   `owner` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `rp_vehicles`
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `rp_vehicles` (
   `UID` int(9) NOT NULL,
@@ -181,111 +118,51 @@ CREATE TABLE `rp_vehicles` (
   `parkRZ` int(7) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Indeksy dla zrzutów tabel
---
 
---
--- Indexes for table `rp_buildings`
---
 ALTER TABLE `rp_buildings`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_characters`
---
 ALTER TABLE `rp_characters`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_groups`
---
 ALTER TABLE `rp_groups`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_groups_members`
---
 ALTER TABLE `rp_groups_members`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_groups_ranks`
---
 ALTER TABLE `rp_groups_ranks`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_items`
---
 ALTER TABLE `rp_items`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_logs`
---
 ALTER TABLE `rp_logs`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_objects`
---
 ALTER TABLE `rp_objects`
   ADD PRIMARY KEY (`UID`);
 
---
--- Indexes for table `rp_vehicles`
---
 ALTER TABLE `rp_vehicles`
   ADD PRIMARY KEY (`UID`);
 
---
--- AUTO_INCREMENT for dumped tables
---
 
---
--- AUTO_INCREMENT dla tabeli `rp_buildings`
---
 ALTER TABLE `rp_buildings`
   MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_characters`
---
 ALTER TABLE `rp_characters`
   MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_groups`
---
 ALTER TABLE `rp_groups`
   MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_groups_members`
---
 ALTER TABLE `rp_groups_members`
   MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_groups_ranks`
---
 ALTER TABLE `rp_groups_ranks`
   MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_items`
---
 ALTER TABLE `rp_items`
   MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_logs`
---
 ALTER TABLE `rp_logs`
   MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_objects`
---
 ALTER TABLE `rp_objects`
   MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT dla tabeli `rp_vehicles`
---
 ALTER TABLE `rp_vehicles`
   MODIFY `UID` int(9) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
