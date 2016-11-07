@@ -16,6 +16,7 @@ end)
 addEventHandler("onPlayerQuit", root, function()
 	 local charInfo = source:getData("charInfo")
 	 if not charInfo then return end -- nie zalogowany, nic nie robimy :)
-	 exports.db:query("UPDATE `rp_characters` SET `skin`=?, `money`=?, `health`=? WHERE `UID`=?", charInfo["skin"],
-	 source.money, source.health, charInfo["UID"])
+	 exports.db:query("UPDATE `rp_characters` SET `skin`=?, `money`=?, `health`=?, `jailX` = ?, `jailY` = ?, `jailZ` = ?," ..
+	  "`jailBuilding` = ? WHERE `UID`=?", charInfo["skin"], source.money, source.health, 
+	  	charInfo.jailX, charInfo.jailY, charInfo.jailZ, charInfo.jailBuilding, charInfo["UID"])
 end)

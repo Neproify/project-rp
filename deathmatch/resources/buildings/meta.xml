@@ -9,4 +9,6 @@
 
 	<file src="buildingInfo.html" />
 	<file src="buildingEdit.html" />
+
+	<export function="getPlayerCurrentBuilding" type="server" />
 </meta>

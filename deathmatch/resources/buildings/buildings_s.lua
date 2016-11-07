@@ -51,6 +51,14 @@ function havePlayerPermissionToOpenBuilding(player, building)
 	if buildingInfo.ownerType == 1 and buildingInfo.owner == charInfo.UID then
 		return true
 	end
+	if buildingInfo.ownerType == 2 then
+		local groupDutyInfo = player:getData("groupDutyInfo")
+		if groupDutyInfo then
+			if buildingInfo.owner == groupDutyInfo.UID then
+				return true
+			end
+		end
+	end
 	return false
 end
 
@@ -64,6 +72,17 @@ function havePlayerPermissionToEditBuilding(player, building)
 	return false
 end
 
+function getPlayerCurrentBuilding(player)
+	local building = player:getData("inBuilding")
+	if building then
+		local buildingInfo = building:getData("buildingInfo")
+		if buildingInfo.UID + 10000 == player.dimension then
+			return building
+		end
+	end
+	return nil
+end
+
 addEvent("useDoor", true)
 addEventHandler("useDoor", root, function(pickup)
 	local building = pickup:getData("building")
@@ -71,12 +90,19 @@ addEventHandler("useDoor", root, function(pickup)
 		exports.notifications:add(client, "Te drzwi są zamknięte!", "danger", 3000)
 		return
 	end
+	local charInfo = client:getData("charInfo")
+	if charInfo.jailBuilding ~= nil then
+		exports.notifications:add(client, "Jesteś przetrzymywany w budynku. Nie możesz wyjść.", "danger", 5000)
+		return
+	end
 	if pickup == building:getData("enterPickup") then -- poza budynkiem
 		client.position = building:getData("exitPickup").position
 		client.dimension = building:getData("exitPickup").dimension
+		client:setData("inBuilding", building)
 	else -- w budynku
 		client.position = building:getData("enterPickup").position
 		client.dimension = building:getData("enterPickup").dimension
+		client:setData("inBuilding", nil)
 	end
 end)
 
