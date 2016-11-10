@@ -36,9 +36,9 @@ addEventHandler("onLoginRequest", root, function(login, password)
 	local globalInfo = {}
 	globalInfo["UID"] = globalInfoTemp["member_id"]
 	globalInfo["name"] = globalInfoTemp["name"]
-	globalInfo["score"] = globalInfoTemp["score"]
-	globalInfo["admin"] = globalInfoTemp["admin"]
-	globalInfo["permissions"] = globalInfoTemp["permissions"]
+	globalInfo["score"] = globalInfoTemp["game_score"]
+	globalInfo["admin"] = globalInfoTemp["game_admin"]
+	globalInfo["adminPermissions"] = globalInfoTemp["game_admin_permissions"]
 	if isPlayerAlreadyLogged(globalInfo["UID"]) then -- zabezpieczenie przed logowaniem na jedno konto przez kilka osób
 		client:kick("Próba logowania na jedno konto przez kilka osób.")
 		exports.logs:addLog(exports.logs:getLogTypes().auth, client.ip, globalInfoTemp["member_id"], -1, "2")
