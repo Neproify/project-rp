@@ -13,6 +13,7 @@ addEventHandler("onClientRender", root, function()
 				if isLineOfSightClear(localPlayer.position, v.position, true, false, false, true, false, false, false) then
 					local bx, by, bz = v:getBonePosition(8)
 					local x, y = getScreenFromWorldPosition(bx, by, bz + 0.25)
+					local x2, y2 = getScreenFromWorldPosition(bx, by, bz - 0.25)
 					if x and y then
 						if localPlayer == v and not showLocalPlayer then
 						else
@@ -39,6 +40,10 @@ addEventHandler("onClientRender", root, function()
 								state = state .. ")"
 								dxDrawText(state, x, y + offset, x, y, tocolor(255, 255, 255), 1, font10, "center", "center")
 								offset = offset + font10:getHeight(1) + 10
+							end
+							local description = v:getData("description")
+							if description then
+								dxDrawText(description, x2, y2, x2, y2, tocolor(255, 255, 255), 1, font10, "center", "center")
 							end
 						end
 					end

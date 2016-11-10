@@ -1,4 +1,7 @@
 <meta>
 	<oop>true</oop>
+
+	<script src="nametags_s.lua" type="server" />
+
 	<script src="nametags_c.lua" type="client" cache="false" />
 </meta>
