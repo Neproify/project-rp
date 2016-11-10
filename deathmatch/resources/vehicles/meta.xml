@@ -13,5 +13,8 @@
 	<file src="playerVehicles.js" />
 	<file src="img/licznik.png" />
 	<file src="img/needle.png" />
+
+	<export function="spawnVehicle" type="server" />
+	<export function="unspawnVehicle" type="server" />
 	<export function="getVehicleByUID" type="server" />
 </meta>

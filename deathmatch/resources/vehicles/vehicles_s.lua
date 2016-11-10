@@ -9,6 +9,7 @@ function spawnVehicle(UID)
 	local veh = Vehicle(vehInfo.model, vehInfo.parkX, vehInfo.parkY, vehInfo.parkZ,
 		vehInfo.parkRX, vehInfo.parkRY, vehInfo.parkRZ,
 		"LS-"..vehInfo.UID, false)
+	veh:setID("vehicle-"..vehInfo.UID)
 	veh:setData("vehInfo", vehInfo)
 	veh.health = vehInfo.health
 	local vehColorsTemp = string.explode(vehInfo.color, ",")
@@ -80,14 +81,7 @@ function unspawnVehicle(UID)
 end
 
 function getVehicleByUID(UID)
-	local vehicle = nil
-	for i,v in ipairs(Element.getAllByType("vehicle")) do
-		local vehInfo = v:getData("vehInfo")
-		if vehInfo.UID == UID then
-			return v
-		end
-	end
-	return false
+	return Element.getByID("vehicle-"..UID)
 end
 
 addEventHandler("onResourceStop", resourceRoot, function()
