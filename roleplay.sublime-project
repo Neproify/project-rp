@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"resource-cache",
+				"backups",
+				"databases"
+			],
+			"path": "deathmatch"
+		}
+	]
+}

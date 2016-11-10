@@ -5,7 +5,7 @@ addEventHandler("spawnPlayer", root, function()
 		return
 	end
 	client:spawn(1481.8495, -1687.1045, 14.0469, 178.7321, charInfo["skin"])
-	if charInfo.jailBuilding ~= nil then
+	if charInfo.jailBuilding ~= nil and charInfo.jailBuilding ~= false then
 		local position = Vector3(charInfo.jailX, charInfo.jailY, charInfo.jailZ)
 		local building = Element.getByID("building-".. charInfo.jailBuilding)
 		if building then
