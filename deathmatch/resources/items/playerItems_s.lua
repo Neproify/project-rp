@@ -6,44 +6,59 @@ addEventHandler("loadPlayerItems", root, function()
 end)
 
 addEvent("dropPlayerItem", true)
-addEventHandler("dropPlayerItem", root, function(UID)
-	if canUseItem(client, UID) then
-		if isItemUsed(UID) then
+addEventHandler("dropPlayerItem", root, function(item)
+	if canUseItem(client, item) then
+		local itemInfo = item:getData("itemInfo")
+		if itemInfo.used == true then
 			return
 		end
-		setItemOwnerType(UID, 2)
-		setItemOwner(UID, 0)
-		local pos = client.position
-		setItemPosition(UID, pos.x, pos.y, pos.z - 0.9)
+		local charInfo = client:getData("charInfo")
+		itemInfo.ownerType = 2
+		itemInfo.owner = 0
+		itemInfo.posX = client.position.x
+		itemInfo.posY = client.position.y
+		itemInfo.posZ = client.position.z - 0.9
+		item:setData("itemInfo", itemInfo)
+		for i,v in ipairs(itemsOwnedBy[1][charInfo.UID]) do
+			if v == item then
+				table.remove(itemsOwnedBy[1][charInfo.UID], i)
+				break
+			end
+		end
+		saveItem(item)
+		loadItem(itemInfo.UID)
 		loadPlayerItems(client)
-		loadGroundItem(UID)
 		local details = {}
-		details[1] = UID
-		details[2] = pos.x
-		details[3] = pos.y
-		details[4] = pos.z
+		details[1] = itemInfo.UID
+		details[2] = client.position.x
+		details[3] = client.position.y
+		details[4] = client.position.z
 		exports.logs:addLog(exports.logs:getLogTypes().itemDrop, client.ip, client:getData("globalInfo")["UID"], client:getData("charInfo")["UID"], details)
 	end
 end)
 
 addEvent("pickItemByPlayer", true)
-addEventHandler("pickItemByPlayer", root, function(UID)
-	local itemInfo = getItemInfo(UID)
+addEventHandler("pickItemByPlayer", root, function(item)
+	local itemInfo = item:getData("itemInfo")
 	local charInfo = client:getData("charInfo")
 	if itemInfo.ownerType == 2 then
 		local pos = client.position
 		local pos2 = Vector3(itemInfo.posX, itemInfo.posY, itemInfo.posZ)
 		if getDistanceBetweenPoints3D(pos, pos2) < 5 then
 			local itemSphere = ColShape.Sphere(pos2, 3)
-			local nearbyObjects = itemSphere:getElementsWithin("object")
-			for i, v in ipairs(nearbyObjects) do
-				if v:getData("itemInfo").UID == UID then
-					v:destroy()
+			local groundObject = item:getData("groundObject")
+			groundObject:destroy()
+			itemInfo.ownerType = 1
+			itemInfo.owner = charInfo.UID
+			for i,v in ipairs(itemsOwnedBy[2][0]) do
+				if v == item then
+					table.remove(itemsOwnedBy[2][0], i)
 					break
 				end
 			end
-			setItemOwnerType(UID, 1)
-			setItemOwner(UID, charInfo.UID)
+			item:setData("itemInfo", itemInfo)
+			saveItem(item)
+			loadItem(itemInfo.UID)
 			loadPlayerItems(client)
 			local details = {}
 			details[1] = UID
@@ -53,16 +68,16 @@ addEventHandler("pickItemByPlayer", root, function(UID)
 end)
 
 addEvent("usePlayerItem", true)
-addEventHandler("usePlayerItem", root, function(UID, player)
+addEventHandler("usePlayerItem", root, function(item, player)
 	if not client then client = player end
 	local charInfo = client:getData("charInfo")
 	if not charInfo then
 		return
 	end
-	if canUseItem(client, UID) then
+	if canUseItem(client, item) then
 		local details = {}
-		local itemInfo = getItemInfo(UID)
-		details[1] = UID
+		local itemInfo = item:getData("itemInfo")
+		details[1] = itemInfo.UID
 		exports.logs:addLog(exports.logs:getLogTypes().itemUse, client.ip, client:getData("globalInfo")["UID"], charInfo["UID"], details)
 	end
 end)
@@ -72,8 +87,8 @@ function loadPlayerItems(player) -- NOTE: Używać po zmianie zawartości ekwipu
 	if not charInfo then
 		return
 	end
-	local items = db:fetch("SELECT * FROM `rp_items` WHERE `ownerType`=1 AND `owner`=?", charInfo["UID"])
-	if #items < 1 then
+	local items = itemsOwnedBy[1][charInfo.UID]
+	if not items then
 		items = nil
 	end
 	player:setData("charItems", items)
@@ -84,29 +99,57 @@ addEventHandler("onCharacterSelected", root, function(player)
 	loadPlayerItems(player)
 end)
 
-function canUseItem(player, UID)
-	if not player or not UID then
+function canUseItem(player, item)
+	if not player or not item then
 		return false
 	end
 	local charInfo = player:getData("charInfo")
 	if not charInfo then
 		return false
 	end
-	local item = db:fetch("SELECT * FROM `rp_items` WHERE `ownerType`=1 AND `owner`=? AND `UID`=?", charInfo['UID'], UID)
-	item = item[1] or nil
+	local itemInfo = item:getData("itemInfo")
+	if itemInfo.ownerType == 1 and itemInfo.owner == charInfo.UID then
+		return true
+	end
+	return false
+end
+
+-- function givePlayerItemForPlayer(from, to, UID)
+-- 	if isItemUsed(UID) then
+-- 		triggerEvent("usePlayerItem", root, UID, from)
+-- 	end
+-- 	setItemOwner(UID, to:getData("charInfo")["UID"])
+-- end
+
+function givePlayerItemForPlayer(from, to, item)
 	if not item then
-		return false
+		return
 	end
-	return true
-end
 
-function isOwnerOfItem(player, UID)
-	return canUseItem(player, UID)
-end
-
-function givePlayerItemForPlayer(from, to, UID)
-	if isItemUsed(UID) then
-		triggerEvent("usePlayerItem", root, UID, from)
+	local itemInfo = item:getData("itemInfo")
+	if not itemInfo then
+		return
 	end
-	setItemOwner(UID, to:getData("charInfo")["UID"])
+
+	if itemInfo.ownerType ~= 1 or itemInfo.owner ~= from:getData("charInfo").UID then
+		return
+	end
+
+	if itemInfo.used == true then
+		triggerEvent("usePlayerItem", root, item, from)
+		return givePlayerItemForPlayer(from, to, item)
+	end
+
+	itemInfo.owner = to:getData("charInfo").UID
+	item:setData("itemInfo", itemInfo)
+	for i,v in ipairs(itemsOwnedBy[1][from:getData("charInfo").UID]) do
+		if v == item then
+			table.remove(itemsOwnedBy[1][from:getData("charInfo").UID], i)
+			break
+		end
+	end
+	saveItem(item)
+	loadItem(itemInfo.UID)
+	loadPlayerItems(from)
+	loadPlayerItems(to)
 end

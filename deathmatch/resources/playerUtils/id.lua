@@ -3,7 +3,7 @@ function getByID(ID)
 	for i,v in ipairs(players) do
 		if v:getData("ID") == ID then return v end
 	end
-	return false
+	return nil
 end
 
 function getByName(name)
@@ -16,5 +16,5 @@ function getByName(name)
 			end
 		end
 	end
-	return false
+	return nil
 end

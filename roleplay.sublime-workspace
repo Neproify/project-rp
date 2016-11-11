@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"ext",
+				"extraColors"
+			],
+			[
+				"vehicle",
+				"vehicleEngine"
+			],
+			[
+				"vehi",
+				"vehicles"
+			],
+			[
 				"admin",
 				"adminWindow"
 			],
@@ -420,10 +432,6 @@
 				"th\tTag"
 			],
 			[
-				"vehi",
-				"vehicle"
-			],
-			[
 				"vehicl",
 				"vehicleEngine"
 			],
@@ -512,10 +520,10 @@
 	"buffers":
 	[
 		{
-			"file": "deathmatch/resources/admin/admin.lua",
+			"file": "deathmatch/resources/vehicles/vehiclesList_s.lua",
 			"settings":
 			{
-				"buffer_size": 576,
+				"buffer_size": 675,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -528,10 +536,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 384.0,
-		"last_filter": "package ",
+		"height": 257.0,
+		"last_filter": "git stash",
 		"selected_items":
 		[
+			[
+				"git stash",
+				"Git: Stash Changes"
+			],
 			[
 				"package ",
 				"Package Control: Remove Package"
@@ -640,12 +652,17 @@
 	[
 		"/C/mtasaserver/server/mods/deathmatch",
 		"/C/mtasaserver/server/mods/deathmatch/resources",
-		"/C/mtasaserver/server/mods/deathmatch/resources/admin",
-		"/C/mtasaserver/server/mods/deathmatch/resources/auth"
+		"/C/mtasaserver/server/mods/deathmatch/resources/db"
 	],
 	"file_history":
 	[
+		"/C/mtasaserver/server/mods/deathmatch/resources/db/config.lua",
+		"/C/mtasaserver/server/mods/deathmatch/resources/groups/groups_c.lua",
+		"/C/mtasaserver/server/mods/deathmatch/resources/items/playerItems_c.lua",
+		"/C/mtasaserver/server/mods/deathmatch/resources/vehicles/vehiclesList_c.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/admin/vehicles_s.lua",
+		"/C/mtasaserver/server/mods/deathmatch/resources/vehicles/vehicles_s.lua",
+		"/C/mtasaserver/server/mods/deathmatch/resources/vehicles/meta.xml",
 		"/C/mtasaserver/server/mods/deathmatch/resources/admin/admin.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/admin/meta.xml",
 		"/C/mtasaserver/server/mods/deathmatch/resources/admin/adminDashboard.html",
@@ -688,7 +705,6 @@
 		"/C/mtasaserver/server/mods/deathmatch/resources/government/government_s.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/government/meta.xml",
 		"/C/mtasaserver/server/mods/deathmatch/resources/items/documents_s.lua",
-		"/C/mtasaserver/server/mods/deathmatch/resources/vehicles/vehicles_s.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/interactionSystem/interaction_c.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/interactionSystem/meta.xml",
 		"/C/mtasaserver/server/mods/deathmatch/resources/interactionSystem/interaction_s.lua",
@@ -719,14 +735,10 @@
 		"/C/mtasaserver/server/mods/deathmatch/resources/fonts/fonts_c.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/groups/group/news_s.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/vehicles/vehicleDamage_c.lua",
-		"/C/mtasaserver/server/mods/deathmatch/resources/vehicles/vehiclesList_c.lua",
-		"/C/mtasaserver/server/mods/deathmatch/resources/groups/groups_c.lua",
-		"/C/mtasaserver/server/mods/deathmatch/resources/items/playerItems_c.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/phones/phone_c.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/interactionSystem/interaction.html",
 		"/C/mtasaserver/server/mods/deathmatch/resources/interactionSystem/interaction.css",
 		"/C/Users/Neproify/Downloads/Animated-Circle-Menu-with-jQuery-CSS3/index.html",
-		"/C/mtasaserver/server/mods/deathmatch/resources/db/config.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/groups/group/lspd_s.lua",
 		"/C/Users/Neproify/Desktop/hosts",
 		"/C/mtasaserver/server/mods/deathmatch/resources/groups/radio_s.lua",
@@ -771,8 +783,7 @@
 		"/C/samp/server/roleplay/gamemodes/roleplay/chat.inc",
 		"/C/samp/server/roleplay/gamemodes/roleplay/dbsettings.inc",
 		"/C/samp/server/roleplay/gamemodes/roleplay/vehicles.inc",
-		"/C/samp/server/roleplay/gamemodes/roleplay/groups.inc",
-		"/C/Users/Neproify/AppData/Roaming/Sublime Text 3/Packages/User/ColorHighlighter.sublime-settings"
+		"/C/samp/server/roleplay/gamemodes/roleplay/groups.inc"
 	],
 	"find":
 	{
@@ -791,6 +802,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"unpack",
+			"arg3",
+			"lakierowanie",
 			"hasPlayerAdminPermissionTo",
 			"hasPlayerPermissionsToViewAdminPanel",
 			"showPhone",
@@ -966,24 +980,25 @@
 			[
 				{
 					"buffer": 0,
-					"file": "deathmatch/resources/admin/admin.lua",
+					"file": "deathmatch/resources/vehicles/vehiclesList_s.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 576,
+						"buffer_size": 675,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								552,
-								552
+								675,
+								675
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.sublime-syntax"
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

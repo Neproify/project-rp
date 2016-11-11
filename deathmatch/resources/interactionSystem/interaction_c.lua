@@ -24,9 +24,8 @@ function endInteraction()
 					triggerServerEvent("toggleVehicleHoodByPlayer", localPlayer, hitElement)
 				end
 			elseif hitElement.type == "object" then
-				if hitElement:getData("itemInfo") then -- przedmiot
-					local itemInfo = hitElement:getData("itemInfo")
-					triggerServerEvent("pickItemByPlayer", localPlayer, itemInfo.UID)
+				if hitElement:getData("item") then -- przedmiot
+					triggerServerEvent("pickItemByPlayer", localPlayer, hitElement:getData("item"))
 				end
 			end
 		end

@@ -21,12 +21,14 @@ addEventHandler("onClientResourceStart", resourceRoot, function()
 			end
 			hide()
 			lastItemUse = getTickCount()
-			triggerServerEvent("usePlayerItem", localPlayer, UID)
+			local item = Element.getByID("item-"..UID)
+			triggerServerEvent("usePlayerItem", localPlayer, item)
 		end)
 		addEvent("dropPlayerItem", true)
 		addEventHandler("dropPlayerItem", itemsWindow.browser, function(UID)
 			hide()
-			triggerServerEvent("dropPlayerItem", localPlayer, UID)
+			local item = Element.getByID("item-"..UID)
+			triggerServerEvent("dropPlayerItem", localPlayer, item)
 		end)
 	end)
 end)
@@ -64,7 +66,12 @@ function updateItems()
 	local charItems = localPlayer:getData("charItems")
 	itemsWindow.browser:executeJavascript('clearItems();')
 	for i,v in ipairs(charItems) do
-		itemsWindow.browser:executeJavascript('addItem('..v['UID']..',"'..v["name"]..'",'..v["used"]..');')
+		local itemInfo = v:getData("itemInfo")
+		local used = "false"
+		if itemInfo["user"] == true then
+			used = "true"
+		end
+		itemsWindow.browser:executeJavascript('addItem('..itemInfo['UID']..',"'..itemInfo["name"]..'",'..used..');')
 	end
 	itemsWindow.browser:executeJavascript('updateItems();')
 end
@@ -74,7 +81,7 @@ addEvent("onPlayerItemsLoaded", true)
 addEventHandler("onPlayerItemsLoaded", root, function()
 	if showItems == true then
 		updateItems()
-		itemsWindow:setVisible(true)
+		itemsWindow.visible = true
 		showCursor(true, false)
 		toggleControl("fire", false)
 	end

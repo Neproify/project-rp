@@ -1,21 +1,20 @@
 local db = exports.db
 
-addEventHandler("usePlayerItem", root, function(UID, player)
+addEventHandler("usePlayerItem", root, function(item, player)
 	if not client then client = player end
 	local charInfo = client:getData("charInfo")
 	if not charInfo then
 		return
 	end
-	if canUseItem(client, UID) then
-		local itemInfo = getItemInfo(UID)
+	if canUseItem(client, item) then
+		local itemInfo = item:getData("itemInfo")
 		if itemInfo.type == 3 then
-			local properties = explodeProperties(itemInfo.properties)
-			local vehicle = exports.vehicles:getVehicleByUID(tonumber(properties[1]))
+			local vehicle = exports.vehicles:getVehicleByUID(tonumber(itemInfo.properties[1]))
 			if not vehicle then
 				return
 			end
 			local range = 0
-			if tonumber(properties[2]) == 1 then
+			if tonumber(itemInfo.properties[2]) == 1 then
 				range = 4
 			end
 			if getDistanceBetweenPoints3D(vehicle.position, client.position) < range then

@@ -20,7 +20,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			end
 			offerInfo.from.money = offerInfo.from.money + offerInfo.price
 			offerInfo.to.money = offerInfo.to.money - offerInfo.price
-			exports.items:givePlayerItemForPlayer(offerInfo.from, offerInfo.to, offerInfo.itemUID)
+			exports.items:givePlayerItemForPlayer(offerInfo.from, offerInfo.to, Element.getByID("item-"..offerInfo.itemUID))
 		elseif offerInfo.type == 2 then
 			if offerInfo.to.money < offerInfo.price then
 				return
@@ -105,7 +105,13 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			return
 		end
 		
-		if not exports.items:isOwnerOfItem(player, tonumber(arg3)) then
+		local item = Element.getByID("item-".. arg3)
+		if not item then
+			exports.notifications:add(player, "Nie możesz dać komuś przedmiotu którego nie masz przy sobie!", "danger", 3000)
+			return
+		end
+
+		if item:getData("itemInfo").ownerType ~= 1 or item:getData("itemInfo").owner ~= charInfo.UID then
 			exports.notifications:add(player, "Nie możesz dać komuś przedmiotu którego nie masz przy sobie!", "danger", 3000)
 			return
 		end
