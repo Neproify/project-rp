@@ -3,6 +3,8 @@
 
 	<script src="admin_s.lua" type="server" />
 	<script src="vehicles_s.lua" type="server" />
+	<script src="players_s.lua" type="server" />
+	<script src="items_s.lua" type="server" />
 	
 	<script src="admin.lua" type="shared" cache="false" />
 </meta>

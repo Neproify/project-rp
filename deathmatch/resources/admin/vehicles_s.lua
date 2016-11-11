@@ -7,7 +7,8 @@ addCommandHandler("apojazd", function(player, cmd, arg1, arg2, arg3, arg4, arg5,
 	end
 
 	if arg1 == "stworz" then
-
+		_, _, insertedID = db:fetch("INSERT INTO `rp_vehicles` (`model`) VALUES ('400');")
+		exports.notifications:add(player, "Stworzyłeś pojazd. Jego UID to: ".. insertedID ..".", "info", 10000)
 		return
 	end
 
@@ -178,5 +179,51 @@ addCommandHandler("apojazd", function(player, cmd, arg1, arg2, arg3, arg4, arg5,
 		return
 	end
 
-	exports.notifications:add(player, "Użyj: /apojazd [stworz, spawn, unspawn, napraw, hp, otworz, zamknij, silnik, model, kolor, wlasciciel]")
+	if arg1 == "tpto" then
+		if not arg2 then
+			exports.notifications:add(player, "Użyj: /apojazd tpto [UID]")
+			return
+		end
+		local vehicle = Element.getByID("vehicle-"..arg2)
+		if not vehicle then
+			exports.notifications:add(player, "Podany pojazd nie jest zespawnowany!", "danger")
+			return
+		end
+		player.position = vehicle.position
+		return
+	end
+
+	if arg1 == "tphere" then
+		if not arg2 then
+			exports.notifications:add(player, "Użyj: /apojazd tphere [UID]")
+			return
+		end
+		local vehicle = Element.getByID("vehicle-"..arg2)
+		if not vehicle then
+			exports.notifications:add(player, "Podany pojazd nie jest zespawnowany!", "danger")
+			return
+		end
+		vehicle.position = player.position
+		return
+	end
+
+	if arg1 == "parkuj" then
+		if not arg2 then
+			exports.notifications:add(player, "Użyj: /apojazd parkuj [UID]")
+			return
+		end
+		local vehicle = Element.getByID("vehicle-"..arg2)
+		if not vehicle then
+			exports.notifications:add(player, "Podany pojazd nie jest zespawnowany!", "danger")
+			return
+		end
+		local vehInfo = vehicle:getData("vehInfo")
+		vehInfo.parkX, vehInfo.parkY, vehInfo.parkZ = vehicle.position.x, vehicle.position.y, vehicle.position.z
+		vehInfo.partRX, vehInfo.parkRY, vehInfo.parkRZ = vehicle.rotation.x, vehicle.rotation.y, vehicle.rotation.z
+		vehicle:setData("vehInfo", vehInfo)
+		exports.notifications:add(player, "Przeparkowałeś pojazd.")
+		return
+	end
+
+	exports.notifications:add(player, "Użyj: /apojazd [stworz, spawn, unspawn, napraw, hp, otworz, zamknij, silnik, model, kolor, wlasciciel, tpto, tphere, parkuj]")
 end)
