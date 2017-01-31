@@ -51,7 +51,7 @@ CREATE TABLE `rp_groups_members` (
   `groupUID` int(11) NOT NULL,
   `rank` int(11) NOT NULL,
   `dutyTime` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `rp_groups_ranks` (
   `UID` int(11) NOT NULL,
