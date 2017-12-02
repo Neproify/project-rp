@@ -24,8 +24,6 @@ addEventHandler("onCharactersFetched", root, function()
 		addEventHandler("onClientBrowserDocumentReady", charInfoWindow.browser, function()
 			local characters = localPlayer:getData("characters")
 			loginPed = createPed(characters[1]["skin"], 1484.8495, -1694.1045, 15.0469)
-			loginPed.dimension = localPlayer:getData("ID") + 500000
-			localPlayer.dimension = loginPed.dimension
 			Camera.setMatrix(1484.8495, -1690.1045, 14.5469, 1484.8495, -1694.1045, 14.5469)
 			updateCharInfo()
 		end)
