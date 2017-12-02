@@ -12,6 +12,14 @@
 	<file src="playerItems.html" />
 	<file src="playerItems.js" />
 	
+	<export function="explodeProperties" type="server" />
+	<export function="packProperties" type="server" />
 	<export function="isOwnerOfItem" type="server" />
 	<export function="givePlayerItemForPlayer" type="server" />
+	<export function="loadItem" type="server" />
+	<export function="createItem" type="server" />
+	<export function="setItemOwner" type="server" />
+	<export function="setItemName" type="server" />
+	<export function="setItemType" type="server" />
+	<export function="setItemProperties" type="server" />
 </meta>

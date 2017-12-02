@@ -18,6 +18,7 @@
 local db = exports.db
 
 itemsOwnedBy = {}
+itemsOwnedBy[0] = {}
 itemsOwnedBy[1] = {}
 itemsOwnedBy[2] = {}
 
@@ -31,7 +32,7 @@ function loadItem(v) -- Jeżeli dostanie tablice to stworzy z niej przedmiot, je
 		v.used = false
 		item:setData("itemInfo", v)
 
-		if not itemsOwnedBy[v.ownerType][v.owner] then
+		if not itemsOwnedBy[v.ownerType][v.owner] or #itemsOwnedBy[v.ownerType][v.owner] == 0 then
 			itemsOwnedBy[v.ownerType][v.owner] = {}
 		end
 
@@ -96,6 +97,71 @@ function deleteItem(item)
 		end
 	end
 	item:destroy()
+end
+
+function setItemOwner(item, ownerType, owner)
+	local itemInfo = item:getData("itemInfo")
+	
+	if not itemsOwnedBy[itemInfo.ownerType][itemInfo.owner] then
+		itemsOwnedBy[itemInfo.ownerType][itemInfo.owner] = {}
+	end
+	
+	for i, v in ipairs(itemsOwnedBy[itemInfo.ownerType][itemInfo.owner]) do
+		if v == item then
+			table.remove(itemsOwnedBy[itemInfo.ownerType][itemInfo.owner], i)
+		end
+	end
+
+	local playerThatNeedItemsReload = nil
+
+	if itemInfo.ownerType == 1 then
+		local player = exports.playerUtils:getByCharUID(tonumber(itemInfo.owner))
+		if player then
+			playerThatNeedItemsReload = player
+			if itemInfo.used == true then
+				triggerEvent("usePlayerItem", root, item, player)
+			end
+		end
+	end
+
+	itemInfo.ownerType = ownerType
+	itemInfo.owner = owner
+
+	item:setData("itemInfo", itemInfo)
+	saveItem(item)
+	loadItem(itemInfo.UID)
+
+	if playerThatNeedItemsReload ~= nil then
+		loadPlayerItems(playerThatNeedItemsReload)
+	end
+
+	if itemInfo.ownerType == 1 then
+		local player = exports.playerUtils:getByCharUID(tonumber(itemInfo.owner))
+		if player then
+			loadPlayerItems(player)
+		end
+	end
+end
+
+function setItemName(item, name)
+	local itemInfo = item:getData("itemInfo")
+	itemInfo.name = name
+	item:setData("itemInfo", itemInfo)
+	saveItem(item)
+end
+
+function setItemType(item, itemType)
+	local itemInfo = item:getData("itemInfo")
+	itemInfo.type = itemType
+	item:setData("itemInfo", itemInfo)
+	saveItem(item)
+end
+
+function setItemProperties(item, properties)
+	local itemInfo = item:getData("itemInfo")
+	itemInfo.properties = properties
+	item:setData("itemInfo", itemInfo)
+	saveItem(item)
 end
 
 function explodeProperties(properties)

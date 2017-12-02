@@ -88,7 +88,7 @@ function loadPlayerItems(player) -- NOTE: Używać po zmianie zawartości ekwipu
 		return
 	end
 	local items = itemsOwnedBy[1][charInfo.UID]
-	if not items then
+	if not items or #items == 0 then
 		items = nil
 	end
 	player:setData("charItems", items)
