@@ -171,10 +171,7 @@ addCommandHandler("apojazd", function(player, cmd, arg1, arg2, arg3, arg4, arg5,
 		if arg3 == "gracz" then
 			ownerType = 1
 		end
-		local vehInfo = vehicle:getData("vehInfo")
-		vehInfo.ownerType = ownerType
-		vehInfo.owner = arg4
-		vehicle:setData("vehInfo", vehInfo)
+		exports.vehicles:setVehicleOwner(vehicle, ownerType, arg4)
 		exports.notifications:add(player, "Zmieniłeś właściciela pojazdu.")
 		return
 	end

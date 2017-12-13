@@ -17,4 +17,7 @@
 	<export function="spawnVehicle" type="server" />
 	<export function="unspawnVehicle" type="server" />
 	<export function="getVehicleByUID" type="server" />
+	<export function="loadPlayerVehicles" type="server" />
+	<export function="saveVehicle" type="server" />
+	<export function="setVehicleOwner" type="server" />
 </meta>

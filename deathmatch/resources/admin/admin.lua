@@ -18,8 +18,20 @@ function hasPlayerAdminPermissionTo(player, permission)
 	if not globalInfo then
 		return false
 	end
-
 	if bitTest(globalInfo.adminPermissions, permission) then
+		return true
+	end
+
+	return false
+end
+
+function isPlayerAdminLevelEqualOrMore(player, level)
+	local globalInfo = player:getData("globalInfo")
+	if not globalInfo then
+		return false
+	end
+
+	if globalInfo.admin >= level then
 		return true
 	end
 

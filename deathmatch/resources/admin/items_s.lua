@@ -1,7 +1,7 @@
 local db = exports.db
 
 addCommandHandler("aprzedmiot", function(player, cmd, arg1, ...)
-	if not hasPlayerAdminPermissionTo(player, adminPermissions.players) then -- TODO: change to items
+	if not hasPlayerAdminPermissionTo(player, adminPermissions.items) then
 		exports.notifications:add(player, "Nie masz uprawnień administratora do zarządzania przedmiotami!", "danger", 3000)
 		return
 	end

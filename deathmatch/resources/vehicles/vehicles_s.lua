@@ -84,6 +84,35 @@ function getVehicleByUID(UID)
 	return Element.getByID("vehicle-"..UID)
 end
 
+function setVehicleOwner(vehicle, ownerType, owner)
+	if not vehicle then
+		return
+	end
+	local playerThatNeedVehicleListReload = nil
+	local vehInfo = vehicle:getData("vehInfo")
+	if vehInfo.ownerType == 1 then
+		local player = exports.playerUtils:getByCharUID(tonumber(vehInfo.owner))
+		if player then
+			playerThatNeedVehicleListReload = player
+		end
+	end
+	vehInfo.ownerType = ownerType
+	vehInfo.owner = owner
+	vehicle:setData("vehInfo", vehInfo)
+	saveVehicle(vehInfo.UID)
+
+	if playerThatNeedVehicleListReload ~= nil then
+		loadPlayerVehicles(playerThatNeedVehicleListReload)
+	end
+
+	if vehInfo.ownerType == 1 then
+		local player = exports.playerUtils:getByCharUID(tonumber(vehInfo.owner))
+		if player then
+			loadPlayerVehicles(player)
+		end
+	end
+end
+
 addEventHandler("onResourceStop", resourceRoot, function()
 	for i,v in ipairs(Element.getAllByType("vehicle")) do
 		local vehInfo = v:getData("vehInfo")
