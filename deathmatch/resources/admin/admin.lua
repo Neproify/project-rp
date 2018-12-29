@@ -7,11 +7,11 @@ adminLevels.owner = 4
 
 adminPermissions = {}
 adminPermissions.players = 1
-adminPermissions.money = 2
-adminPermissions.vehicles = 4
-adminPermissions.buildings = 8
-adminPermissions.groups = 16
-adminPermissions.items = 32
+adminPermissions.money = 10
+adminPermissions.vehicles = 100
+adminPermissions.buildings = 1000
+adminPermissions.groups = 10000
+adminPermissions.items = 100000
 
 function hasPlayerAdminPermissionTo(player, permission)
 	local globalInfo = player:getData("globalInfo")

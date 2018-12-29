@@ -11,9 +11,9 @@ addEventHandler("onClientRender", root, function()
 			local dist = getDistanceBetweenPoints3D(localPlayer.position, v.position)
 			if dist < 15 then
 				if isLineOfSightClear(localPlayer.position, v.position, true, false, false, true, false, false, false) then
-					local bx, by, bz = v:getBonePosition(8)
-					local x, y = getScreenFromWorldPosition(bx, by, bz + 0.25)
-					local x2, y2 = getScreenFromWorldPosition(bx, by, bz - 0.25)
+					local bonePosition = v:getBonePosition(8)
+					local x, y = getScreenFromWorldPosition(bonePosition.x, bonePosition.y, bonePosition.z + 0.25)
+					local x2, y2 = getScreenFromWorldPosition(bonePosition.x, bonePosition.y, bonePosition.z - 0.25)
 					if x and y then
 						if localPlayer == v and not showLocalPlayer then
 						else

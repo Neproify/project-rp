@@ -641,12 +641,12 @@
 	},
 	"expanded_folders":
 	[
-		"/C/mtasaserver/server/mods/deathmatch",
-		"/C/mtasaserver/server/mods/deathmatch/resources",
-		"/C/mtasaserver/server/mods/deathmatch/resources/admin"
+		"/C/mtaserver/server/mods/deathmatch",
+		"/C/mtaserver/server/mods/deathmatch/resources"
 	],
 	"file_history":
 	[
+		"/C/mtaserver/server/mods/deathmatch/resources/db/config.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/admin/items_s.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/items/items_s.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/items/meta.xml",
@@ -773,8 +773,7 @@
 		"/C/Users/Neproify/Downloads/circlemenu/main.lua",
 		"/C/Users/Neproify/Downloads/circlemenu/server.lua",
 		"/C/Users/Neproify/Downloads/circlemenu/mutat.lua",
-		"/C/samp/server/roleplay/gamemodes/roleplay/settings.inc",
-		"/C/samp/server/roleplay/gamemodes/roleplay/chat.inc"
+		"/C/samp/server/roleplay/gamemodes/roleplay/settings.inc"
 	],
 	"find":
 	{
@@ -977,7 +976,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 27.0
 	},
 	"input":
 	{

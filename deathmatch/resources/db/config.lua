@@ -1,7 +1,7 @@
 dbAddress = "localhost"
 dbUser = "root"
 dbPassword = ""
-dbName = "our-rp"
+dbName = "mtarp"
 
 dbGamePrefix = "rp_"
 dbForumPrefix = "forum_"
