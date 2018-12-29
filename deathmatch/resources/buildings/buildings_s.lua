@@ -91,7 +91,7 @@ addEventHandler("useDoor", root, function(pickup)
 		return
 	end
 	local charInfo = client:getData("charInfo")
-	if charInfo.jailBuilding ~= nil then
+	if charInfo.jailBuilding then
 		exports.notifications:add(client, "Jesteś przetrzymywany w budynku. Nie możesz wyjść.", "danger", 5000)
 		return
 	end
