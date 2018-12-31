@@ -642,10 +642,19 @@
 	"expanded_folders":
 	[
 		"/C/mtaserver/server/mods/deathmatch",
-		"/C/mtaserver/server/mods/deathmatch/resources"
+		"/C/mtaserver/server/mods/deathmatch/resources",
+		"/C/mtaserver/server/mods/deathmatch/resources/groups"
 	],
 	"file_history":
 	[
+		"/D/Gry/BeamNG.drive v0.13.0.5/gameengine/core/scripts/server/commands.cs",
+		"/D/Gry/BeamNG.drive v0.13.0.5/gameengine/core/scripts/server/server.cs",
+		"/D/Gry/BeamNG.drive v0.13.0.5/gameengine/scripts/client/beamng.cs",
+		"/D/Gry/BeamNG.drive v0.13.0.5/gameengine/core/main.cs",
+		"/C/mtaserver/server/mods/deathmatch/resources/buildings/buildings_s.lua",
+		"/C/mtaserver/server/mods/deathmatch/resources/nameTags/nametags_c.lua",
+		"/C/mtaserver/server/mods/deathmatch/resources/admin/admin.lua",
+		"/C/mtaserver/server/mods/deathmatch/resources/admin/items_s.lua",
 		"/C/mtaserver/server/mods/deathmatch/resources/db/config.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/admin/items_s.lua",
 		"/C/mtasaserver/server/mods/deathmatch/resources/items/items_s.lua",
@@ -765,19 +774,11 @@
 		"/C/Users/Neproify/Downloads/assault (1)/assault/assault_client.lua",
 		"/C/samp/server/roleplay/server.cfg",
 		"/C/samp/server/roleplay/gamemodes/roleplay/admin_cmds.inc",
-		"/C/samp/server/roleplay/gamemodes/roleplay/items.inc",
-		"/C/samp/server/roleplay/gamemodes/roleplay.pwn",
-		"/C/samp/server/roleplay/gamemodes/roleplay/login.inc",
-		"/C/samp/server/roleplay/gamemodes/roleplay/player.inc",
-		"/C/mtasarp/server/mods/deathmatch/mtaserver.conf",
-		"/C/Users/Neproify/Downloads/circlemenu/main.lua",
-		"/C/Users/Neproify/Downloads/circlemenu/server.lua",
-		"/C/Users/Neproify/Downloads/circlemenu/mutat.lua",
-		"/C/samp/server/roleplay/gamemodes/roleplay/settings.inc"
+		"/C/samp/server/roleplay/gamemodes/roleplay/items.inc"
 	],
 	"find":
 	{
-		"height": 41.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
@@ -1021,7 +1022,7 @@
 	"project": "roleplay.sublime-project",
 	"replace":
 	{
-		"height": 82.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
