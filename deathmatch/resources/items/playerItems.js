@@ -5,29 +5,27 @@ function updateItems()
 	$('#items tbody').html('');
 	for(var i = 0; i < items.length; i++)
 	{
-		var output = '<tr>';
+		var output = '<tr id="'+items[i]['UID']+'">';
 		output += '<td>'+items[i]['UID']+'</td>';
-		output += '<td id="useItem-'+items[i]['UID']+'">'+items[i]['name']+'</td>';
-		output += '<td><div class="ui dropdown"><div class="default text">Opcje</div>';
-		output += '<div class="menu"><div class="item" id="dropItem-'+items[i]['UID']+'">Wyrzuć</div></div>';
-		output += '</div></td>';
+		output += '<td id="useItem">'+items[i]['name']+'</td>';
+		output += '<td id="dropItem">Wyrzuć</td>';
 		output += '</tr>';
 		var item = $(output);
 		item.appendTo('#items tbody');
-		$('.ui.dropdown').dropdown();
 		if(items[i]['used'] == true)
 		{
 			item.css('font-weight', '900');
 		}
 		item.on('click', function(event)
 		{
-			if(event.target.id.includes('useItem'))
+			var parent = $(event.target).parent();
+			if(event.target.id == "useItem")
 			{
-				useItem(event.target.id.substring(8));
+				useItem(parent.attr('id'));
 			}
-			if(event.target.id.includes('dropItem'))
+			if(event.target.id == "dropItem")
 			{
-				dropItem(event.target.id.substring(9));
+				dropItem(parent.attr('id'));
 			}
 		});
 	}

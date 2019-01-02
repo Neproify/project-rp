@@ -18,7 +18,4 @@
 	<file src="font-awesome/fonts/fontawesome-webfont.ttf" />
 	<file src="font-awesome/fonts/fontawesome-webfont.woff" />
 	<file src="font-awesome/fonts/fontawesome-webfont.woff2" />
-	<!-- Semantic UI -->
-	<file src="js/semantic.min.js" />
-	<file src="css/semantic.min.css" />
 </meta>

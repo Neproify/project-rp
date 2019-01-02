@@ -8,7 +8,6 @@ local isGUIReady = false
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	itemsWindow = GuiBrowser(screenWidth - 300, screenHeight / 2 - 100, 300, 300, true, true, false)
 	addEventHandler("onClientBrowserCreated", itemsWindow.browser, function()
-		itemsWindow.browser:toggleDevTools(false)
 		triggerServerEvent("loadPlayerItems", localPlayer)
 		itemsWindow.browser:loadURL("http://mta/local/playerItems.html")
 		guiSetVisible(itemsWindow, showItems)
