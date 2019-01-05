@@ -5,6 +5,7 @@
 	3 - lakierowanie
 	4 - leczenie
 --]]
+local ownerTypes = exports.core:getOwnerTypes()
 
 addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 	if arg1 == "akceptuj" then
@@ -111,7 +112,7 @@ addCommandHandler("o", function(player, cmd, arg1, arg2, arg3, arg4, arg5, arg6)
 			return
 		end
 
-		if item:getData("itemInfo").ownerType ~= 1 or item:getData("itemInfo").owner ~= charInfo.UID then
+		if item:getData("itemInfo").ownerType ~= ownerTypes.character or item:getData("itemInfo").owner ~= charInfo.UID then
 			exports.notifications:add(player, "Nie możesz dać komuś przedmiotu którego nie masz przy sobie!", "danger", 3000)
 			return
 		end

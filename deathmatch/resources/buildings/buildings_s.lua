@@ -1,4 +1,5 @@
 local db = exports.db
+local ownerTypes = exports.core:getOwnerTypes()
 
 function loadBuildings()
 	local buildings = db:fetch("SELECT * FROM `rp_buildings`")
@@ -21,7 +22,7 @@ function loadBuildings()
 
 		building:setData("buildingInfo", v)
 
-		local objects = db:fetch("SELECT * FROM `rp_objects` WHERE `ownerType`=1 AND `owner`=?", v.UID)
+		local objects = db:fetch("SELECT * FROM `rp_objects` WHERE `ownerType`=? AND `owner`=?", ownerTypes.building, v.UID)
 		for i,v in ipairs(objects) do
 			local object = Object(v.model, Vector3(v.posX, v.posY, v.posZ), Vector3(v.rotX, v.rotY, v.rotZ))
 			object.dimension = v.owner + 10000
@@ -48,10 +49,10 @@ function havePlayerPermissionToOpenBuilding(player, building)
 	local buildingInfo = building:getData("buildingInfo")
 	if not buildingInfo then return false end
 	local charInfo = player:getData("charInfo")
-	if buildingInfo.ownerType == 1 and buildingInfo.owner == charInfo.UID then
+	if buildingInfo.ownerType == ownerTypes.character and buildingInfo.owner == charInfo.UID then
 		return true
 	end
-	if buildingInfo.ownerType == 2 then
+	if buildingInfo.ownerType == ownerTypes.group then
 		local groupDutyInfo = player:getData("groupDutyInfo")
 		if groupDutyInfo then
 			if buildingInfo.owner == groupDutyInfo.UID then
@@ -66,7 +67,7 @@ function havePlayerPermissionToEditBuilding(player, building)
 	local buildingInfo = building:getData("buildingInfo")
 	if not buildingInfo then return false end
 	local charInfo = player:getData("charInfo")
-	if buildingInfo.ownerType == 1 and buildingInfo.owner == charInfo.UID then
+	if buildingInfo.ownerType == ownerTypes.character and buildingInfo.owner == charInfo.UID then
 		return true
 	end
 	return false

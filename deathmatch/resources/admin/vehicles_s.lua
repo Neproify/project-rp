@@ -1,4 +1,5 @@
 local db = exports.db
+local ownerTypes = exports.core:getOwnerTypes()
 
 addCommandHandler("apojazd", function(player, cmd, arg1, arg2, arg3, arg4, arg5, ...)
 	if not hasPlayerAdminPermissionTo(player, adminPermissions.vehicles) then
@@ -167,9 +168,9 @@ addCommandHandler("apojazd", function(player, cmd, arg1, arg2, arg3, arg4, arg5,
 			exports.notifications:add(player, "Podany pojazd nie jest zespawnowany!", "danger")
 			return
 		end
-		local ownerType = 0
+		local ownerType = ownerTypes.none
 		if arg3 == "gracz" then
-			ownerType = 1
+			ownerType = ownerTypes.character
 		end
 		exports.vehicles:setVehicleOwner(vehicle, ownerType, arg4)
 		exports.notifications:add(player, "Zmieniłeś właściciela pojazdu.")

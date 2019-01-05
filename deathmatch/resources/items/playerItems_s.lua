@@ -1,4 +1,5 @@
 local db = exports.db
+local ownerTypes = exports.core:getOwnerTypes()
 
 addEvent("loadPlayerItems", true)
 addEventHandler("loadPlayerItems", root, function()
@@ -13,15 +14,15 @@ addEventHandler("dropPlayerItem", root, function(item)
 			return
 		end
 		local charInfo = client:getData("charInfo")
-		itemInfo.ownerType = 2
+		itemInfo.ownerType = ownerTypes.world
 		itemInfo.owner = 0
 		itemInfo.posX = client.position.x
 		itemInfo.posY = client.position.y
 		itemInfo.posZ = client.position.z - 0.9
 		item:setData("itemInfo", itemInfo)
-		for i,v in ipairs(itemsOwnedBy[1][charInfo.UID]) do
+		for i,v in ipairs(itemsOwnedBy[ownerTypes.character][charInfo.UID]) do
 			if v == item then
-				table.remove(itemsOwnedBy[1][charInfo.UID], i)
+				table.remove(itemsOwnedBy[ownerTypes.character][charInfo.UID], i)
 				break
 			end
 		end
@@ -41,14 +42,14 @@ addEvent("pickItemByPlayer", true)
 addEventHandler("pickItemByPlayer", root, function(item)
 	local itemInfo = item:getData("itemInfo")
 	local charInfo = client:getData("charInfo")
-	if itemInfo.ownerType == 2 then
+	if itemInfo.ownerType == ownerTypes.world then
 		local pos = client.position
 		local pos2 = Vector3(itemInfo.posX, itemInfo.posY, itemInfo.posZ)
 		if getDistanceBetweenPoints3D(pos, pos2) < 5 then
 			local itemSphere = ColShape.Sphere(pos2, 3)
 			local groundObject = item:getData("groundObject")
 			groundObject:destroy()
-			itemInfo.ownerType = 1
+			itemInfo.ownerType = ownerTypes.character
 			itemInfo.owner = charInfo.UID
 			for i,v in ipairs(itemsOwnedBy[2][0]) do
 				if v == item then
@@ -108,7 +109,7 @@ function canUseItem(player, item)
 		return false
 	end
 	local itemInfo = item:getData("itemInfo")
-	if itemInfo.ownerType == 1 and itemInfo.owner == charInfo.UID then
+	if itemInfo.ownerType == ownerTypes.character and itemInfo.owner == charInfo.UID then
 		return true
 	end
 	return false
@@ -131,7 +132,7 @@ function givePlayerItemForPlayer(from, to, item)
 		return
 	end
 
-	if itemInfo.ownerType ~= 1 or itemInfo.owner ~= from:getData("charInfo").UID then
+	if itemInfo.ownerType ~= ownerTypes.character or itemInfo.owner ~= from:getData("charInfo").UID then
 		return
 	end
 
@@ -142,9 +143,9 @@ function givePlayerItemForPlayer(from, to, item)
 
 	itemInfo.owner = to:getData("charInfo").UID
 	item:setData("itemInfo", itemInfo)
-	for i,v in ipairs(itemsOwnedBy[1][from:getData("charInfo").UID]) do
+	for i,v in ipairs(itemsOwnedBy[ownerTypes.character][from:getData("charInfo").UID]) do
 		if v == item then
-			table.remove(itemsOwnedBy[1][from:getData("charInfo").UID], i)
+			table.remove(itemsOwnedBy[ownerTypes.character][from:getData("charInfo").UID], i)
 			break
 		end
 	end

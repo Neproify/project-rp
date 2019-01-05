@@ -1,4 +1,5 @@
 local db = exports.db
+local ownerTypes = exports.core:getOwnerTypes()
 
 addCommandHandler("aprzedmiot", function(player, cmd, arg1, ...)
 	if not hasPlayerAdminPermissionTo(player, adminPermissions.items) then
@@ -25,9 +26,9 @@ addCommandHandler("aprzedmiot", function(player, cmd, arg1, ...)
 		local item = Element.getByID("item-".. args[1])
 		local ownerType = 0
 		
-		if args[2] == "nikt" then ownerType = 0
-		elseif args[2] == "gracz" then ownerType = 1
-		elseif args[2] == "swiat" then ownerType = 2
+		if args[2] == "nikt" then ownerType = ownerTypes.none
+		elseif args[2] == "gracz" then ownerType = ownerTypes.character
+		elseif args[2] == "swiat" then ownerType = ownerTypes.world
 		end
 
 		local owner = args[3]

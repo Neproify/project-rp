@@ -11,8 +11,6 @@
 	<script src="mileage_c.lua" type="client" cache="false" />
 	<file src="playerVehicles.html" />
 	<file src="playerVehicles.js" />
-	<file src="img/licznik.png" />
-	<file src="img/needle.png" />
 
 	<export function="spawnVehicle" type="server" />
 	<export function="unspawnVehicle" type="server" />

@@ -1,10 +1,4 @@
 --[[
-	ownerType:
-	1 - gracz
-	2 - świat(przedmiot wyrzucony)
---]]
-
---[[
 	Typ przedmiotu:
 	1 - broń, podtypy: id broni, ilość kul
 	2 - magazynek do broni, podtypy: id broni, ilość kul
@@ -16,6 +10,7 @@
 	]
 --]]
 local db = exports.db
+local ownerTypes = exports.core:getOwnerTypes()
 
 itemsOwnedBy = {}
 itemsOwnedBy[0] = {}
@@ -38,7 +33,7 @@ function loadItem(v) -- Jeżeli dostanie tablice to stworzy z niej przedmiot, je
 
 		table.insert(itemsOwnedBy[v.ownerType][v.owner], item)
 
-		if v.ownerType == 2 then
+		if v.ownerType == ownerTypes.world then
 			local object = Object(getItemObjectModel(item), Vector3(v.posX, v.posY, v.posZ), Vector3(0, 0, 0), false)
 			object:setData("item", item)
 			item:setData("groundObject", object)
@@ -135,7 +130,7 @@ function setItemOwner(item, ownerType, owner)
 		loadPlayerItems(playerThatNeedItemsReload)
 	end
 
-	if itemInfo.ownerType == 1 then
+	if itemInfo.ownerType == ownerTypes.character then
 		local player = exports.playerUtils:getByCharUID(tonumber(itemInfo.owner))
 		if player then
 			loadPlayerItems(player)

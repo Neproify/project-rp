@@ -1,4 +1,5 @@
 local db = exports.db
+local ownerTypes = exports.core:getOwnerTypes()
 
 addEventHandler("usePlayerItem", root, function(item, player)
 	if not client then client = player end
@@ -12,7 +13,7 @@ addEventHandler("usePlayerItem", root, function(item, player)
 			if itemInfo.used == false then
 				if client:getWeapon(getSlotFromWeapon(itemInfo.properties[1])) == 0 then
 					local ammoClip = nil
-					for i,v in ipairs(itemsOwnedBy[1][charInfo.UID]) do
+					for i,v in ipairs(itemsOwnedBy[ownerTypes.character][charInfo.UID]) do
 						local vItemInfo = v:getData("itemInfo")
 						if vItemInfo.type == 2 and vItemInfo.used == true and vItemInfo.properties[1] == itemInfo.properties[1] then
 							ammoClip = v

@@ -1,4 +1,5 @@
 local db = exports.db
+local ownerTypes = exports.core:getOwnerTypes()
 
 function spawnVehicle(UID)
 	local vehInfo = db:fetch("SELECT * FROM `rp_vehicles` WHERE `UID`=?", UID)
@@ -90,7 +91,7 @@ function setVehicleOwner(vehicle, ownerType, owner)
 	end
 	local playerThatNeedVehicleListReload = nil
 	local vehInfo = vehicle:getData("vehInfo")
-	if vehInfo.ownerType == 1 then
+	if vehInfo.ownerType == ownerTypes.character then
 		local player = exports.playerUtils:getByCharUID(tonumber(vehInfo.owner))
 		if player then
 			playerThatNeedVehicleListReload = player
@@ -105,7 +106,7 @@ function setVehicleOwner(vehicle, ownerType, owner)
 		loadPlayerVehicles(playerThatNeedVehicleListReload)
 	end
 
-	if vehInfo.ownerType == 1 then
+	if vehInfo.ownerType == ownerTypes.character then
 		local player = exports.playerUtils:getByCharUID(tonumber(vehInfo.owner))
 		if player then
 			loadPlayerVehicles(player)
