@@ -70,10 +70,11 @@ addCommandHandler("aprzedmiot", function(player, cmd, arg1, ...)
 		end
 		local args = {...}
 		local item = Element.getByID("item-".. args[1])
+		local itemID = args[1]
 		table.remove(args, 1) -- hacky
 		local itemProperties = args
 		exports.items:setItemProperties(item, itemProperties)
-		exports.notifications:add(player, "Zmieniłeś wlasciwosci przedmiotu ".. args[1] .. " na: " .. exports.items:packProperties(itemProperties) .. ".")
+		exports.notifications:add(player, "Zmieniłeś wlasciwosci przedmiotu ".. itemID .. " na: " .. exports.items:packProperties(itemProperties) .. ".")
 		return
 	end
 
